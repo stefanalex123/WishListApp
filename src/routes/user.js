@@ -16,7 +16,7 @@ router.route('/register')
         .withMessage('is required')
         .isLength({ min: 7 })
         .withMessage("Password need at least 7 characters")
-        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{8,}$/, "i")
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{7,}$/, "i")
         .withMessage("Password need at least one letter, one number and one special character"),
         check("username")
         .exists()

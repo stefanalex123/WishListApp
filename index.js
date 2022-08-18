@@ -4,8 +4,10 @@ import bodyParser from "body-parser";
 //import errorsMiddleware from "./src/middleware/errorsMiddleware.js";
 import userRouter from "./src/routes/user.js";
 import itemRouter from "./src/routes/items.js"
+import userprofileRouter from "./src/routes/userprofile.js"
 //import gameRouter from "./src/routes/game.js";
 import cors from 'cors'
+import userprofile from "./src/services/userprofile.js";
 
 
 
@@ -27,11 +29,13 @@ app.get("/", (req, res) => {
 
 
 
+
 // Link router to app
 //app.use('/courses', router);
 
 app.use("/users", userRouter);
 app.use("/items", itemRouter);
+app.use("/userprofile", userprofileRouter);
 
 
 

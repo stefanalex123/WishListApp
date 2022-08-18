@@ -1,6 +1,15 @@
 import itemService from "../services/item.js"
 
 
+const deleteItem = async (req, res, next) => {
+  try {
+      await itemService.deleteItem(req.params.id);
+      res.send("Item deleted");
+  } catch (err) {
+      next(err);
+  }
+};
+
 const getAllItems = async (req, res, next) => {
   try {
       res.json(await itemService.geAllItems(req.auth.userid));
@@ -43,7 +52,7 @@ const updateItem = async (req, res, next) => {
       }
   
       const response = await itemService.updateItem(req.params.id, {
-        userid: req.auth.userid || item.username,
+        userid: req.auth.userid || item.userid,
         itemtitle: req?.body?.ItemTitle || item.itemtitle,
         itemlink: req?.body?.ItemLink || item.itemlink,
         itemdescription:req?.body?.ItemDescription || item.itemdescription,
@@ -51,7 +60,7 @@ const updateItem = async (req, res, next) => {
   
       res.json(response);
     } catch (err) {
-      console.error(`Error while updating user`);
+      console.error(`Error while updating item`);
       next(err);
     }
   };
@@ -64,7 +73,7 @@ const updateItem = async (req, res, next) => {
 
 
 
-export default  {createItem, updateItem, getAllItems, getItem}
+export default  {createItem, updateItem, getAllItems, getItem, deleteItem}
 
 
 

@@ -18,8 +18,17 @@ model User {
   username      String    @unique() 
   password      String       @default ("root")
   useritems     Items[]      @relation("useritems")
+  userprofile   UserProfile[] @relation ("userprofile")
 
   @@map("users")
+}
+
+model UserProfile{
+userid           String @id
+user             User     @relation("userprofile", fields: [userid], references: [id], onDelete: Cascade)
+email            String
+nickname         String   @unique
+phonenumber      String
 }
 
 model Items {

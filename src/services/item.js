@@ -2,6 +2,15 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
+const deleteItem = async (id) => {
+  const item = await prisma.items.delete({
+      where: {
+          id: id
+      }
+  });
+  return item;
+};
+
 const getItem= async (id) => {
     const item = await prisma.items.findUnique({
       where: {

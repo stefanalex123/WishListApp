@@ -81,6 +81,14 @@ router.route('/')
 
     ], validationMiddleware, jwtMiddleware, itemnameMiddleware2, itemController.updateItem)
 
+    .delete([
+
+     
+      
+
+
+    ], validationMiddleware, jwtMiddleware, itemController.deleteItem)
+
 
 
 
