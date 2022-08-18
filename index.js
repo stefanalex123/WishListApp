@@ -8,7 +8,7 @@ import userprofileRouter from "./src/routes/userprofile.js"
 //import gameRouter from "./src/routes/game.js";
 import cors from 'cors'
 import userprofile from "./src/services/userprofile.js";
-
+import useradressRouter from"./src/routes/adress.js";
 
 
 
@@ -36,6 +36,7 @@ app.get("/", (req, res) => {
 app.use("/users", userRouter);
 app.use("/items", itemRouter);
 app.use("/userprofile", userprofileRouter);
+app.use("/adress", useradressRouter)
 
 
 

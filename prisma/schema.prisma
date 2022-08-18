@@ -19,6 +19,7 @@ model User {
   password      String       @default ("root")
   useritems     Items[]      @relation("useritems")
   userprofile   UserProfile[] @relation ("userprofile")
+  useradresses  Adress[]      @relation ("useradresses")
 
   @@map("users")
 }
@@ -40,6 +41,20 @@ itemlink           String
 itemdescription    String
   @@map ("items")
 }
+
+model Adress {
+id          String   @id @default(uuid())
+userid      String 
+user        User     @relation("useradresses", fields: [userid], references: [id], onDelete: Cascade)
+country     String 
+city    String
+street      String
+flat        String
+postalcode  String
+  @@map ("adress")
+}
+
+
 
 
 
