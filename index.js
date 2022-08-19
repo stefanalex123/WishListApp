@@ -9,6 +9,7 @@ import userprofileRouter from "./src/routes/userprofile.js"
 import cors from 'cors'
 import userprofile from "./src/services/userprofile.js";
 import useradressRouter from"./src/routes/adress.js";
+import wishlistRouter from "./src/routes/wishlist.js"
 
 
 
@@ -37,6 +38,7 @@ app.use("/users", userRouter);
 app.use("/items", itemRouter);
 app.use("/userprofile", userprofileRouter);
 app.use("/adress", useradressRouter)
+app.use("/wishlists", wishlistRouter)
 
 
 

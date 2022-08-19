@@ -18,6 +18,7 @@ model User {
   username      String    @unique() 
   password      String       @default ("root")
   useritems     Items[]      @relation("useritems")
+  userwishlists Wishlist[]    @relation("userwishlists")
   userprofile   UserProfile[] @relation ("userprofile")
   useradresses  Adress[]      @relation ("useradresses")
 
@@ -52,6 +53,19 @@ street      String
 flat        String
 postalcode  String
   @@map ("adress")
+}
+
+model Wishlist{
+id            String   @id @default(uuid())
+userid           String 
+user        User     @relation("userwishlists", fields: [userid], references: [id], onDelete: Cascade)
+wishlistname           String 
+wishlistdescription    String
+status                 String @default("Processing, you need to add at least one item to make it vizible for other users")
+createdAt     DateTime @default(now())
+updatedAt     DateTime @default(now())
+
+  @@map ("wishlist")
 }
 
 
