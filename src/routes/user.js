@@ -1,10 +1,10 @@
 import express, { request } from "express";
 import usersController from "../controllers/user.js";
-import usernameMiddleware from "../middleware/usernameMiddleware.js";
-import validationMiddleware from "../middleware/validationMiddleware.js";
+import Verify_if_Username_exists_in_UsersDB from "../middleware/Register_Middlewares/Verify_if_Username_exists_in_UsersDB.js";
+import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
-import errorsMiddleware from "../middleware/errorsMiddleware.js";
-import { jwtMiddleware } from "../middleware/auth.js";
+import errorsMiddleware from "../middleware/others_Middlewares/errorsMiddleware.js";
+import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 
 const router = express.Router();
 
@@ -28,13 +28,18 @@ router.route('/register')
         .matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter")
         
-    ], validationMiddleware,usernameMiddleware, usersController.addUser)
+    ], 
+    validationMiddleware,
+    Verify_if_Username_exists_in_UsersDB, 
+    usersController.addUser)
 
     router.route('/login')
     .post([
         check("username", "Invalid name, it must have at least 4 characters").isLength({ min: 4 }),
         check("password", "Invalid password, it must have at least 4 characters").isLength({ min: 4 })
-    ], validationMiddleware, usersController.loginUser)
+    ],
+    validationMiddleware,
+    usersController.loginUser)
 
 
 

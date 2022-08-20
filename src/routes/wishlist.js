@@ -1,15 +1,17 @@
 import express, { request } from "express";
-import usersController from "../controllers/user.js";
-import usernameMiddleware from "../middleware/usernameMiddleware.js";
-import validationMiddleware from "../middleware/validationMiddleware.js";
+import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
-import errorsMiddleware from "../middleware/errorsMiddleware.js";
-import { jwtMiddleware } from "../middleware/auth.js";
-import nicknameMiddleware from "../middleware/nicknameMiddleware.js";
-import userprofileController from "../controllers/userprofile.js"
+import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 import wishlistController from "../controllers/wishlist.js"
-import wishlistidMiddleware from "../middleware/wishlistidMiddleware.js";
-import wishlist from "../services/wishlist.js";
+//import Verify_If_Item_Body_Exists_In_ItemsDB from "../middleware/Item_To_Wishlist_Middlewares/Verify_If_Item_Body_Exists_In_ItemsDB"
+//import Verify_If_Item_Body_Exists_In_ItemsDB from "../middleware/Item_To_Wishlist_Middlewares/Verify_If_Item_Body_Exists_In_ItemsDB.js"
+import Verify_If_Item_Body_Exists_In_ItemsDB from "../middleware/Item_To_Wishlist_Middlewares/Verify_If_Item_Body_Exists_In_ItemsDB.js"
+import Verify_if_Item_Body_Exists_In_ItemToWhislistsDB from "../middleware/Item_To_Wishlist_Middlewares/Verify_if_Item_Body_Exists_In_ItemToWhislistsDB.js"
+import Verify_if_Item_Params_Exists_In_ItemsDB from "..//middleware/Item_To_Wishlist_Middlewares/Verify_if_Item_Params_Exists_In_ItemsDB.js"
+import Verify_if_Item_Params_Exists_In_ItemToWhislistsDB from "..//middleware/Item_To_Wishlist_Middlewares/Verify_if_Item_Params_Exists_In_ItemToWhislistsDB.js"
+import Verify_If_WishList_Exists_In_WhisListsDB from "..//middleware/Item_To_Wishlist_Middlewares//Verify_If_WishList_Exists_In_WhisListsDB.js"
+import Verify_If_Wishlist_Exists_in_WishlistsDB from "../middleware/Wishlists_Middlewares/Verify_If_Wishlist_Exists_in_WishlistsDB.js";
+import itemtowishlistController from "../controllers/itemtowishlist.js"
 const router = express.Router();
 
 
@@ -62,7 +64,7 @@ router.route('/')
         .withMessage("It has to start with a letter")
 
 
-    ], validationMiddleware, jwtMiddleware, wishlistidMiddleware,wishlistController.updateWishlist)
+    ], validationMiddleware, jwtMiddleware, Verify_If_Wishlist_Exists_in_WishlistsDB,wishlistController.updateWishlist)
 
     .delete([
 
@@ -70,7 +72,53 @@ router.route('/')
       
 
 
-    ], validationMiddleware, jwtMiddleware,wishlistidMiddleware,wishlistController.deleteWishlist)
+    ], validationMiddleware, jwtMiddleware,Verify_If_WishList_Exists_In_WhisListsDB,wishlistController.deleteWishlist)
+
+
+
+
+    router.route('/:id/items')
+    .get([    
+        ],
+     validationMiddleware,
+     jwtMiddleware, 
+     Verify_If_WishList_Exists_In_WhisListsDB,
+     itemtowishlistController.getWishlistAllItems)  
+
+    .post([ 
+          ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_WishList_Exists_In_WhisListsDB,
+    Verify_If_Item_Body_Exists_In_ItemsDB,
+    Verify_if_Item_Body_Exists_In_ItemToWhislistsDB, 
+    itemtowishlistController.createItemtoWishlist) 
+
+
+    router.route('/:id/items/:itemid')
+    .delete([   
+            ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_WishList_Exists_In_WhisListsDB,
+    Verify_if_Item_Params_Exists_In_ItemToWhislistsDB,
+    Verify_if_Item_Params_Exists_In_ItemsDB,
+    itemtowishlistController.deleteItemFromWhishList) 
+    
+    .put([    
+         ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_WishList_Exists_In_WhisListsDB,
+    Verify_if_Item_Params_Exists_In_ItemToWhislistsDB,
+    Verify_If_Item_Body_Exists_In_ItemsDB,
+    Verify_if_Item_Body_Exists_In_ItemToWhislistsDB,
+    itemtowishlistController.updateItemtoWishlist) 
+
+
+
+
+
 
 
 

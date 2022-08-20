@@ -40,6 +40,7 @@ user        User     @relation("useritems", fields: [userid], references: [id], 
 itemname           String 
 itemlink           String
 itemdescription    String
+wishlists          Itemtowishlist[]      @relation ("wishlists")
   @@map ("items")
 }
 
@@ -64,9 +65,35 @@ wishlistdescription    String
 status                 String @default("Processing, you need to add at least one item to make it vizible for other users")
 createdAt     DateTime @default(now())
 updatedAt     DateTime @default(now())
+wishlistitems          Itemtowishlist[]      @relation ("wishlistitems")
 
   @@map ("wishlist")
 }
+
+
+model Itemtowishlist {
+id            String   @id @default(uuid())
+wishlistid    String
+wishlist        Wishlist     @relation("wishlistitems", fields: [wishlistid], references: [id], onDelete: Cascade)
+itemid        String
+items           Items    @relation("wishlists", fields: [itemid], references: [id], onDelete: Cascade)
+createdAt     DateTime @default(now())
+updatedAt     DateTime @default(now())
+
+  @@map ("itemtowishlist")
+}
+
+
+model Group {
+id            String   @id @default(uuid())
+grouptitle        String
+groupdescription  String
+groupownerid      String
+
+@@map ("group")
+}
+
+
 
 
 

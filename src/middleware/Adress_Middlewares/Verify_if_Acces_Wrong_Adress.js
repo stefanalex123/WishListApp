@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const adressidMiddleware = async ( req, res, next) => {
+const Verify_if_Acces_Wrong_Adress= async ( req, res, next) => {
     try{
     const adress = await prisma.adress.findUnique({
         where: {
@@ -25,5 +25,5 @@ const adressidMiddleware = async ( req, res, next) => {
         
     }
 
-    export default adressidMiddleware
+    export default Verify_if_Acces_Wrong_Adress
           

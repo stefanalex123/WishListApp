@@ -8,16 +8,14 @@ async function randomIntFromInterval(min, max) { // min and max included
     async function  NumeSugestie(numeNou){
 
     try{
-        const userprofile =  await prisma.userProfile.findUnique({
+        const user =  await prisma.user.findUnique({
             where: {
-                nickname:numeNou
+                username:numeNou
             },
     
         })
-        
-        
 
-        if(userprofile.nickname==numeNou){
+        if(user.username==numeNou){
         var NumeNouRandom= await randomIntFromInterval(10,90)
         return NumeSugestie(numeNou + NumeNouRandom);
         }
@@ -27,20 +25,18 @@ async function randomIntFromInterval(min, max) { // min and max included
     }
 
 
-const nicknameMiddleware = async ( req, res, next) => {
+const Verify_if_Username_exists_in_UsersDB = async ( req, res, next) => {
 try{
-const userprofile = await prisma.userProfile.findUnique({
+const user = await prisma.user.findUnique({
     where: {
-        nickname:req.body.nickname
+        username:req.body.username
     },
-
 
 })
 
-if(userprofile.nickname==req.body.nickname){
-
-    var msg= await NumeSugestie(req.body.nickname);
-    res.send("Acest nickname este preluat de al utilizator, poti prelua acest username: "+ msg);
+if(user.username==req.body.username){
+    var msg= await NumeSugestie(req.body.username);
+    res.send("Acest username este preluat de al utilizator, poti prelua acest username: "+ msg);
 
    
 } } catch(err) {
@@ -61,4 +57,4 @@ if(userprofile.nickname==req.body.nickname){
    
 
   
-  export default nicknameMiddleware;
+  export default Verify_if_Username_exists_in_UsersDB;

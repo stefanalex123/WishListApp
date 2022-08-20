@@ -1,12 +1,11 @@
 import express, { request } from "express";
-import usersController from "../controllers/user.js";
-import usernameMiddleware from "../middleware/usernameMiddleware.js";
-import validationMiddleware from "../middleware/validationMiddleware.js";
+import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
-import errorsMiddleware from "../middleware/errorsMiddleware.js";
-import { jwtMiddleware } from "../middleware/auth.js";
-import nicknameMiddleware from "../middleware/nicknameMiddleware.js";
+import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
+
 import userprofileController from "../controllers/userprofile.js"
+//import Verify_if_Nickname_is_taken from "../middleware/User_Profile_Middlewares/Verify_if_Nickname_is_taken.js";
+import Verify_if_Nickname_taken from "../middleware/User_Profile_Middlewares/Verify_if_Nickname_taken.js"
 const router = express.Router();
 
 
@@ -38,7 +37,10 @@ router.route('/')
         .isMobilePhone()
         .withMessage("Phone Number Invalid")
         
-    ], validationMiddleware,jwtMiddleware, nicknameMiddleware, userprofileController.createUserProfile)
+    ],validationMiddleware,
+    jwtMiddleware,
+    Verify_if_Nickname_taken,
+    userprofileController.createUserProfile)
 
     .put([
 
@@ -64,7 +66,11 @@ router.route('/')
         .withMessage("Phone Number Invalid")
 
 
-    ], validationMiddleware, jwtMiddleware, nicknameMiddleware, userprofileController.updateUserProfile)
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_if_Nickname_taken,
+    userprofileController.updateUserProfile)
 
     .get([
 
@@ -72,14 +78,20 @@ router.route('/')
       
 
 
-    ], validationMiddleware, jwtMiddleware, userprofileController.getUserProfile)
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    userprofileController.getUserProfile)
     .delete([
 
      
       
 
 
-    ], validationMiddleware, jwtMiddleware, userprofileController.deleteUserProfile)
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    userprofileController.deleteUserProfile)
 
 
 

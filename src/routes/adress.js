@@ -1,26 +1,21 @@
 import express, { request } from "express";
-import usersController from "../controllers/user.js";
-import itemController from "../controllers/item.js"
-import usernameMiddleware from "../middleware/usernameMiddleware.js";
-import itemnameMiddleware from "../middleware/itemnameMiddleware.js"
-import itemnameMiddleware2 from "../middleware/itemnameMiddleware2.js"
-import validationMiddleware from "../middleware/validationMiddleware.js";
+import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
-import errorsMiddleware from "../middleware/errorsMiddleware.js";
-import { jwtMiddleware } from "../middleware/auth.js";
+import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 import adressController from "../controllers/adress.js"
-import adressidMiddleware from "../middleware/adressidMiddleware.js";
+import Verify_If_Acces_Wrong_Adress from "../middleware/Adress_Middlewares/Verify_If_Acces_Wrong_Adress.js";
+
 
 
 const router = express.Router();
 
-
 router.route('/')
 
 .get([    
-
-
-], validationMiddleware,jwtMiddleware,adressController.getAllAdresses)  
+     ], 
+     validationMiddleware,
+     jwtMiddleware,
+     adressController.getAllAdresses)  
 
     .post([
         check("country")
@@ -58,7 +53,10 @@ router.route('/')
 
     
         
-    ], validationMiddleware,jwtMiddleware, adressController.createAdress) 
+    ], 
+    validationMiddleware,
+    jwtMiddleware, 
+    adressController.createAdress) 
 
     router.route('/:id')
     .put([
@@ -97,16 +95,19 @@ router.route('/')
         .withMessage("Inccorect postal code")
 
 
-    ], validationMiddleware, jwtMiddleware, adressidMiddleware ,adressController.updateAdress)
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_Acces_Wrong_Adress,
+    adressController.updateAdress)
 
     
     .delete([
-
-     
-      
-
-
-    ], validationMiddleware, jwtMiddleware,adressidMiddleware, adressController.deleteAdress)
+           ], 
+    validationMiddleware, 
+    jwtMiddleware,
+    Verify_If_Acces_Wrong_Adress, 
+    adressController.deleteAdress)
 
 
 

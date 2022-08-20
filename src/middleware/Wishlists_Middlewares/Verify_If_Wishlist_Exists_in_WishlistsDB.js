@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const wishlistidMiddleware = async ( req, res, next) => {
+const Verify_If_Wishlist_Exists_in_WishlistsDB = async ( req, res, next) => {
     try{
     const wishlist = await prisma.wishlist.findUnique({
         where: {
@@ -25,5 +25,5 @@ const wishlistidMiddleware = async ( req, res, next) => {
         
     }
 
-    export default wishlistidMiddleware
+    export default Verify_If_Wishlist_Exists_in_WishlistsDB
           

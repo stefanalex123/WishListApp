@@ -1,15 +1,15 @@
 import dotenv from "dotenv";
 import express from "express";
 import bodyParser from "body-parser";
-//import errorsMiddleware from "./src/middleware/errorsMiddleware.js";
 import userRouter from "./src/routes/user.js";
 import itemRouter from "./src/routes/items.js"
 import userprofileRouter from "./src/routes/userprofile.js"
-//import gameRouter from "./src/routes/game.js";
 import cors from 'cors'
 import userprofile from "./src/services/userprofile.js";
 import useradressRouter from"./src/routes/adress.js";
 import wishlistRouter from "./src/routes/wishlist.js"
+import groupRouter from "./src/routes/groups.js"
+
 
 
 
@@ -39,6 +39,9 @@ app.use("/items", itemRouter);
 app.use("/userprofile", userprofileRouter);
 app.use("/adress", useradressRouter)
 app.use("/wishlists", wishlistRouter)
+app.use ("/groups", groupRouter)
+
+
 
 
 

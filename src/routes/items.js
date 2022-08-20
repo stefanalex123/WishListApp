@@ -1,13 +1,12 @@
 import express, { request } from "express";
-import usersController from "../controllers/user.js";
 import itemController from "../controllers/item.js"
-import usernameMiddleware from "../middleware/usernameMiddleware.js";
-import itemnameMiddleware from "../middleware/itemnameMiddleware.js"
-import itemnameMiddleware2 from "../middleware/itemnameMiddleware2.js"
-import validationMiddleware from "../middleware/validationMiddleware.js";
+//import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
+import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
-import errorsMiddleware from "../middleware/errorsMiddleware.js";
-import { jwtMiddleware } from "../middleware/auth.js";
+import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
+
+import Verify_If_Item_Exists_In_ItemsDB from "../middleware/Items_Middlewars/Verify_If_Item_Exists_In_ItemsDB.js"
+
 
 
 const router = express.Router();
@@ -16,9 +15,10 @@ const router = express.Router();
 router.route('/')
 
 .get([    
-
-
-], validationMiddleware,jwtMiddleware,itemController.getAllItems)  
+     ], 
+validationMiddleware,
+jwtMiddleware,
+itemController.getAllItems)  
 
 
     .post([
@@ -48,7 +48,10 @@ router.route('/')
 
     
         
-    ], validationMiddleware,jwtMiddleware, itemController.createItem) 
+    ],
+    validationMiddleware,
+    jwtMiddleware, 
+    itemController.createItem) 
     
     router.route('/:id')
     .put([
@@ -79,15 +82,18 @@ router.route('/')
         .withMessage("It has to start with a letter")
 
 
-    ], validationMiddleware, jwtMiddleware, itemnameMiddleware2, itemController.updateItem)
+    ], 
+    validationMiddleware,
+    jwtMiddleware, 
+   Verify_If_Item_Exists_In_ItemsDB,
+    itemController.updateItem)
 
     .delete([
-
-     
-      
-
-
-    ], validationMiddleware, jwtMiddleware,itemnameMiddleware2, itemController.deleteItem)
+            ],
+    validationMiddleware, 
+    jwtMiddleware,
+    Verify_If_Item_Exists_In_ItemsDB, 
+    itemController.deleteItem)
 
 
 
