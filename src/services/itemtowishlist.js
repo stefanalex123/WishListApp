@@ -14,7 +14,7 @@ const deleteItemFromWhishList= async (wishlistid, itemid) => {
 
   const itemtowishlistDeleted = await prisma.itemtowishlist.delete({
     where: {
-      id:itemtowishlist[0]
+      id:itemtowishlist[0].id
     }
    
   })

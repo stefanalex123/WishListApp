@@ -21,6 +21,7 @@ model User {
   userwishlists Wishlist[]    @relation("userwishlists")
   userprofile   UserProfile[] @relation ("userprofile")
   useradresses  Adress[]      @relation ("useradresses")
+  user_group_invitation GroupInvitations[] @relation ("usergroupinvitation")
 
   @@map("users")
 }
@@ -66,7 +67,7 @@ status                 String @default("Processing, you need to add at least one
 createdAt     DateTime @default(now())
 updatedAt     DateTime @default(now())
 wishlistitems          Itemtowishlist[]      @relation ("wishlistitems")
-
+wishlistgroups         Wishlisttogroup[]     @relation ("wishlistgroups")
   @@map ("wishlist")
 }
 
@@ -89,8 +90,32 @@ id            String   @id @default(uuid())
 grouptitle        String
 groupdescription  String
 groupownerid      String
+groupwishlists    Wishlisttogroup[]     @relation ("groupswihslists")
+invitations_to_this_group  GroupInvitations[] @relation ("invitationtothisgroup")
 
 @@map ("group")
+}
+
+model Wishlisttogroup {
+id            String   @id @default(uuid())
+wishlistid    String
+wishlist        Wishlist     @relation("wishlistgroups", fields: [wishlistid], references: [id], onDelete: Cascade)
+groupid       String
+group         Group   @relation("groupswihslists", fields: [groupid], references: [id], onDelete: Cascade)    
+createdAt     DateTime @default(now())
+updatedAt     DateTime @default(now())
+
+  @@map ("wishlisttogroup")
+}
+
+model GroupInvitations {
+id            String   @id @default(uuid())
+status        String    
+groupid       String
+group         Group     @relation ("invitationtothisgroup", fields: [groupid], references: [id], onDelete: Cascade) 
+userinvitedId String
+user          User      @relation ("usergroupinvitation", fields: [userinvitedId], references: [id], onDelete: Cascade) 
+
 }
 
 

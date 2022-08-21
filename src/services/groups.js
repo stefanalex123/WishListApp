@@ -33,11 +33,11 @@ const getAllGroupsWhereOwner= async (id) => {
   };
 
 
-const creategroup= async (grouptitle, groupdescription, groupownerid) =>{
+const creategroup= async (grouptitle, groupDescription, groupownerid) =>{
     const group=await prisma.group.create({
         data: {
             grouptitle:grouptitle,
-            groupdescription:groupdescription,
+            groupdescription:groupDescription,
             groupownerid:groupownerid
         }
     });

@@ -94,10 +94,6 @@ router.route('/')
     userprofileController.deleteUserProfile)
 
 
-
-
-
-
     export default router;
 
 

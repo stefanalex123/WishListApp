@@ -2,11 +2,11 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const Verify_if_Item_Params_Exists_In_ItemsDB = async ( req, res, next) => {
+const Verify_If_User_Is_Owner_Of_Item_Body = async ( req, res, next) => {
     try{
     const item = await prisma.items.findUnique({
         where: {
-           id:req.params.itemid
+           id:req.body.itemid
         },
     
     })
@@ -14,6 +14,7 @@ const Verify_if_Item_Params_Exists_In_ItemsDB = async ( req, res, next) => {
 
     
     if(item.userid==req.auth.userid){
+    //Userul este ownerul acestui item
        next();
     }
     else {
@@ -27,5 +28,5 @@ const Verify_if_Item_Params_Exists_In_ItemsDB = async ( req, res, next) => {
         
     }
 
-    export default Verify_if_Item_Params_Exists_In_ItemsDB
+    export default Verify_If_User_Is_Owner_Of_Item_Body
           

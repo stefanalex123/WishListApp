@@ -34,7 +34,7 @@ const getAllGroupsWhereOwner = async (req, res, next) => {
 
 const createGroup = async (req,res,next) => {
     try{
-        const newGroup= await groupServices.creategroup(req.body.grouptitle, req.body.groupdescription, req.auth.userid)
+        const newGroup= await groupServices.creategroup(req.body.groupTitle, req.body.groupDescription, req.auth.userid)
         res.json(newGroup);
     } catch (err){
         next(err);
