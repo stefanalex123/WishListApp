@@ -15,7 +15,8 @@ router.route('/')
      ], 
      validationMiddleware,
      jwtMiddleware,
-     adressController.getAllAdresses)  
+     adressController.getalladresses)  
+
 
     .post([
         check("country")
@@ -56,12 +57,12 @@ router.route('/')
     ], 
     validationMiddleware,
     jwtMiddleware, 
-    adressController.createAdress) 
+    adressController.createadress) 
+
 
     router.route('/:id')
-    .put([
 
-     
+    .put([
         check("country")
         .optional().exists()
         .withMessage('Country is required')
@@ -99,7 +100,7 @@ router.route('/')
     validationMiddleware,
     jwtMiddleware,
     Verify_If_Acces_Wrong_Adress,
-    adressController.updateAdress)
+    adressController.updateadress)
 
     
     .delete([
@@ -107,7 +108,7 @@ router.route('/')
     validationMiddleware, 
     jwtMiddleware,
     Verify_If_Acces_Wrong_Adress, 
-    adressController.deleteAdress)
+    adressController.deleteadress)
 
 
 

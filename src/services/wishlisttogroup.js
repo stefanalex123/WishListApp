@@ -34,6 +34,7 @@ const getAllwishlisttogroup= async (id) => {
       },
       include: {
        wishlist:true,
+       
            
     }
     })

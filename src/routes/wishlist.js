@@ -18,13 +18,12 @@ const router = express.Router();
 router.route('/')
 
 .get([    
+],
+ validationMiddleware,
+ jwtMiddleware, 
+ wishlistController.getAllWishlists)  
 
-
-], validationMiddleware,jwtMiddleware, wishlistController.getAllWishlists)  
-
-
-
-    .post([
+.post([
         check("wishlistname")
         .exists()
         .withMessage('is required')
@@ -40,13 +39,15 @@ router.route('/')
         .withMessage("Wishlist description needs at least 10 characters")
         .matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter")
-    ], validationMiddleware,jwtMiddleware, wishlistController.createWishlist ) 
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    wishlistController.createWishlist) 
 
 
 
     router.route('/:id')
     .put([
-
         check("wishlistname")
         .optional().exists()
         .withMessage('is required')
@@ -64,55 +65,58 @@ router.route('/')
         .withMessage("It has to start with a letter")
 
 
-    ], validationMiddleware, jwtMiddleware, Verify_If_Wishlist_Exists_in_WishlistsDB,wishlistController.updateWishlist)
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_Wishlist_Exists_in_WishlistsDB,
+    wishlistController.updateWishlist)
 
     .delete([
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_Wishlist_Exists_in_WishlistsDB,
+    wishlistController.deleteWishlist)
 
-     
-      
 
-
-    ], validationMiddleware, jwtMiddleware,Verify_If_Wishlist_Exists_in_WishlistsDB,wishlistController.deleteWishlist)
-
-
-/////////////////////////////////////////////ADDING ITEMS TO WISHLIST///////////////////
+                                            //ADDING ITEMS TO WISHLIST
 
     router.route('/:id/items')
     .get([    
-        ],
+    ],
      validationMiddleware,
      jwtMiddleware, 
-     Verify_If_User_Is_Owner_Of_WishList,
-     itemtowishlistController.getWishlistAllItems)  
+     Verify_If_User_Is_Owner_Of_WishList,  
+     itemtowishlistController.getwishlistallitems)  
 
     .post([ 
-          ],
+    ],
     validationMiddleware,
     jwtMiddleware,
-    Verify_If_User_Is_Owner_Of_WishList,
-    Verify_If_User_Is_Owner_Of_Item_Body,
-    Verify_If_Item_Body_Is_Not_Shared_In_WishList, 
-    itemtowishlistController.createItemtoWishlist) 
+    Verify_If_User_Is_Owner_Of_WishList,   
+    Verify_If_User_Is_Owner_Of_Item_Body,     
+    Verify_If_Item_Body_Is_Not_Shared_In_WishList,  
+    itemtowishlistController.createitemtowishlist)   
 
 
     router.route('/:id/items/:itemid')
     .delete([   
-            ],
+    ],
     validationMiddleware,
     jwtMiddleware,
-    Verify_If_User_Is_Owner_Of_WishList,
-    Verify_If_Item_Params_Is_Shared_In_WishList,
-    itemtowishlistController.deleteItemFromWhishList) 
+    Verify_If_User_Is_Owner_Of_WishList, 
+    Verify_If_Item_Params_Is_Shared_In_WishList, 
+    itemtowishlistController.deleteitemfromwhishlist) 
     
     .put([    
-         ],
+    ],
     validationMiddleware,
     jwtMiddleware,
-    Verify_If_User_Is_Owner_Of_WishList,
-    Verify_If_Item_Params_Is_Shared_In_WishList,
-    Verify_If_User_Is_Owner_Of_Item_Body,
-    Verify_If_Item_Body_Is_Not_Shared_In_WishList,
-    itemtowishlistController.updateItemtoWishlist) 
+    Verify_If_User_Is_Owner_Of_WishList, 
+    Verify_If_Item_Params_Is_Shared_In_WishList, 
+    Verify_If_User_Is_Owner_Of_Item_Body, 
+    Verify_If_Item_Body_Is_Not_Shared_In_WishList, 
+    itemtowishlistController.updateitemtowishlist) 
 
 
 

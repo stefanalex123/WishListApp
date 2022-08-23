@@ -13,10 +13,10 @@ const updatewishlisttogroup = async (req, res, next) => {
       }
 
 
-      const response = await wishlisttogroupServices.updatewishlisttogroup(itemtowishlist[0].id, {
-        wishlistid:req.params.wishlistid,
+      const response = await wishlisttogroupServices.updatewishlisttogroup(wishlisttogroup[0].id, {
+        wishlistid:req.body.wishlistid,
         groupid:req.params.groupid,
-        createdat:wishlisttogroup[0].createdAt,
+        createdAt:wishlisttogroup[0].createdAt,
         updatedAt: new Date(),
       });
       res.json("Item Updated");

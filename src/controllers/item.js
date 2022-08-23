@@ -1,26 +1,26 @@
-import itemService from "../services/item.js"
+import itemservice from "../services/item.js"
 
 
-const deleteItem = async (req, res, next) => {
+const deleteitem = async (req, res, next) => {
   try {
-      await itemService.deleteItem(req.params.id);
+      await itemservice.deleteitem(req.params.id);
       res.send("Item deleted");
   } catch (err) {
       next(err);
   }
 };
 
-const getAllItems = async (req, res, next) => {
+const getallitems = async (req, res, next) => {
   try {
-      res.json(await itemService.geAllItems(req.auth.userid));
+      res.json(await itemservice.getallitems(req.auth.userid));
   } catch (err) {
       next(err);
   }
 };
 
-const getItem = async (req,res,next)=>{
+const getitem = async (req,res,next)=>{
   try {
-    res.json(await itemService.getItem(req.body.ItemName));
+    res.json(await itemservice.getitem(req.body.itemtitle));
   } catch (err){
     next(err);
   }
@@ -28,12 +28,12 @@ const getItem = async (req,res,next)=>{
 
 
 
-const createItem = async (req,res,next) => {
+const createitem = async (req,res,next) => {
     try{
-        const newItem= await itemService.createItem(req.body.ItemName, req.auth.userid, 
-        req.body.ItemLink, req.body.ItemDescription)
+        const newitem= await itemservice.createitem(req.body.itemtitle, req.auth.userid, 
+        req.body.itemlink, req.body.itemdescription)
 
-        res.json(newItem);
+        res.json(newitem);
 
     } catch (err){
         next(err);
@@ -41,21 +41,21 @@ const createItem = async (req,res,next) => {
 
 };
 
-const updateItem = async (req, res, next) => {
+const updateitem = async (req, res, next) => {
     try {
     
   
-      const item = await itemService.getItem(req.params.id);
+      const item = await itemservice.getitem(req.params.id);
   
       if (!item) {
         throw { message: "Item not found" };
       }
   
-      const response = await itemService.updateItem(req.params.id, {
+      const response = await itemservice.updateitem(req.params.id, {
         userid: req.auth.userid || item.userid,
-        itemtitle: req?.body?.ItemTitle || item.itemtitle,
-        itemlink: req?.body?.ItemLink || item.itemlink,
-        itemdescription:req?.body?.ItemDescription || item.itemdescription,
+        itemtitle: req?.body?.itemtitle || item.itemtitle,
+        itemlink: req?.body?.itemlink || item.itemlink,
+        itemdescription:req?.body?.itemdescription || item.itemdescription,
       });
   
       res.json(response);
@@ -73,7 +73,7 @@ const updateItem = async (req, res, next) => {
 
 
 
-export default  {createItem, updateItem, getAllItems, getItem, deleteItem}
+export default  {createitem, updateitem, getallitems, getitem, deleteitem}
 
 
 

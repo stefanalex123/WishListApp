@@ -10,15 +10,17 @@ try{
 const groupinvitation = await prisma.groupInvitations.findMany({
     where: {
         groupid:req.params.id,
-        userinvitedId:req.body.userinvitedId
+        userinvitedid:req.body.userinvitedid
     },
 })
 
 
-if(groupinvitation[0].userinvitedId==req.body.userinvitedId && groupinvitation[0].groupid==req.params.id){
-    res.send("Acestui utilizator are deja o invitatie trimisa")
+if(groupinvitation[0].userinvitedid==req.body.userinvitedid && groupinvitation[0].groupid==req.params.id && groupinvitation[0].status=="PENDING"){
+    res.send("Acest utilizator are deja o invitatie trimisa")
 }
 
+else if(groupinvitation[0].userinvitedid==req.body.userinvitedid && groupinvitation[0].groupid==req.params.id && groupinvitation[0].status=="ACCEPTED")
+    res.send("Acest utilizator face parte din grup")
 else {
     next();
 }

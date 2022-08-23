@@ -10,12 +10,12 @@ try{
 const groupinvitation = await prisma.groupInvitations.findMany({
     where: {
         groupid:req.params.id,
-        userinvitedId:req.auth.userid
+        userinvitedid:req.auth.userid
     },
 })
 
 if(groupinvitation[0].status=="ACCEPTED" && groupinvitation[0].groupid==req.params.id &&
-groupinvitation[0].userinvitedId==req.auth.userid){
+groupinvitation[0].userinvitedid==req.auth.userid){
     next();
 }
 

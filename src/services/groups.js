@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const updateGroup = async (id, groupInfo) => {
+const updategroup = async (id, groupInfo) => {
   const group = await prisma.group.update({
     where: {
       id: id
@@ -14,16 +14,16 @@ const updateGroup = async (id, groupInfo) => {
 
 
 
-const getAllGroupsWhereOwner= async (id) => {
-    const allGroupsWhereOwner = await prisma.group.findMany({
+const getallgroupswhereowner= async (id) => {
+    const allgroupswhereowner = await prisma.group.findMany({
       where: {
         groupownerid:id
       }
     })
-    return allGroupsWhereOwner;
+    return allgroupswhereowner;
   };
 
-  const getGroup= async (id) => {
+  const getgroup= async (id) => {
     const group = await prisma.group.findUnique({
       where: {
         id:id
@@ -33,18 +33,18 @@ const getAllGroupsWhereOwner= async (id) => {
   };
 
 
-const creategroup= async (grouptitle, groupDescription, groupownerid) =>{
+const creategroup= async (grouptitle, groupdescription, groupownerid) =>{
     const group=await prisma.group.create({
         data: {
             grouptitle:grouptitle,
-            groupdescription:groupDescription,
+            groupdescription:groupdescription,
             groupownerid:groupownerid
         }
     });
         return group;
 };
 
-const deleteGroup = async (id) => {
+const deletegroup = async (id) => {
   const group = await prisma.group.delete({
       where: {
           id: id
@@ -54,4 +54,4 @@ const deleteGroup = async (id) => {
 };
 
 
-export default {creategroup, getAllGroupsWhereOwner, updateGroup, getGroup, deleteGroup}
+export default {creategroup, getallgroupswhereowner, updategroup, getgroup, deletegroup}

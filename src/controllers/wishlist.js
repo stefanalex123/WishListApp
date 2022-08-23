@@ -36,6 +36,7 @@ const updateWishlist = async (req, res, next) => {
         wishlistname: req?.body?.wishlistname || wishlist.wishlistname,
         wishlistdescription: req?.body?.wishlistdescription || wishlist.wishlistdescription,
         status: wishlist.status,
+        wishlistnritems:wishlist.wishlistnritems,
         updatedAt:new Date()
       });
   

@@ -7,23 +7,24 @@ const Verify_If_User_Body_Exists = async ( req, res, next) => {
 
 
 try{
-const users = await prisma.user.findUnique({
+const userprofile = await prisma.userProfile.findUnique({
     where: {
-        id:req.body.userinvitedID
+        userid:req.body.userinvitedid
+    
     },
 })
 
 
-if(users.id==req.body.userinvitedID){
+if(userprofile.userid==req.body.userinvitedid){
    //Userul caruia ii trimitem invitatie exista
    next()
 }
 else{
-    res.send("Userul pe care incerci sa il inviti nu exista")
+    res.send("Userul pe care incerci sa il inviti nu exista sau nu si a completat profilul")
 }
 
 } catch(err) {
-    res.send("Userul pe care incerci sa il inviti nu exista")
+    res.send("Userul pe care incerci sa il inviti nu exista sau nu si a completat profilul")
 }
     
 }

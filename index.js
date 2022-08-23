@@ -9,6 +9,8 @@ import userprofile from "./src/services/userprofile.js";
 import useradressRouter from"./src/routes/adress.js";
 import wishlistRouter from "./src/routes/wishlist.js"
 import groupRouter from "./src/routes/groups.js"
+import invitationsRouter from "./src/routes/invitations.js"
+
 
 
 
@@ -25,7 +27,12 @@ app.use(cors());
 const port = process.env.PORT || 3000;
 
 app.get("/", (req, res) => {
-  res.json({ message: "ok" });
+  cron.schedule('* * * * * *', function() {
+    res.json({ message: "ok" });
+  });
+
+
+ 
 });
 
 
@@ -34,12 +41,14 @@ app.get("/", (req, res) => {
 // Link router to app
 //app.use('/courses', router);
 
+
 app.use("/users", userRouter);
 app.use("/items", itemRouter);
 app.use("/userprofile", userprofileRouter);
 app.use("/adress", useradressRouter)
 app.use("/wishlists", wishlistRouter)
 app.use ("/groups", groupRouter)
+app.use("/invitations",invitationsRouter)
 
 
 

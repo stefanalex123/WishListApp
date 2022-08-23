@@ -10,12 +10,12 @@ try{
 const groupinvitation = await prisma.groupInvitations.findMany({
     where: {
         groupid:req.params.id,
-        userinvitedId:req.params.userinvitedId
+        userinvitedid:req.params.userinvitedid
     },
 })
 
 
-if(groupinvitation[0].userinvitedId==req.body.userinvitedId && groupinvitation[0].groupid==req.params.id){
+if(groupinvitation[0].userinvitedid==req.params.userinvitedid && groupinvitation[0].groupid==req.params.id && groupinvitation[0].status=="PENDING"){
     next();
 }
 

@@ -1,8 +1,9 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
+import wishlistServices from "../services/wishlist.js"
 
-const deleteItemFromWhishList= async (wishlistid, itemid) => {
+const deleteitemfromshishlist= async (wishlistid, itemid) => {
 
 
   const itemtowishlist = await prisma.itemtowishlist.findMany({
@@ -12,7 +13,7 @@ const deleteItemFromWhishList= async (wishlistid, itemid) => {
     }
   })
 
-  const itemtowishlistDeleted = await prisma.itemtowishlist.delete({
+  const itemtowishlistdeleted = await prisma.itemtowishlist.delete({
     where: {
       id:itemtowishlist[0].id
     }
@@ -20,27 +21,40 @@ const deleteItemFromWhishList= async (wishlistid, itemid) => {
   })
 
 
-  return itemtowishlistDeleted;
+  return itemtowishlistdeleted;
+};
+
+const getallwishlistItems= async (id) => {
+  const itemtowishlist = await prisma.itemtowishlist.findMany({
+    where: {
+      wishlistid:id
+    },
+    include: {
+     items:true,
+         
+  }
+  })
+  return itemtowishlist;
 };
 
 
 
 
-
-const getAllItemToWishList= async (id) => {
+const getallitemtowishlist= async (id) => {
     const itemtowishlist = await prisma.itemtowishlist.findMany({
       where: {
         wishlistid:id
       },
       include: {
        items:true,
+       wishlist:true
            
     }
     })
     return itemtowishlist;
   };
 
-  const getitemToWishlist= async (wishlistid, itemid) => {
+  const getitemtowishlist= async (wishlistid, itemid) => {
     const itemtowishlist = await prisma.itemtowishlist.findMany({
       where: {
         wishlistid:wishlistid,
@@ -54,31 +68,33 @@ const getAllItemToWishList= async (id) => {
 
 
 
-const createItemtoWishlist= async (wishlistid ,itemid) =>{
+const createitemtowishlist= async (wishlistid ,itemid) =>{
     const itemtowishlist=await prisma.itemtowishlist.create({
         data: {
             wishlistid:wishlistid,
             itemid:itemid,
-            createdAt:new Date()
+            createdat:new Date()
         }
     });
+   
+
         return itemtowishlist;
 };
 
 
-const updateItemtoWishlist= async (id, itemtowishlistInfo) => {
+const updateitemtowishlist= async (id, itemtowishlistInfo) => {
 
-  const itemtowishlistUpdated = await prisma.itemtowishlist.update({
+  const itemtowishlistupdated = await prisma.itemtowishlist.update({
     where: {
       id:id
     },
     data: { ...itemtowishlistInfo}
   })
-  return itemtowishlistUpdated;
+  return itemtowishlistupdated;
 };
 
 
 
 
 
-export default {createItemtoWishlist, getAllItemToWishList, deleteItemFromWhishList, updateItemtoWishlist, getitemToWishlist}
+export default {createitemtowishlist, getallwishlistItems,getallitemtowishlist, deleteitemfromshishlist, updateitemtowishlist, getitemtowishlist}

@@ -7,15 +7,14 @@ const Verify_If_Invitation_To_User_Auth_Is_Sent = async ( req, res, next) => {
 
 
 try{
-const groupinvitation = await prisma.groupInvitations.findMany({
+const groupinvitation = await prisma.groupInvitations.findUnique({
     where: {
-        groupid:req.params.id,
-        userinvitedId:req.auth.userid
+        id:req.params.invitationid,
     },
 })
 
 
-if(groupinvitation[0].status=="PENDING" && groupinvitation[0].userinvitedId==req.body.userinvitedId && groupinvitation[0].groupid==req.auth.userid){
+if(groupinvitation.status=="PENDING" &&  groupinvitation.userinvitedid==req.auth.userid){
     next();
 }
 

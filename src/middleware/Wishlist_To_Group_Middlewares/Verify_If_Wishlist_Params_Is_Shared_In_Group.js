@@ -10,16 +10,16 @@ try{
 const wishlisttogroup = await prisma.wishlisttogroup.findMany({
     where: {
         groupid:req.params.id,
-        wishlistid:req.body.wishlistid,
+        wishlistid:req.params.wishlistid,
     },
 })
 
 
-if(wishlisttogroup[0].wishlistid==req.body.wishlistid && wishlisttogroup[0].groupid==req.params.id){
+if(wishlisttogroup[0].wishlistid==req.params.wishlistid && wishlisttogroup[0].groupid==req.params.id){
   next();
 }
 else{
-  res.send("Acest wishlist nu a fost partajat pe grup pentru a il putea modifica/sterge")
+  res.send("Acest wishlist nu a fost partajat pe grup pentru a il putea modifica/sterge sau nu il detineti")
 }
 
 } catch(err) {

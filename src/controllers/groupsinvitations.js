@@ -1,8 +1,33 @@
-import groupsinvitationServices from "../services/groupsinvitations.js"
+import groupsinvitationservices from "../services/groupsinvitations.js"
 
-const getGroupAllInvitations = async (req, res, next) => {
+const updategroupinvitation = async (req, res, next) => {
     try {
-        var groupallinvitations=await groupsinvitationServices.getAllGroupInvitations(req.params.id);
+    
+  
+
+
+      const response = await groupsinvitationservices.updategroupinvitation(req.params.invitationid, {
+
+         status:req.body.status,   
+         
+        
+      });
+
+
+
+
+      res.json("Group Invitation Updated");
+    } catch (err) {
+      console.error(`Error while updating Invitation`);
+      next(err);
+    }
+  };
+
+
+
+const getgroupallinvitations = async (req, res, next) => {
+    try {
+        var groupallinvitations=await groupsinvitationservices.getallgroupinvitations(req.params.id);
         res.json(groupallinvitations)
     } catch (err) {
         next(err);
@@ -11,7 +36,9 @@ const getGroupAllInvitations = async (req, res, next) => {
 
 const creategroupinvitation = async (req,res,next) => {
     try{
-        const newgroupinvitation= await groupsinvitationServices.createGroupInvitation(req.params.id, req.body.userinvitedId)
+        const newgroupinvitation= await groupsinvitationservices.creategroupinvitation(req.params.id, req.body.userinvitedid)
+        
+
         res.json(newgroupinvitation);
     } catch (err){
         next(err);
@@ -22,12 +49,21 @@ const creategroupinvitation = async (req,res,next) => {
 
 const deletegroupinvitation = async (req, res, next) => {
     try {
-        await groupsinvitationServices.deletegroupinvitation(req.params.id, req.params.userInvitedId);
+        await groupsinvitationservices.deletegroupinvitation(req.params.id, req.params.userInvitedid);
         res.send("Group invitation deleted");
     } catch (err) {
         next(err);
     }
   };
 
+  const getallinvitationsforuser = async (req, res, next) => {
+    try {
+        const allinvitationsforuser=await groupsinvitationservices.getallinvitationsforuser(req.auth.id);
+        res.json(allinvitationsforuser)
+    } catch (err) {
+        next(err);
+    }
+  };
 
-export default {creategroupinvitation, deletegroupinvitation, getGroupAllInvitations}
+
+export default {updategroupinvitation, getallinvitationsforuser , creategroupinvitation, deletegroupinvitation, getgroupallinvitations}

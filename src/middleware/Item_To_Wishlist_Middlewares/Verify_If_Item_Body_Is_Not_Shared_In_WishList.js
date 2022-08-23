@@ -10,21 +10,21 @@ try{
 const itemtowishlist = await prisma.itemtowishlist.findMany({
     where: {
         wishlistid:req.params.id,
-        itemid:req.params.itemid
+        itemid:req.body.itemid
     },
 })
 
 
 if(itemtowishlist[0].itemid==req.body.itemid && itemtowishlist[0].wishlistid==req.params.id){
    //Acest item exista in wishlist ca sa il modificam/stergem
-   next()
+res.send("Acest item a fost deja adaugat in wihslist")
 }
 else{
-    res.send("Trebuie sa adaugati itemul in wishlist pentru a il putea modifica/sterge")
+    next()
 }
 
 } catch(err) {
-    res.send("Trebuie sa adaugati itemul in wishlist pentru a il putea modifica/sterge")
+    next()
 }
     
 }

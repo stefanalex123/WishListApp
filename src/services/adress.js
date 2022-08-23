@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const getAdress= async (id) => {
+const getadress= async (id) => {
     const adress = await prisma.adress.findUnique({
       where: {
         id:id
@@ -12,7 +12,7 @@ const getAdress= async (id) => {
   };
 
   
-  const getAllAdresses= async (id) => {
+  const getalladresses= async (id) => {
     const adress = await prisma.adress.findMany({
       where: {
         userid:id
@@ -21,7 +21,7 @@ const getAdress= async (id) => {
     return adress;
   };
 
-const createAdress= async (userid ,country, city, street, flat, postalcode) =>{
+const createadress= async (userid ,country, city, street, flat, postalcode) =>{
     const adress=await prisma.adress.create({
         data: {
             userid:userid,
@@ -37,7 +37,7 @@ const createAdress= async (userid ,country, city, street, flat, postalcode) =>{
 
 
 
-const updateAdress = async (id, adressInfo) => {
+const updateadress = async (id, adressInfo) => {
     const adress = await prisma.adress.update({
       where: {
         id: id
@@ -47,7 +47,7 @@ const updateAdress = async (id, adressInfo) => {
     return adress;
   };
 
-  const deleteAdress = async (id) => {
+  const deleteadress = async (id) => {
     const adress = await prisma.adress.delete({
         where: {
             id: id
@@ -58,4 +58,4 @@ const updateAdress = async (id, adressInfo) => {
   
 
 
-export default {createAdress, updateAdress, getAdress, getAllAdresses, deleteAdress}
+export default {createadress, updateadress, getadress, getalladresses, deleteadress}

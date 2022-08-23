@@ -14,70 +14,61 @@ const router = express.Router();
 
 router.route('/')
 
-.get([    
-     ], 
-validationMiddleware,
-jwtMiddleware,
-itemController.getAllItems)  
+        .get([    
+        ], 
+        validationMiddleware,
+        jwtMiddleware,
+        itemController.getallitems)  
 
-
-    .post([
-        check("ItemName")
+        .post([
+        check("itemtitle")
         .exists()
         .withMessage('is required')
         .isLength({ min: 4})
         .withMessage("Item Title need at least 4 characters")
- 
         .matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter"),
 
-        check("ItemLink")
+        check("itemlink")
         .exists()
         .withMessage('is required')
         .isURL()
         .withMessage('You have to introduce a link'),
 
-        check("ItemDescription")
+        check("itemdescription")
         .exists()
         .withMessage('is required')
         .isLength({ min: 10})
         .withMessage("Item Description needs at least 10 characters")
-       
         .matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter")
 
     
         
-    ],
-    validationMiddleware,
-    jwtMiddleware, 
-    itemController.createItem) 
+        ],
+        validationMiddleware,
+        jwtMiddleware, 
+        itemController.createitem) 
     
-    router.route('/:id')
-    .put([
+        router.route('/:id')
 
-     
-
-        check("ItemName")
+        .put([
+        check("itemtitle")
         .optional().isLength({ min: 4})
         .withMessage("Item Title need at least 4 characters")
-
         .optional().matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter"),
 
-        check("ItemLink")
-   
+        check("itemlink")
         .optional().isURL()
         .withMessage('You have to introduce a link'),
 
-        check("ItemDescription")
-
+        check("itemdescription")
         .optional().isLength({ min: 10})
         .exists()
         .withMessage('is required')
         .isLength({ min: 10})
         .withMessage("Item Description needs at least 10 characters")
-       
         .matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter")
 
@@ -85,15 +76,16 @@ itemController.getAllItems)
     ], 
     validationMiddleware,
     jwtMiddleware, 
-   Verify_If_Item_Exists_In_ItemsDB,
-    itemController.updateItem)
+    Verify_If_Item_Exists_In_ItemsDB,
+    itemController.updateitem)
 
-    .delete([
-            ],
+    .delete([   
+    ],
     validationMiddleware, 
     jwtMiddleware,
-    Verify_If_Item_Exists_In_ItemsDB, 
-    itemController.deleteItem)
+    Verify_If_Item_Exists_In_ItemsDB,
+    itemController.deleteitem
+    )
 
 
 

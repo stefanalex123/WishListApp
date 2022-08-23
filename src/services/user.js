@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 
 
-const addUser = async(username, password) => {
+const adduser = async(username, password) => {
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt);
 
@@ -21,28 +21,28 @@ const addUser = async(username, password) => {
     return user;
     };
 
-const loginUser = async (username,password) => {
-    const existingUser = await prisma.user.findUnique({
+const loginuser = async (username,password) => {
+    const existinguser = await prisma.user.findUnique({
         where: {
             username:username,
         }
     });
 
  
-    if (!existingUser) {
+    if (!existinguser) {
 
         return "InvalidUser";
     }
 
-    const validPassword = await bcrypt.compare(password, existingUser.password);
+    const validPassword = await bcrypt.compare(password, existinguser.password);
     if(!validPassword){
         return "InvalidPassword"
     }
 
-    return geneateAuthToken(existingUser.id);
+    return geneateAuthToken(existinguser.id);
 }
 
 
 
 
-export default { addUser,loginUser};
+export default { adduser,loginuser};

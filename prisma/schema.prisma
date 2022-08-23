@@ -21,7 +21,9 @@ model User {
   userwishlists Wishlist[]    @relation("userwishlists")
   userprofile   UserProfile[] @relation ("userprofile")
   useradresses  Adress[]      @relation ("useradresses")
-  user_group_invitation GroupInvitations[] @relation ("usergroupinvitation")
+  itemboughtbyusers BuyItem[] @relation ("itemsboughtbyuser")
+  itemsboughtbyuserwithcontribution ContributionInvitation[] @relation ("itemsboughtbyuserwithcontribution")
+  usersaskedforcontribution         ContributionInvitation[] @relation ("usersaskedforcontribution")
 
   @@map("users")
 }
@@ -32,6 +34,7 @@ user             User     @relation("userprofile", fields: [userid], references:
 email            String
 nickname         String   @unique
 phonenumber      String
+user_group_invitation GroupInvitations[] @relation ("usergroupinvitation")
 }
 
 model Items {
@@ -41,7 +44,11 @@ user        User     @relation("useritems", fields: [userid], references: [id], 
 itemname           String 
 itemlink           String
 itemdescription    String
+status             String  @default ("DISPONIBLE")
 wishlists          Itemtowishlist[]      @relation ("wishlists")
+itemboughtby       BuyItem[]             @relation ("itemboughtby")
+itemboughtbyitemboughtbycountribution     ContributionInvitation[]            @relation ("itemboughtbycountribution")
+
   @@map ("items")
 }
 
@@ -63,7 +70,8 @@ userid           String
 user        User     @relation("userwishlists", fields: [userid], references: [id], onDelete: Cascade)
 wishlistname           String 
 wishlistdescription    String
-status                 String @default("Processing, you need to add at least one item to make it vizible for other users")
+status                 String @default("Unavailable, add at least one item to it")
+wishlistnritems        Int @default(0)
 createdAt     DateTime @default(now())
 updatedAt     DateTime @default(now())
 wishlistitems          Itemtowishlist[]      @relation ("wishlistitems")
@@ -72,14 +80,15 @@ wishlistgroups         Wishlisttogroup[]     @relation ("wishlistgroups")
 }
 
 
+
 model Itemtowishlist {
 id            String   @id @default(uuid())
 wishlistid    String
 wishlist        Wishlist     @relation("wishlistitems", fields: [wishlistid], references: [id], onDelete: Cascade)
 itemid        String
 items           Items    @relation("wishlists", fields: [itemid], references: [id], onDelete: Cascade)
-createdAt     DateTime @default(now())
-updatedAt     DateTime @default(now())
+createdat     DateTime @default(now())
+updatedat     DateTime @default(now())
 
   @@map ("itemtowishlist")
 }
@@ -113,10 +122,37 @@ id            String   @id @default(uuid())
 status        String    
 groupid       String
 group         Group     @relation ("invitationtothisgroup", fields: [groupid], references: [id], onDelete: Cascade) 
-userinvitedId String
-user          User      @relation ("usergroupinvitation", fields: [userinvitedId], references: [id], onDelete: Cascade) 
+userinvitedid String
+userprofile          UserProfile      @relation ("usergroupinvitation", fields: [userinvitedid], references: [userid], onDelete: Cascade) 
 
 }
+
+
+model BuyItem{
+id            String   @id @default(uuid())
+itemid        String    
+item          Items     @relation("itemboughtby", fields: [itemid], references: [id], onDelete: Cascade)
+userbuyerid     String
+user          User      @relation ("itemsboughtbyuser",  fields: [userbuyerid], references: [id], onDelete: Cascade)
+userstatus        String
+}
+
+model ContributionInvitation{
+id            String   @id @default(uuid())
+itemid        String    
+item          Items     @relation("itemboughtbycountribution", fields: [itemid], references: [id], onDelete: Cascade)
+usercontributerid  String
+user          User      @relation ("itemsboughtbyuserwithcontribution",  fields: [usercontributerid], references: [id], onDelete: Cascade)
+status        String
+useraskedid  String
+usersaskedforcontribution          User      @relation ("usersaskedforcontribution",  fields: [useraskedid], references: [id], onDelete: Cascade)
+}
+
+
+
+
+
+
 
 
 

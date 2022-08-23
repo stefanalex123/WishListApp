@@ -1,22 +1,22 @@
-import adressService from "../services/adress.js"
+import adressservice from "../services/adress.js"
 
 
 
-const deleteAdress = async (req, res, next) => {
+const deleteadress = async (req, res, next) => {
     try {
-        await adressService.deleteAdress(req.params.id);
+        await adressservice.deleteadress(req.params.id);
         res.send("Adress deleted");
     } catch (err) {
         next(err);
     }
   };
 
-const createAdress = async (req,res,next) => {
+const createadress = async (req,res,next) => {
     try{
-        const newAdress= await adressService.createAdress(req.auth.userid, req.body.country, req.body.city, req.body.street,
+        const newadress= await adressservice.createadress(req.auth.userid, req.body.country, req.body.city, req.body.street,
         req.body.flat, req.body.postalcode)
 
-        res.json(newAdress);
+        res.json(newadress);
 
     } catch (err){
         next(err);
@@ -24,17 +24,17 @@ const createAdress = async (req,res,next) => {
 
 };
 
-const updateAdress = async (req, res, next) => {
+const updateadress = async (req, res, next) => {
     try {
     
   
-      const adress = await adressService.getAdress(req.params.id);
+      const adress = await adressservice.getadress(req.params.id);
   
       if (!adress) {
         throw { message: "Adress not found" };
       }
   
-      const response = await adressService.updateAdress(req.params.id, {
+      const response = await adressservice.updateadress(req.params.id, {
         userid: req.auth.userid || adress.userid,
         country: req?.body?.country || adress.country,
         city: req?.body?.city || adress.city,
@@ -51,12 +51,12 @@ const updateAdress = async (req, res, next) => {
   };
 
 
-  const getAllAdresses = async (req, res, next) => {
+  const getalladresses = async (req, res, next) => {
     try {
-        res.json(await adressService.getAllAdresses(req.auth.userid));
+        res.json(await adressservice.getalladresses(req.auth.userid));
     } catch (err) {
         next(err);
     }
   };
 
-export default {createAdress, updateAdress, getAllAdresses, deleteAdress}
+export default {createadress, updateadress, getalladresses, deleteadress}

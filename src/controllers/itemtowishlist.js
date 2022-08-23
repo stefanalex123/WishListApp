@@ -1,23 +1,24 @@
-import itemtowishlistServices from "../services/itemtowishlist.js";
+import itemtowishlistservices from "../services/itemtowishlist.js";
 import wishlist from "./wishlist.js";
 import itemService from "../services/item.js"
 import item from "./item.js";
+import wishlistServices from "../services/wishlist.js"
 
 
-const updateItemtoWishlist = async (req, res, next) => {
+const updateitemtowishlist = async (req, res, next) => {
     try {
     
   
-      const itemtowishlist = await itemtowishlistServices.getitemToWishlist(req.params.wishlistid, req.params.itemid);
+      const itemtowishlist = await itemtowishlistservices.getitemtowishlist(req.params.id, req.params.itemid);
   
       if (!itemtowishlist) {
         throw { message: "Item not found in wishlist" };
       }
 
 
-      const response = await itemtowishlistServices.updateItemtoWishlist(itemtowishlist[0].id, {
+      const response = await itemtowishlistservices.updateitemtowishlist(itemtowishlist[0].id, {
         itemid:req.body.itemid || itemtowishlist.itemid,
-         updatedAt: new Date(),
+         updatedat: new Date(),
       });
       res.json("Item Updated");
     } catch (err) {
@@ -28,9 +29,37 @@ const updateItemtoWishlist = async (req, res, next) => {
 
 
 
-const deleteItemFromWhishList = async (req, res, next) => {
+const deleteitemfromwhishlist = async (req, res, next) => {
     try {
-        await itemtowishlistServices.deleteItemFromWhishList(req.params.id,req.params.itemid);
+        await itemtowishlistservices.deleteitemfromshishlist(req.params.id,req.params.itemid);
+        //Daca stergem si ramane wishlistul gol schimbam statusul
+        
+        
+        const wishlist= await wishlistServices.getWishList(req.params.id);
+        if(wishlist.wishlistnritems==0){
+          
+        await wishlistServices.updateWishList(req.params.id, {
+        userid: wishlist.userid,
+        wishlistname: wishlist.wishlistname,
+        wishlistdescription: wishlist.wishlistdescription,
+        status:"UNAVAILABLE",
+        wishlistnritems:wishlist.wishlistnritems-1,
+        updatedAt:new Date()
+  });
+}
+else {
+  await wishlistServices.updateWishList(req.params.id, {
+    userid: wishlist.userid,
+    wishlistname: wishlist.wishlistname,
+    wishlistdescription: wishlist.wishlistdescription,
+    status:"Unavailable, add at least one item to it",
+    wishlistnritems:wishlist.wishlistnritems-1,
+    updatedAt:new Date()
+});
+
+}
+
+
         res.send("Item deleted from your WishList");
     } catch (err) {
         next(err);
@@ -39,9 +68,9 @@ const deleteItemFromWhishList = async (req, res, next) => {
 
 
 
-const getWishlistAllItems = async (req, res, next) => {
+const getwishlistallitems = async (req, res, next) => {
     try {
-        var wishlistallitems=await itemtowishlistServices.getAllItemToWishList(req.params.id);
+        var wishlistallitems=await itemtowishlistservices.getallwishlistItems(req.params.wishlistid);
         res.json(wishlistallitems)
     } catch (err) {
         next(err);
@@ -49,14 +78,31 @@ const getWishlistAllItems = async (req, res, next) => {
   };
 
 
-const createItemtoWishlist = async (req,res,next) => {
+const createitemtowishlist = async (req,res,next) => {
     try{
-        const newItemToWishlist= await itemtowishlistServices.createItemtoWishlist(req.params.id, req.body.itemid)
-        res.json(newItemToWishlist);
+        const newitemtowishlist= await itemtowishlistservices.createitemtowishlist(req.params.id, req.body.itemid)
+
+
+        //Am adaugat item in wishlist, acuma facem update la statusul din wihhlist (available)
+    
+        const wishlist= await wishlistServices.getWishList(req.params.id);
+        await wishlistServices.updateWishList(req.params.id, {
+        userid: wishlist.userid,
+        wishlistname: wishlist.wishlistname,
+        wishlistdescription: wishlist.wishlistdescription,
+        status:"AVAILABLE",
+        wishlistnritems:wishlist.wishlistnritems+1,
+        updatedAt:new Date()
+  });
+
+
+
+
+        res.json(newitemtowishlist);
     } catch (err){
         next(err);
     }
 
 };
 
-export default {createItemtoWishlist, getWishlistAllItems, deleteItemFromWhishList, updateItemtoWishlist}
+export default {createitemtowishlist, getwishlistallitems, deleteitemfromwhishlist, updateitemtowishlist}

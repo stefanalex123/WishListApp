@@ -15,7 +15,8 @@ const router = express.Router();
 
 
 
-router.route('/')
+    router.route('/')
+
     .post([
         check("email")
         .exists()
@@ -37,14 +38,13 @@ router.route('/')
         .isMobilePhone()
         .withMessage("Phone Number Invalid")
         
-    ],validationMiddleware,
+    ],
+    validationMiddleware,
     jwtMiddleware,
     Verify_if_Nickname_taken,
     userprofileController.createUserProfile)
 
     .put([
-
-     
         check("email")
         .optional().exists()
         .withMessage("Email is required")
@@ -73,21 +73,12 @@ router.route('/')
     userprofileController.updateUserProfile)
 
     .get([
-
-     
-      
-
-
     ],
     validationMiddleware,
     jwtMiddleware,
     userprofileController.getUserProfile)
+
     .delete([
-
-     
-      
-
-
     ],
     validationMiddleware,
     jwtMiddleware,

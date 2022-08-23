@@ -9,7 +9,8 @@ import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 const router = express.Router();
 
 
-router.route('/register')
+    router.route('/register')
+
     .post([
         check("password")
         .exists()
@@ -18,6 +19,7 @@ router.route('/register')
         .withMessage("Password need at least 7 characters")
         .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{7,}$/, "i")
         .withMessage("Password need at least one letter, one number and one special character"),
+
         check("username")
         .exists()
         .withMessage('is required')
@@ -31,15 +33,16 @@ router.route('/register')
     ], 
     validationMiddleware,
     Verify_if_Username_exists_in_UsersDB, 
-    usersController.addUser)
+    usersController.adduser)
 
     router.route('/login')
+    
     .post([
         check("username", "Invalid name, it must have at least 4 characters").isLength({ min: 4 }),
         check("password", "Invalid password, it must have at least 4 characters").isLength({ min: 4 })
     ],
     validationMiddleware,
-    usersController.loginUser)
+    usersController.loginuser)
 
 
 
