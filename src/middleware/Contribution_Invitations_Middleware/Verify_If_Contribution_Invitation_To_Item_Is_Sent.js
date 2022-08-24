@@ -22,11 +22,11 @@ next();
 
 }
 else{
-   res.send("Invitation doesnt exist to delete it")
+   res.send("Invittatia nu exista")
 }
 
 } catch(err) {
-    res.send("Invitation doesnt exist to delete it")
+    res.send("Invitatia nu exista")
 }
     
 }

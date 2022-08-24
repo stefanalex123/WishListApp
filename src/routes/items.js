@@ -51,6 +51,12 @@ router.route('/')
         itemController.createitem) 
     
         router.route('/:id')
+        
+        .get([    
+        ], 
+        validationMiddleware,
+        jwtMiddleware,
+        itemController.getitem)  
 
         .put([
         check("itemtitle")

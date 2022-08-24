@@ -1,5 +1,6 @@
 import buyitemservices from "../services/buyitem.js"
 import itemservice from "../services/item.js"
+import userprofileService from "../services/userprofile.js"
 
 const getallbuyersforitem= async (req, res, next) => {
   try {
@@ -10,7 +11,6 @@ const getallbuyersforitem= async (req, res, next) => {
   }
 };
 
-
   const getallcontributioninvitationforuserasked = async (req, res, next) => {
     try {
         var allcontributionsforuser=await contributioninvitationsServices.getallcontributioninvitationsforuser(req.auth.userid);
@@ -20,15 +20,12 @@ const getallbuyersforitem= async (req, res, next) => {
     }
   };
 
-
 const createbuyitem = async (req,res,next) => {
     try{
         const newbuyitem= await buyitemservices.createbuyitem(req.auth.userid, req.params.itemid)
         // modificam statusul itemului in indisponibil
-
         try {
     
-  
             const item = await itemservice.getitem(req.params.itemid);
         
             if (!item) {
@@ -47,7 +44,12 @@ const createbuyitem = async (req,res,next) => {
             next(err);
           }
 
-
+          // Trimitem o notificare catre proprietarul itemului ca a fost cumparat
+        const item= await itemservice.getitem(req.params.itemid)
+        const user=await userprofileService.getUserProfile(req.auth.userid) 
+        const newnotificaton= await notificationsServices.createnotification(
+        "Itemul pe care il detii " + item.itemname + " a fost cumparat de  " + user.nickname+ " " , Date.now(), item.userid
+        )
         res.json(newbuyitem);
 
     } catch (err){

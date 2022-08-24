@@ -35,6 +35,15 @@ const getgroupinvitation= async (groupid, userinvitedid) => {
     return groupinvitation;
   };
 
+  const getgroupinvitationbyid= async (id) => {
+    const groupinvitation = await prisma.groupInvitations.findUnique({
+      where: {
+       id:id
+      }
+    })
+    return groupinvitation;
+  };
+
 
 
 const creategroupinvitation= async (groupid ,userinvitedid) =>{
@@ -93,4 +102,4 @@ const getallgroupinvitations= async (id) => {
 
 
 
-export default {updategroupinvitation, getallinvitationsforuser, creategroupinvitation, getgroupinvitation, deletegroupinvitation, getallgroupinvitations}
+export default {updategroupinvitation,getgroupinvitationbyid, getallinvitationsforuser, creategroupinvitation, getgroupinvitation, deletegroupinvitation, getallgroupinvitations}

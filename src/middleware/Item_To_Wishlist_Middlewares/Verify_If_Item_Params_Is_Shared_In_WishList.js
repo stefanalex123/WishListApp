@@ -19,11 +19,11 @@ if(itemtowishlist[0].itemid==req.params.itemid && itemtowishlist[0].wishlistid==
    next()
 }
 else{
-    res.send("Trebuie sa adaugati itemul in wishlist pentru a il putea modifica/sterge")
+    res.send("Trebuie sa adaugati itemul in wishlist mai intai")
 }
 
 } catch(err) {
-    res.send("Trebuie sa adaugati itemul in wishlist pentru a il putea modifica/sterge")
+    res.send("Trebuie sa adaugati itemul in wishlist mai intai")
 }
     
 }

@@ -1,7 +1,5 @@
 import adressservice from "../services/adress.js"
 
-
-
 const deleteadress = async (req, res, next) => {
     try {
         await adressservice.deleteadress(req.params.id);
@@ -26,7 +24,6 @@ const createadress = async (req,res,next) => {
 
 const updateadress = async (req, res, next) => {
     try {
-    
   
       const adress = await adressservice.getadress(req.params.id);
   
@@ -49,7 +46,6 @@ const updateadress = async (req, res, next) => {
       next(err);
     }
   };
-
 
   const getalladresses = async (req, res, next) => {
     try {

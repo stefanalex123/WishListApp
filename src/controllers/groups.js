@@ -4,7 +4,6 @@ import groupservices from "../services/groups.js"
 const updategroup = async (req, res, next) => {
     try {
     
-  
       const group= await groupservices.getgroup(req.params.id);
   
       if (!group) {

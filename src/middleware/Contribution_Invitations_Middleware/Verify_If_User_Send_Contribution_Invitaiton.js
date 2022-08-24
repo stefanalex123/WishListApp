@@ -22,11 +22,11 @@ if(contributioninvitation[0].usercontributerid==req.auth.userid && contributioni
    next()
 }
 else{
-    res.send("Nu ai trimis aceasta invitiatie ca sa o poti sterge")
+    res.send("Nu ai trimis aceasta invitiatie ")
 }
 
 } catch(err) {
-    res.send("Nu ai trimis aceasta invitatie ca sa o poti sterge")
+    res.send("Nu ai trimis aceasta invitatie ")
 }
     
 }

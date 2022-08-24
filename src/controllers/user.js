@@ -1,10 +1,6 @@
 
 import userservices from "../services/user.js";
 
-
-
-
-
 const adduser = async (req, res, next) => {
     try {
         const newuser = await userservices.adduser(req.body.username, req.body.password);
@@ -24,11 +20,7 @@ const loginuser = async (req, res, next) => {
         if(token=="InvalidPassword"){
             res.send("The password is incorrect")
         }
-
-
         else {
-
-        
         res.send({
             token
         });

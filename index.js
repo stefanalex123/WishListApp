@@ -10,6 +10,7 @@ import useradressRouter from"./src/routes/adress.js";
 import wishlistRouter from "./src/routes/wishlist.js"
 import groupRouter from "./src/routes/groups.js"
 import invitationsRouter from "./src/routes/invitations.js"
+import notificationRouter from "./src/routes/notifications.js"
 
 
 
@@ -49,6 +50,7 @@ app.use("/adress", useradressRouter)
 app.use("/wishlists", wishlistRouter)
 app.use ("/groups", groupRouter)
 app.use("/invitations",invitationsRouter)
+app.use("/notifications", notificationRouter)
 
 
 

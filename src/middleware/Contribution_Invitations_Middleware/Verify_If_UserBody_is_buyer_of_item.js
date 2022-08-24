@@ -20,11 +20,11 @@ if(buyitem[0].userbuyerid==req.body.useraskedid){
    next()
 }
 else{
-    res.send("Userul pe care l ai introdus nu este primul cumaparator al acestui itemmmm")
+    res.send("Userul pe care l ai introdus nu este primul cumaparator al acestui item")
 }
 
 } catch(err) {
-    res.send("Userul pe care l ai introdus nu este primul cumaparator al acestui itemmmm")
+    res.send("Userul pe care l ai introdus nu este primul cumaparator al acestui item")
 }
     
 }

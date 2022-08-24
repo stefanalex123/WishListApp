@@ -19,11 +19,11 @@ if(wishlisttogroup[0].wishlistid==req.params.wishlistid && wishlisttogroup[0].gr
   next();
 }
 else{
-  res.send("Acest wishlist nu a fost partajat pe grup pentru a il putea modifica/sterge sau nu il detineti")
+  res.send("Acest wishlist nu a fost partajat pe grup")
 }
 
 } catch(err) {
-    res.send("Acest wishlist nu a fost partajat pe grup pentru a il putea modifica/sterge")
+    res.send("Acest wishlist nu a fost partajat pe grup ")
 }
     
 }

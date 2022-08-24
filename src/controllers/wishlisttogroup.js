@@ -4,15 +4,10 @@ import wishlisttogroupServices from "../services/wishlisttogroup.js"
 
 const updatewishlisttogroup = async (req, res, next) => {
     try {
-    
-  
       const wishlisttogroup = await wishlisttogroupServices.getwishlisttogroup(req.params.id, req.params.wishlistid);
-  
       if (!wishlisttogroup) {
         throw { message: "Whislist not found in group" };
       }
-
-
       const response = await wishlisttogroupServices.updatewishlisttogroup(wishlisttogroup[0].id, {
         wishlistid:req.body.wishlistid,
         groupid:req.params.groupid,

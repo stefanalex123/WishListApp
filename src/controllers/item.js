@@ -20,7 +20,7 @@ const getallitems = async (req, res, next) => {
 
 const getitem = async (req,res,next)=>{
   try {
-    res.json(await itemservice.getitem(req.body.itemtitle));
+    res.json(await itemservice.getitem(req.params.id));
   } catch (err){
     next(err);
   }
@@ -43,8 +43,6 @@ const createitem = async (req,res,next) => {
 
 const updateitem = async (req, res, next) => {
     try {
-    
-  
       const item = await itemservice.getitem(req.params.id);
   
       if (!item) {

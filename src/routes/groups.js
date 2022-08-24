@@ -39,7 +39,7 @@ import contributionInvitationsController from "../controllers/contributioninvita
 const router = express.Router();
 
 
-                                                                //GROUPS
+ //Groups
 
     router.route('/owner')
     .get([    
@@ -101,9 +101,7 @@ const router = express.Router();
     Verify_if_Owner_Group,
     groupController.deletegroup)
 
-                                        //Adding wishlists to groups
-
-
+ //Adding wishlists to groups
 
      router.route('/:id/wishlist') 
     .get([    
@@ -149,14 +147,9 @@ const router = express.Router();
     wishlisttogroupController.updatewishlisttogroup) 
 
 
-                                        //SENDING INVITATION TO USERS TO GRUOUPS
-
-
+//Sending invitations to user to groups
 
     router.route('/:id/invite')
-
-    //de creat un .get
-
     .post([ 
     ],
     validationMiddleware,
@@ -178,7 +171,7 @@ const router = express.Router();
     )
 
 
-                                        //Buy Items from wishlit from group
+//Buy Items from wishlit from group
 
 router.route('/:id/wishlists/:wishlistid/items')
 .get([ 
@@ -226,7 +219,7 @@ buyitemcontroller.createbuyitem
 )
 
 
-                                        //Send contribution invitations
+//Send contribution invitations
 router.route('/:id/wishlists/:wishlistid/items/:itemid/contribute')
 .post([ 
 ],

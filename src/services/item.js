@@ -15,7 +15,16 @@ const getitem= async (id) => {
     const item = await prisma.items.findUnique({
       where: {
         id:id
+      },
+      include: {
+        user:true
       }
+       
+      
+    
+      
+     
+      
     })
     return item;
   };

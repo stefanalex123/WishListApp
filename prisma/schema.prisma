@@ -11,20 +11,18 @@ datasource db {
 }
 
 
-
-
 model User {
-  id            String   @id @default(uuid())
-  username      String    @unique() 
-  password      String       @default ("root")
-  useritems     Items[]      @relation("useritems")
+  id            String        @id @default(uuid())
+  username      String        @unique() 
+  password      String        @default ("root")
+  useritems     Items[]       @relation("useritems")
   userwishlists Wishlist[]    @relation("userwishlists")
   userprofile   UserProfile[] @relation ("userprofile")
   useradresses  Adress[]      @relation ("useradresses")
   itemboughtbyusers BuyItem[] @relation ("itemsboughtbyuser")
   itemsboughtbyuserwithcontribution ContributionInvitation[] @relation ("itemsboughtbyuserwithcontribution")
   usersaskedforcontribution         ContributionInvitation[] @relation ("usersaskedforcontribution")
-
+  notifications                     Notifications[]          @relation("notificantions")
   @@map("users")
 }
 
@@ -38,9 +36,9 @@ user_group_invitation GroupInvitations[] @relation ("usergroupinvitation")
 }
 
 model Items {
-id            String   @id @default(uuid())
-userid           String 
-user        User     @relation("useritems", fields: [userid], references: [id], onDelete: Cascade)
+id                 String   @id @default(uuid())
+userid             String 
+user               User     @relation("useritems", fields: [userid], references: [id], onDelete: Cascade)
 itemname           String 
 itemlink           String
 itemdescription    String
@@ -48,7 +46,6 @@ status             String  @default ("DISPONIBLE")
 wishlists          Itemtowishlist[]      @relation ("wishlists")
 itemboughtby       BuyItem[]             @relation ("itemboughtby")
 itemboughtbyitemboughtbycountribution     ContributionInvitation[]            @relation ("itemboughtbycountribution")
-
   @@map ("items")
 }
 
@@ -57,63 +54,57 @@ id          String   @id @default(uuid())
 userid      String 
 user        User     @relation("useradresses", fields: [userid], references: [id], onDelete: Cascade)
 country     String 
-city    String
+city        String
 street      String
 flat        String
 postalcode  String
-  @@map ("adress")
+   @@map ("adress")
 }
 
 model Wishlist{
-id            String   @id @default(uuid())
-userid           String 
-user        User     @relation("userwishlists", fields: [userid], references: [id], onDelete: Cascade)
+id                     String   @id @default(uuid())
+userid                 String 
+user                   User     @relation("userwishlists", fields: [userid], references: [id], onDelete: Cascade)
 wishlistname           String 
 wishlistdescription    String
 status                 String @default("Unavailable, add at least one item to it")
 wishlistnritems        Int @default(0)
-createdAt     DateTime @default(now())
-updatedAt     DateTime @default(now())
+createdAt              DateTime @default(now())
+updatedAt              DateTime @default(now())
 wishlistitems          Itemtowishlist[]      @relation ("wishlistitems")
 wishlistgroups         Wishlisttogroup[]     @relation ("wishlistgroups")
   @@map ("wishlist")
 }
 
-
-
 model Itemtowishlist {
 id            String   @id @default(uuid())
 wishlistid    String
-wishlist        Wishlist     @relation("wishlistitems", fields: [wishlistid], references: [id], onDelete: Cascade)
+wishlist      Wishlist     @relation("wishlistitems", fields: [wishlistid], references: [id], onDelete: Cascade)
 itemid        String
-items           Items    @relation("wishlists", fields: [itemid], references: [id], onDelete: Cascade)
+items         Items    @relation("wishlists", fields: [itemid], references: [id], onDelete: Cascade)
 createdat     DateTime @default(now())
 updatedat     DateTime @default(now())
-
-  @@map ("itemtowishlist")
+@@map ("itemtowishlist")
 }
 
-
 model Group {
-id            String   @id @default(uuid())
+id                String   @id @default(uuid())
 grouptitle        String
 groupdescription  String
 groupownerid      String
 groupwishlists    Wishlisttogroup[]     @relation ("groupswihslists")
 invitations_to_this_group  GroupInvitations[] @relation ("invitationtothisgroup")
-
 @@map ("group")
 }
 
 model Wishlisttogroup {
 id            String   @id @default(uuid())
 wishlistid    String
-wishlist        Wishlist     @relation("wishlistgroups", fields: [wishlistid], references: [id], onDelete: Cascade)
+wishlist      Wishlist     @relation("wishlistgroups", fields: [wishlistid], references: [id], onDelete: Cascade)
 groupid       String
 group         Group   @relation("groupswihslists", fields: [groupid], references: [id], onDelete: Cascade)    
 createdAt     DateTime @default(now())
 updatedAt     DateTime @default(now())
-
   @@map ("wishlisttogroup")
 }
 
@@ -124,28 +115,34 @@ groupid       String
 group         Group     @relation ("invitationtothisgroup", fields: [groupid], references: [id], onDelete: Cascade) 
 userinvitedid String
 userprofile          UserProfile      @relation ("usergroupinvitation", fields: [userinvitedid], references: [userid], onDelete: Cascade) 
-
 }
-
 
 model BuyItem{
 id            String   @id @default(uuid())
 itemid        String    
 item          Items     @relation("itemboughtby", fields: [itemid], references: [id], onDelete: Cascade)
-userbuyerid     String
+userbuyerid   String
 user          User      @relation ("itemsboughtbyuser",  fields: [userbuyerid], references: [id], onDelete: Cascade)
-userstatus        String
+userstatus    String
 }
 
 model ContributionInvitation{
-id            String   @id @default(uuid())
-itemid        String    
-item          Items     @relation("itemboughtbycountribution", fields: [itemid], references: [id], onDelete: Cascade)
+id                 String   @id @default(uuid())
+itemid             String    
+item               Items     @relation("itemboughtbycountribution", fields: [itemid], references: [id], onDelete: Cascade)
 usercontributerid  String
-user          User      @relation ("itemsboughtbyuserwithcontribution",  fields: [usercontributerid], references: [id], onDelete: Cascade)
-status        String
-useraskedid  String
+user               User      @relation ("itemsboughtbyuserwithcontribution",  fields: [usercontributerid], references: [id], onDelete: Cascade)
+status             String
+useraskedid        String
 usersaskedforcontribution          User      @relation ("usersaskedforcontribution",  fields: [useraskedid], references: [id], onDelete: Cascade)
+}
+
+model Notifications {
+id                        String   @id @default(uuid())
+notificationdescription   String
+deliverat                 DateTime @default(now())
+userdeliverid             String  
+user                      User      @relation ("notificantions",  fields: [userdeliverid], references: [id], onDelete: Cascade)
 }
 
 

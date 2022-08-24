@@ -12,9 +12,7 @@ const getAllWishlists = async (req, res, next) => {
 const createWishlist = async (req,res,next) => {
     try{
         const newWishList= await wishlistServices.createWishlist(req.auth.userid,req.body.wishlistname, req.body.wishlistdescription)
-
         res.json(newWishList);
-
     } catch (err){
         next(err);
     }
@@ -23,10 +21,7 @@ const createWishlist = async (req,res,next) => {
 
 const updateWishlist = async (req, res, next) => {
     try {
-    
-  
       const wishlist= await wishlistServices.getWishList(req.params.id);
-  
       if (!wishlist) {
         throw { message: "Wishlist not found" };
       }

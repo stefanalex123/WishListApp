@@ -7,15 +7,10 @@ import wishlistServices from "../services/wishlist.js"
 
 const updateitemtowishlist = async (req, res, next) => {
     try {
-    
-  
       const itemtowishlist = await itemtowishlistservices.getitemtowishlist(req.params.id, req.params.itemid);
-  
       if (!itemtowishlist) {
         throw { message: "Item not found in wishlist" };
       }
-
-
       const response = await itemtowishlistservices.updateitemtowishlist(itemtowishlist[0].id, {
         itemid:req.body.itemid || itemtowishlist.itemid,
          updatedat: new Date(),
@@ -33,8 +28,6 @@ const deleteitemfromwhishlist = async (req, res, next) => {
     try {
         await itemtowishlistservices.deleteitemfromshishlist(req.params.id,req.params.itemid);
         //Daca stergem si ramane wishlistul gol schimbam statusul
-        
-        
         const wishlist= await wishlistServices.getWishList(req.params.id);
         if(wishlist.wishlistnritems==0){
           
@@ -81,10 +74,7 @@ const getwishlistallitems = async (req, res, next) => {
 const createitemtowishlist = async (req,res,next) => {
     try{
         const newitemtowishlist= await itemtowishlistservices.createitemtowishlist(req.params.id, req.body.itemid)
-
-
         //Am adaugat item in wishlist, acuma facem update la statusul din wihhlist (available)
-    
         const wishlist= await wishlistServices.getWishList(req.params.id);
         await wishlistServices.updateWishList(req.params.id, {
         userid: wishlist.userid,

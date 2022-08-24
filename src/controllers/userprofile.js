@@ -34,8 +34,6 @@ const createUserProfile = async (req,res,next) => {
 
 const updateUserProfile = async (req, res, next) => {
     try {
-    
-  
       const userprofile = await userprofileService.getUserProfile(req.auth.userid);
   
       if (!userprofile) {

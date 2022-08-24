@@ -37,7 +37,6 @@ router.route('/contributioninvitations')
 ],
 validationMiddleware,
 jwtMiddleware,
-
 contributionInvitationController.getallcontributioninvitationforuserasked
 )   
 
@@ -50,8 +49,6 @@ validationMiddleware,
 jwtMiddleware,
 Verify_If_InvitationContr_To_User_Auth_Is_Sent, 
 contributionInvitationController.updatecontributioninvitation,
-
-
 ) 
 
 
