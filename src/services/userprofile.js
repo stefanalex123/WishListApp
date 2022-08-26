@@ -3,19 +3,19 @@ const prisma = new PrismaClient();
 
 
 const deleteUserProfile = async (id) => {
-    const userprofile = await prisma.userProfile.delete({
+    const userProfile = await prisma.userProfile.delete({
         where: {
-            userid: id
+            userId: id
         }
     });
-    return userprofile;
+    return userProfile;
 };
 
 
 const getUserProfile= async (id) => {
     const userProfile = await prisma.userProfile.findUnique({
       where: {
-        userid:id
+        userId:id
       }
     })
     return userProfile;
@@ -23,27 +23,27 @@ const getUserProfile= async (id) => {
 
 
 
-const createuserprofile= async (userid, email ,nickname, phonenumber) =>{
-    const userprofile=await prisma.userProfile.create({
+const createUserProfile= async (userId, email ,nickname, phoneNumber) =>{
+    const userProfile=await prisma.userProfile.create({
         data: {
-            userid:userid,
+            userId:userId,
             email:email,
             nickname:nickname,
-            phonenumber:phonenumber
+            phoneNumber:phoneNumber
         }
     });
-        return userprofile;
+        return userProfile;
 };
 
 
 const updateUserProfile = async (id, userProfileInfo) => {
-    const userprofile = await prisma.userProfile.update({
+    const userProfile = await prisma.userProfile.update({
       where: {
         userid: id
       },
       data: { ...userProfileInfo }
     })
-    return userprofile;
+    return userProfile;
   };
 
-export default {createuserprofile, updateUserProfile, getUserProfile, deleteUserProfile};
+export default {createUserProfile, updateUserProfile, getUserProfile, deleteUserProfile};

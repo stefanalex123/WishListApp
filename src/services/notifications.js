@@ -3,26 +3,26 @@ const prisma = new PrismaClient();
 
 
 
-const getallnotifications= async (id) => {
-    const allnotifications = await prisma.notifications.findMany({
+const getAllNotifications= async (id) => {
+    const allNotifications = await prisma.notifications.findMany({
       where: {
-        userdeliverid:id
+        userDeliverId:id
       }
     })
-    return allnotifications;
+    return allNotifications;
   };
 
-  const createnotification= async (notificationdescription,deliverat, userdeliverid) =>{
-    const createnotification=await prisma.notifications.create({
+  const createNotification= async (notificationDescription,deliverAt, userdeliverId) =>{
+    const createNotification=await prisma.notifications.create({
         data: {
-          notificationdescription:notificationdescription,
-          deliverat:deliverat,
-          userdeliverid:userdeliverid
+          notificationDescription:notificationDescription,
+          deliverAt:deliverAt,
+          userdeliverId:userdeliverId
         }
     });
-        return createnotification;
+        return createNotification;
 };
 
 
 
-  export default {getallnotifications, createnotification}
+  export default {getAllNotifications, createNotification}

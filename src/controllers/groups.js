@@ -1,18 +1,18 @@
-import groupservices from "../services/groups.js"
+import groupServices from "../services/groups.js";
 
 
-const updategroup = async (req, res, next) => {
+const updateGroup = async (req, res, next) => {
     try {
     
-      const group= await groupservices.getgroup(req.params.id);
+      const group= await groupServices.getGroup(req.params.id);
   
       if (!group) {
         throw { message: "Group not found" };
       }
   
-      const response = await groupservices.updategroup(req.params.id, {
-        grouptitle: req?.body?.grouptitle || group.grouptitle,
-        groupdescription: req?.body?.groupdescription || group.groupdescription,
+      const response = await groupServices.updateGroup(req.params.id, {
+        groupTitle: req?.body?.groupTitle || group.groupTitle,
+        groupDescription: req?.body?.groupDescription || group.groupDescription,
       });
       res.json(response);
     } catch (err) {
@@ -22,31 +22,31 @@ const updategroup = async (req, res, next) => {
 }
 
 
-const getallgroupswhereowner = async (req, res, next) => {
+const getAllGroupsWhereOwner = async (req, res, next) => {
     try {
-        res.json(await groupservices.getallgroupswhereowner(req.auth.userid));
+        res.json(await groupServices.getAllGroupsWhereOwner(req.auth.userId));
     } catch (err) {
         next(err);
     }
   };
 
 
-const creategroup = async (req,res,next) => {
+const createGroup = async (req,res,next) => {
     try{
-        const newGroup= await groupservices.creategroup(req.body.grouptitle, req.body.groupdescription, req.auth.userid)
+        const newGroup= await groupServices.createGroup(req.body.groupTitle, req.body.groupDescription, req.auth.userId)
         res.json(newGroup);
     } catch (err){
         next(err);
     }
 };
 
-const deletegroup = async (req, res, next) => {
+const deleteGroup = async (req, res, next) => {
     try {
-        await groupservices.deletegroup(req.params.id);
+        await groupServices.deleteGroup(req.params.id);
         res.send("Group deleted");
     } catch (err) {
         next(err);
     }
   };
 
-export default {creategroup, getallgroupswhereowner, updategroup, deletegroup}
+export default {createGroup, getAllGroupsWhereOwner, updateGroup, deleteGroup}

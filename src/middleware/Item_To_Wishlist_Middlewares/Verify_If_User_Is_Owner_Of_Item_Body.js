@@ -6,14 +6,14 @@ const Verify_If_User_Is_Owner_Of_Item_Body = async ( req, res, next) => {
     try{
     const item = await prisma.items.findUnique({
         where: {
-           id:req.body.itemid
+           id:req.body.itemId
         },
     
     })
 
 
     
-    if(item.userid==req.auth.userid){
+    if(item.userId==req.auth.userId){
     //Userul este ownerul acestui item
        next();
     }

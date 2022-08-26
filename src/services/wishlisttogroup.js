@@ -2,35 +2,35 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const deletewishlistrogroup= async (groupid, wishlistid) => {
+const deleteWishlistToGroup= async (groupId, wishlistId) => {
 
 
-  const wishlisttogroup = await prisma.wishlisttogroup.findMany({
+  const wishlistToGroup = await prisma.wishlistToGroup.findMany({
     where: {
-    groupid:groupid,
-    wishlistid:wishlistid,
+    groupId:groupId,
+    wishlistId:wishlistId,
     }
   })
 
-  const wishlisttogroupDeleted = await prisma.wishlisttogroup.delete({
+  const wishlistToGroupDeleted = await prisma.wishlistToGroup.delete({
     where: {
-      id:wishlisttogroup[0].id
+      id:wishlistToGroup[0].id
     }
    
   })
 
 
-  return wishlisttogroupDeleted;
+  return wishlistToGroupDeleted;
 };
 
 
 
 
 
-const getAllwishlisttogroup= async (id) => {
-    const wishlisttogroup = await prisma.wishlisttogroup.findMany({
+const getAllWishlistToGroup= async (id) => {
+    const wishlistToGroup = await prisma.wishlistToGroup.findMany({
       where: {
-        groupid:id
+        groupId:id
       },
       include: {
        wishlist:true,
@@ -38,50 +38,50 @@ const getAllwishlisttogroup= async (id) => {
            
     }
     })
-    return wishlisttogroup;
+    return wishlistToGroup;
   };
 
 
 
-  const getwishlisttogroup= async (groupid, wishlistid) => {
-    const wishlisttogroup = await prisma.wishlisttogroup.findMany({
+  const getWishlistToGroup= async (groupId, wishlistId) => {
+    const wishlistToGroup = await prisma.wishlistToGroup.findMany({
       where: {
-        groupid:groupid,
-        wishlistid:wishlistid
+        groupId:groupId,
+        wishlistId:wishlistId
       }
     })
-    return wishlisttogroup;
+    return wishlistToGroup;
   };
 
 
 
 
 
-const createwishlisttogroup= async (groupid ,wishlistid) =>{
-    const wishlisttogroup=await prisma.wishlisttogroup.create({
+const createWishlistToGroup= async (groupId ,wishlistId) =>{
+    const wishlistToGroup=await prisma.wishlistToGroup.create({
         data: {
-            groupid:groupid,
-            wishlistid:wishlistid,
+            groupId:groupId,
+            wishlistId:wishlistId,
             createdAt:new Date()
         }
     });
-        return wishlisttogroup;
+        return wishlistToGroup;
 };
 
 
-const updatewishlisttogroup= async (id, wishlisttogroupInfo) => {
+const updateWishlistToGroup= async (id, wishlistToGroupInfo) => {
 
-  const wishlisttogroupUpdated = await prisma.wishlisttogroup.update({
+  const wishlistToGroupUpdated = await prisma.wishlistToGroup.update({
     where: {
       id:id
     },
-    data: { ...wishlisttogroupInfo}
+    data: { ...wishlistToGroupInfo}
   })
-  return wishlisttogroupUpdated;
+  return wishlistToGroupUpdated;
 };
 
 
 
 
 
-export default {deletewishlistrogroup,getAllwishlisttogroup, getwishlisttogroup, createwishlisttogroup, updatewishlisttogroup}
+export default {deleteWishlistToGroup,getAllWishlistToGroup, getWishlistToGroup, createWishlistToGroup, updateWishlistToGroup}

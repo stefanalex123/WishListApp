@@ -1,42 +1,43 @@
-import buyitemservices from "../services/buyitem.js"
-import itemservice from "../services/item.js"
-import userprofileService from "../services/userprofile.js"
+import buyItemServices from "../services/buyitem.js";
+import itemservice from "../services/item.js";
+import userprofileService from "../services/userprofile.js";
 
-const getallbuyersforitem= async (req, res, next) => {
+
+const getAllBuyersForItem= async (req, res, next) => {
   try {
-      var allbuyersforitem=await buyitemservices.getbuyersforitem(req.params.itemid);
-      res.json(allbuyersforitem)
+      var allBuyersForItem=await buyItemServices.getBuyersForItem(req.params.itemId);
+      res.json(allBuyersForItem)
   } catch (err) {
       next(err);
   }
 };
 
-  const getallcontributioninvitationforuserasked = async (req, res, next) => {
+  const getAllContributionInvitationForUserAsked = async (req, res, next) => {
     try {
-        var allcontributionsforuser=await contributioninvitationsServices.getallcontributioninvitationsforuser(req.auth.userid);
-        res.json(allcontributionsforuser)
+        var allContributionsForUser=await contributionInvitationsServices.getAllContributionInvitationsForUser(req.auth.userId);
+        res.json(allContributionsForUser)
     } catch (err) {
         next(err);
     }
   };
 
-const createbuyitem = async (req,res,next) => {
+const createBuyItem = async (req,res,next) => {
     try{
-        const newbuyitem= await buyitemservices.createbuyitem(req.auth.userid, req.params.itemid)
+        const newBuyItem= await buyItemServices.createBuyItem(req.auth.userId, req.params.itemId)
         // modificam statusul itemului in indisponibil
         try {
     
-            const item = await itemservice.getitem(req.params.itemid);
+            const item = await itemService.getItem(req.params.itemId);
         
             if (!item) {
               throw { message: "Item not found" };
             }
         
-            const response = await itemservice.updateitem(req.params.itemid, {
-              userid: item.userid,
-              itemtitle: item.itemtitle,
-              itemlink: item.itemlink,
-              itemdescription:item.itemdescription,
+            const response = await itemService.updateItem(req.params.itemId, {
+              userId: item.userId,
+              itemTitle: item.itemTitle,
+              itemLink: item.itemLink,
+              itemDescription:item.itemDescription,
               status:"INDISPONIBILE"
             });
           } catch (err) {
@@ -45,12 +46,12 @@ const createbuyitem = async (req,res,next) => {
           }
 
           // Trimitem o notificare catre proprietarul itemului ca a fost cumparat
-        const item= await itemservice.getitem(req.params.itemid)
-        const user=await userprofileService.getUserProfile(req.auth.userid) 
-        const newnotificaton= await notificationsServices.createnotification(
-        "Itemul pe care il detii " + item.itemname + " a fost cumparat de  " + user.nickname+ " " , Date.now(), item.userid
+        const item= await itemService.getItem(req.params.itemId)
+        const user=await userProfileService.getUserProfile(req.auth.userId) 
+        const newNotification= await notificationsServices.createNotification(
+        "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " " , Date.now(), item.userId
         )
-        res.json(newbuyitem);
+        res.json(newBuyItem);
 
     } catch (err){
         next(err);
@@ -58,4 +59,4 @@ const createbuyitem = async (req,res,next) => {
 
 };
 
-export default {createbuyitem, getallbuyersforitem}
+export default {createBuyItem, getAllBuyersForItem}

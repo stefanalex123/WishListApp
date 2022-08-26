@@ -33,7 +33,7 @@ const router = express.Router();
     ], 
     validationMiddleware,
     Verify_if_Username_exists_in_UsersDB, 
-    usersController.adduser)
+    usersController.addUser)
 
     router.route('/login')
     
@@ -42,7 +42,7 @@ const router = express.Router();
         check("password", "Invalid password, it must have at least 4 characters").isLength({ min: 4 })
     ],
     validationMiddleware,
-    usersController.loginuser)
+    usersController.loginUser)
 
 
 

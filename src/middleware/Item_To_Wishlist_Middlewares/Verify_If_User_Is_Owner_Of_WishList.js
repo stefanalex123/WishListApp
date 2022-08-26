@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -13,7 +14,7 @@ const wishlist = await prisma.wishlist.findUnique({
     },
 })
 
-if(wishlist.userid==req.auth.userid){
+if(wishlist.userId==req.auth.userId){
 // Userul detine acest wishlit
     next()
 }

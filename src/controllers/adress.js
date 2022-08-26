@@ -1,20 +1,20 @@
-import adressservice from "../services/adress.js"
+import adressService from "../services/adress.js";
 
-const deleteadress = async (req, res, next) => {
+const deleteAdress = async (req, res, next) => {
     try {
-        await adressservice.deleteadress(req.params.id);
+        await adressService.deleteAdress(req.params.id);
         res.send("Adress deleted");
     } catch (err) {
         next(err);
     }
   };
 
-const createadress = async (req,res,next) => {
+const createAdress = async (req,res,next) => {
     try{
-        const newadress= await adressservice.createadress(req.auth.userid, req.body.country, req.body.city, req.body.street,
-        req.body.flat, req.body.postalcode)
+        const newAdress= await adressService.createAdress(req.auth.userId, req.body.country, req.body.city, req.body.street,
+        req.body.flat, req.body.postalCode)
 
-        res.json(newadress);
+        res.json(newAdress);
 
     } catch (err){
         next(err);
@@ -22,22 +22,23 @@ const createadress = async (req,res,next) => {
 
 };
 
-const updateadress = async (req, res, next) => {
+
+const updateAdress = async (req, res, next) => {
     try {
   
-      const adress = await adressservice.getadress(req.params.id);
+      const adress = await adressService.getAdress(req.params.id);
   
       if (!adress) {
         throw { message: "Adress not found" };
       }
   
-      const response = await adressservice.updateadress(req.params.id, {
-        userid: req.auth.userid || adress.userid,
+      const response = await adressService.updateAdress(req.params.id, {
+        userId: req.auth.userId || adress.userId,
         country: req?.body?.country || adress.country,
         city: req?.body?.city || adress.city,
         street:req?.body?.street || adress.street,
         flat:req?.body?.flat || adress.flat,
-        postalcode:req?.body?.postalcode || adress.postalcode,
+        postalCode:req?.body?.postalCode || adress.postalCode,
       });
   
       res.json(response);
@@ -47,12 +48,12 @@ const updateadress = async (req, res, next) => {
     }
   };
 
-  const getalladresses = async (req, res, next) => {
+  const getAllAdresses = async (req, res, next) => {
     try {
-        res.json(await adressservice.getalladresses(req.auth.userid));
+        res.json(await adressService.getAllAdresses(req.auth.userId));
     } catch (err) {
         next(err);
     }
   };
 
-export default {createadress, updateadress, getalladresses, deleteadress}
+export default {createAdress, updateAdress, getAllAdresses, deleteAdress}

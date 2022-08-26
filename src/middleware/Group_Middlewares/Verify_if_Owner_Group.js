@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 
@@ -11,7 +12,7 @@ const Verify_if_Owner_Group = async ( req, res, next) => {
     
     })
 
-    if(group.groupownerid==req.auth.userid){
+    if(group.groupOwnerId==req.auth.userId){
         next();
     }
     else {

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -7,14 +8,14 @@ const Verify_If_Invitation_To_User_Auth_Is_Sent = async ( req, res, next) => {
 
 
 try{
-const groupinvitation = await prisma.groupInvitations.findUnique({
+const groupInvitation = await prisma.groupInvitations.findUnique({
     where: {
-        id:req.params.invitationid,
+        id:req.params.invitationId,
     },
 })
 
 
-if(groupinvitation.status=="PENDING" &&  groupinvitation.userinvitedid==req.auth.userid){
+if(groupInvitation.status=="PENDING" &&  groupInvitation.userInvitedId==req.auth.userId){
     next();
 }
 

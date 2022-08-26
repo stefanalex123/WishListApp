@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 
+
 const prisma = new PrismaClient();
 
 
@@ -8,14 +9,14 @@ const Verify_If_UserBody_is_buyer_of_item = async ( req, res, next) => {
 
 
 try{
-    const buyitem = await prisma.buyItem.findMany({
+    const buyItem = await prisma.buyItem.findMany({
         where: {
-            itemid:req.params.itemid
+            itemId:req.params.itemId
         },
     })
 
 
-if(buyitem[0].userbuyerid==req.body.useraskedid){
+if(buyItem[0].userBuyerId==req.body.userAskedId){
 
    next()
 }

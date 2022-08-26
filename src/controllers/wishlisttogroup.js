@@ -1,17 +1,17 @@
-import wishlisttogroupServices from "../services/wishlisttogroup.js"
+import wishlistToGroupServices from "../services/wishlisttogroup.js";
 
 
 
-const updatewishlisttogroup = async (req, res, next) => {
+const updateWishlistToGroup = async (req, res, next) => {
     try {
-      const wishlisttogroup = await wishlisttogroupServices.getwishlisttogroup(req.params.id, req.params.wishlistid);
-      if (!wishlisttogroup) {
+      const wishlistToGroup = await wishlistTogroupServices.getWishlistToGroup(req.params.id, req.params.wishlistId);
+      if (!wishlistToGroup) {
         throw { message: "Whislist not found in group" };
       }
-      const response = await wishlisttogroupServices.updatewishlisttogroup(wishlisttogroup[0].id, {
-        wishlistid:req.body.wishlistid,
-        groupid:req.params.groupid,
-        createdAt:wishlisttogroup[0].createdAt,
+      const response = await wishlistToGroupServices.updateWishlistToGroup(wishlistToGroup[0].id, {
+        wishlistId:req.body.wishlistId,
+        groupId:req.params.groupId,
+        createdAt:wishlistToGroup[0].createdAt,
         updatedAt: new Date(),
       });
       res.json("Item Updated");
@@ -23,9 +23,9 @@ const updatewishlisttogroup = async (req, res, next) => {
 
 
 
-const deletewishlistrogroup = async (req, res, next) => {
+const deleteWishlistToGroup = async (req, res, next) => {
     try {
-        await wishlisttogroupServices.deletewishlistrogroup(req.params.id,req.params.wishlistid);
+        await wishlistToGroupServices.deleteWishlistToGroup(req.params.id,req.params.wishlistId);
         res.send("Wishlist deleted from your group");
     } catch (err) {
         next(err);
@@ -34,24 +34,24 @@ const deletewishlistrogroup = async (req, res, next) => {
 
 
 
-const getgroupallwishlists = async (req, res, next) => {
+const getGroupAllWishlists = async (req, res, next) => {
     try {
-        var groupallwishlists=await wishlisttogroupServices.getAllwishlisttogroup(req.params.id);
-        res.json(groupallwishlists)
+        var groupAllWishlists=await wishlistToGroupServices.getAllWishlistToGroup(req.params.id);
+        res.json(groupAllWishlists)
     } catch (err) {
         next(err);
     }
   };
 
 
-const createwishlisttogroup = async (req,res,next) => {
+const createWishlistToGroup = async (req,res,next) => {
     try{
-        const newwishlisttogroup= await wishlisttogroupServices.createwishlisttogroup(req.params.id, req.body.wishlistid)
-        res.json(newwishlisttogroup);
+        const newWishlistToGroup= await wishlistToGroupServices.createWishlistToGroup(req.params.id, req.body.wishlistId)
+        res.json(newWishlistToGroup);
     } catch (err){
         next(err);
     }
 
 };
 
-export default {updatewishlisttogroup, deletewishlistrogroup, getgroupallwishlists, createwishlisttogroup}
+export default { getGroupAllWishlists  ,updateWishlistToGroup, deleteWishlistToGroup, getGroupAllWishlists, createWishlistToGroup}

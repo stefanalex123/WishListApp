@@ -1,12 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 const Verify_If_Item_is_having_Principal_Buyer = async ( req, res, next) => {
     try{
         const item = await prisma.items.findUnique({
             where: {
-               id:req.params.itemid
+               id:req.params.itemId
             },
         
         })

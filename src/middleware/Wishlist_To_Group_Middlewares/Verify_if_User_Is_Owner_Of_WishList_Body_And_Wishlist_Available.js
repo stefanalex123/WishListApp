@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -9,16 +10,16 @@ const Verify_if_User_Is_Owner_Of_WishList_Body_And_Wishlist_Available = async ( 
 try{
 const wishlist = await prisma.wishlist.findUnique({
     where: {
-        id:req.body.wishlistid
+        id:req.body.wishlistId
     },
 })
 
-if(wishlist.userid==req.auth.userid && wishlist.status=="AVAILABLE"){
+if(wishlist.userId==req.auth.userId && wishlist.status=="AVAILABLE"){
 // Userul detine acest wishlit
     next()
 }
 
-else if(wishlist.userid==req.auth.userid && wishlist.status!="AVAILABLE"){
+else if(wishlist.userId==req.auth.userId && wishlist.status!="AVAILABLE"){
     res.send("Acest wihslit este gol, nu ii puteti face share")
     }
 else {

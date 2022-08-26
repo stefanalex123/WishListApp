@@ -46,41 +46,41 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-    groupController.getallgroupswhereowner)  
+    groupController.getAllGroupsWhereOwner)  
 
 
     router.route('/')
 
     .post([
-    check("grouptitle")
+    check("groupTitle")
     .exists()
     .withMessage('is required')
     .isLength({ min: 4})
-    .withMessage("GroupTtile need at least 4 characters")
+    .withMessage("GroupTitle need at least 4 characters")
     .matches(/^[a-zA-Z][\w\s-]+/)
     .withMessage("It has to start with a letter"),
 
-    check("groupdescription")
+    check("groupDescription")
     .exists()
     .withMessage('is required')
     ],
     validationMiddleware,
     jwtMiddleware,
-    groupController.creategroup) 
+    groupController.createGroup) 
 
 
     router.route('/:id')
 
     .put([
-    check("grouptitle")
+    check("groupTitle")
     .optional().exists()
     .withMessage('is required')
     .optional().isLength({ min: 4})
-    .withMessage("GroupTtile need at least 4 characters")
+    .withMessage("GroupTitile need at least 4 characters")
     .optional().matches(/^[a-zA-Z][\w\s-]+/)
     .withMessage("It has to start with a letter"),
 
-    check("groupdescription")
+    check("groupDescription")
     .optional().exists()
     .withMessage('is required')
     .optional().isLength({ min: 10})
@@ -91,7 +91,7 @@ const router = express.Router();
     validationMiddleware,
     jwtMiddleware,
     Verify_if_Owner_Group,
-    groupController.updategroup)
+    groupController.updateGroup)
 
 
     .delete([
@@ -99,7 +99,7 @@ const router = express.Router();
     validationMiddleware,
     jwtMiddleware,
     Verify_if_Owner_Group,
-    groupController.deletegroup)
+    groupController.deleteGroup)
 
  //Adding wishlists to groups
 
@@ -108,8 +108,8 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware, 
-    Verify_If_User_Is_Member_Of_Group,
-    wishlisttogroupController.getgroupallwishlists 
+    Verify_If_User_Is_Member_Of_Group, //
+    wishlisttogroupController.getGroupAllWishlists
     )  
 
     .post([ 
@@ -119,7 +119,7 @@ const router = express.Router();
     Verify_If_User_Is_Member_Of_Group, 
     Verify_if_User_Is_Owner_Of_WishList_Body_And_Wishlist_Available, 
     Verify_If_Wishlist_Body_Is_Not_Shared_In_Group,
-    wishlisttogroupController.createwishlisttogroup
+    wishlisttogroupController.createWishlistToGroup
     ) 
 
 
@@ -132,7 +132,7 @@ const router = express.Router();
     Verify_if_User_Is_Owner_Of_WishList_Params, 
     Verify_If_User_Is_Member_Of_Group, 
     Verify_If_Wishlist_Params_Is_Shared_In_Group,
-    wishlisttogroupController.deletewishlistrogroup 
+    wishlisttogroupController.deleteWishlistToGroup
    )
 
 
@@ -144,7 +144,7 @@ const router = express.Router();
     Verify_If_Wishlist_Params_Is_Shared_In_Group, 
     Verify_if_User_Is_Owner_Of_WishList_Body_And_Wishlist_Available,
     Verify_If_Wishlist_Body_Is_Not_Shared_In_Group, 
-    wishlisttogroupController.updatewishlisttogroup) 
+    wishlisttogroupController.updateWishlistToGroup) 
 
 
 //Sending invitations to user to groups
@@ -158,7 +158,7 @@ const router = express.Router();
     Verify_If_User_Body_Exists,        
     Verify_If_Invitation_To_User_Body_Is_Not_Sent,  
     //-> + Verify_If_User_Invited_is_Already_In_Group 
-    groupinvitationController.creategroupinvitation) 
+    groupinvitationController.createGroupInvitation) 
 
     router.route('/:id/invite/:userinvitedid')
     .delete([   
@@ -167,80 +167,79 @@ const router = express.Router();
     jwtMiddleware,
     Verify_If_User_is_Owner_Of_Group, 
     Verify_If_Invitation_To_User_Params_Is_Sent, 
-    groupinvitationController.deletegroupinvitation 
+    groupinvitationController.deleteGroupInvitation
     )
 
 
 //Buy Items from wishlit from group
 
-router.route('/:id/wishlists/:wishlistid/items')
-.get([ 
-],
-validationMiddleware,
-jwtMiddleware,
-Verify_If_User_Is_Member_Of_Group, 
-Verify_If_Wishlist_Params_Is_Shared_In_Group,
-itemtowishlistController.getwishlistallitems
+    router.route('/:id/wishlists/:wishlistid/items')
+    .get([ 
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_User_Is_Member_Of_Group, 
+    Verify_If_Wishlist_Params_Is_Shared_In_Group,
+    itemtowishlistController.getWishListAllItems
+    )
 
-)
+    router.route('/:id/wishlists/:wishlistid/items/:itemid/buyer') 
+    .get([ 
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_User_Is_Member_Of_Group, 
+    Verify_If_Wishlist_Params_Is_Shared_In_Group,
+    Verify_If_Item_Params_Is_Shared_In_WishList,    
+    buyitemcontroller.getAllBuyersForItem
+    )
 
-router.route('/:id/wishlists/:wishlistid/items/:itemid/buyer') 
-.get([ 
-],
-validationMiddleware,
-jwtMiddleware,
-Verify_If_User_Is_Member_Of_Group, 
-Verify_If_Wishlist_Params_Is_Shared_In_Group,
-Verify_If_Item_Params_Is_Shared_In_WishList,    
-buyitemcontroller.getallbuyersforitem
-)
+    router.route('/:id/wishlists/:wishlistid/items/:itemid/contributors') 
+    .get([ 
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_User_Is_Member_Of_Group,
+    Verify_If_Wishlist_Params_Is_Shared_In_Group, 
+    Verify_If_Item_Params_Is_Shared_In_WishList,
+    contributionInvitationsController.getAllContributorsForItem
+    )
 
-router.route('/:id/wishlists/:wishlistid/items/:itemid/contributors') 
-.get([ 
-],
-validationMiddleware,
-jwtMiddleware,
-Verify_If_User_Is_Member_Of_Group,
-Verify_If_Wishlist_Params_Is_Shared_In_Group, 
-Verify_If_Item_Params_Is_Shared_In_WishList,
-contributionInvitationsController.getallcontributorsforitem
-)
-
-router.route('/:id/wishlists/:wishlistid/items/:itemid/buy')
-.post([ 
-],
-validationMiddleware,
-jwtMiddleware,
-Verify_If_User_Is_Member_Of_Group,  
-Verify_If_Item_Params_Is_Shared_In_WishList,     
-Verify_If_Wishlist_Params_Is_Shared_In_Group, 
-Verify_If_Item_is_not_having_Principal_Buyer, 
-buyitemcontroller.createbuyitem 
-)
+    router.route('/:id/wishlists/:wishlistid/items/:itemid/buy')
+    .post([ 
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_User_Is_Member_Of_Group,  
+    Verify_If_Item_Params_Is_Shared_In_WishList,     
+    Verify_If_Wishlist_Params_Is_Shared_In_Group, 
+    Verify_If_Item_is_not_having_Principal_Buyer, 
+    buyitemcontroller.createBuyItem
+    )
 
 
-//Send contribution invitations
-router.route('/:id/wishlists/:wishlistid/items/:itemid/contribute')
-.post([ 
-],
-validationMiddleware,
-jwtMiddleware,
-Verify_If_User_Is_Member_Of_Group,   
-Verify_If_Item_Params_Is_Shared_In_WishList,        
-Verify_If_Wishlist_Params_Is_Shared_In_Group, 
-Verify_If_UserBody_is_buyer_of_item, 
-Verify_If_Contribution_Invitation_To_Item_Is_Not_Sent,
-contributionInvitationsController.createcontributioninvitation
-)
+    //Send contribution invitations
+    router.route('/:id/wishlists/:wishlistid/items/:itemid/contribute')
+    .post([ 
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_User_Is_Member_Of_Group,   
+    Verify_If_Item_Params_Is_Shared_In_WishList,        
+    Verify_If_Wishlist_Params_Is_Shared_In_Group, 
+    Verify_If_UserBody_is_buyer_of_item, 
+    Verify_If_Contribution_Invitation_To_Item_Is_Not_Sent,
+    contributionInvitationsController.createContributionInvitation
+    )
 
-.delete([   
-],
-validationMiddleware,
-jwtMiddleware,
-Verify_If_User_Send_Contribution_Invitaiton, 
-Verify_If_Contribution_Invitation_To_Item_Is_Sent, 
-contributionInvitationsController.detelecontributioninvitation
-)
+    .delete([   
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    Verify_If_User_Send_Contribution_Invitaiton, 
+    Verify_If_Contribution_Invitation_To_Item_Is_Sent, 
+    contributionInvitationsController.deteleContributionInvitation
+    )
 
 
                                                              

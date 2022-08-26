@@ -3,77 +3,77 @@ const prisma = new PrismaClient();
 
 
 
-const deletegroupinvitation= async (groupid, userinvitedid) => {
+const deleteGroupInvitation= async (groupId, userInvitedId) => {
 
 
-    const groupinvitation = await prisma.groupInvitations.findMany({
+    const groupInvitation = await prisma.groupInvitations.findMany({
       where: {
-        groupid:groupid,
-        userinvitedId:userinvitedid
+        groupId:groupId,
+        userInvitedId:userInvitedId
       }
     })
   
-    const groupinvitationdeleted = await prisma.groupInvitations.delete({
+    const groupInvitationDeleted = await prisma.groupInvitations.delete({
       where: {
-        id:groupinvitation[0].id
+        id:groupInvitation[0].id
       }
      
     })
 
-    return groupinvitationdeleted
+    return groupInvitationDeleted
 
 }
   
 
-const getgroupinvitation= async (groupid, userinvitedid) => {
-    const groupinvitation = await prisma.groupInvitations.findMany({
+const getGroupInvitation= async (groupId, userInvitedId) => {
+    const groupInvitation = await prisma.groupInvitations.findMany({
       where: {
-        groupid:groupid,
-        userinvitedId:userinvitedid
+        groupId:groupId,
+        userInvitedId:userInvitedId
       }
     })
-    return groupinvitation;
+    return groupInvitation;
   };
 
-  const getgroupinvitationbyid= async (id) => {
-    const groupinvitation = await prisma.groupInvitations.findUnique({
+  const getGroupInvitationById= async (id) => {
+    const groupInvitation = await prisma.groupInvitations.findUnique({
       where: {
        id:id
       }
     })
-    return groupinvitation;
+    return groupInvitation;
   };
 
 
 
-const creategroupinvitation= async (groupid ,userinvitedid) =>{
-    const groupinvitation=await prisma.groupInvitations.create({
+const createGroupInvitation= async (groupId ,userInvitedId) =>{
+    const groupInvitation=await prisma.groupInvitations.create({
         data: {
             status:"PENDING",
-            groupid:groupid,
-            userinvitedid:userinvitedid
+            groupId:groupId,
+            userInvitedId:userInvitedId
         }
     });
-        return groupinvitation;
+        return groupInvitation;
 };
 
-const getallgroupinvitations= async (id) => {
-    const allgroupinvitations = await prisma.groupInvitations.findMany({
+const getAllGroupInvitations= async (id) => {
+    const allGroupInvitations = await prisma.groupInvitations.findMany({
       where: {
-        groupid:id
+        groupId:id
       },
       include: {
-       userprofile:true
+       userProfile:true
            
     }
     })
-    return allgroupinvitations;
+    return allGroupInvitations;
   };
 
-  const getallinvitationsforuser= async (id) => {
-    const allgroupinvitations = await prisma.groupInvitations.findMany({
+  const getAllInvitationsForUser= async (id) => {
+    const allGroupInvitations = await prisma.groupInvitations.findMany({
       where: {
-        userinvitedid:id
+        userInvitedId:id
       },
       include: {
         group:true
@@ -84,22 +84,22 @@ const getallgroupinvitations= async (id) => {
 
     
 
-    return allgroupinvitations;
+    return allGroupInvitations;
   };
 
-  const updategroupinvitation= async (id, groupinvitationInfo) => {
+  const updateGroupInvitation= async (id, groupInvitationInfo) => {
 
-    const groupinvitationUpdated = await prisma.groupInvitations.update({
+    const groupInvitationUpdated = await prisma.groupInvitations.update({
       where: {
         id:id
       },
-      data: { ...groupinvitationInfo}
+      data: { ...groupInvitationInfo}
     })
-    return groupinvitationUpdated;
+    return groupInvitationUpdated;
   };
   
 
 
 
 
-export default {updategroupinvitation,getgroupinvitationbyid, getallinvitationsforuser, creategroupinvitation, getgroupinvitation, deletegroupinvitation, getallgroupinvitations}
+export default {updateGroupInvitation,getGroupInvitationById, getAllInvitationsForUser, createGroupInvitation, getGroupInvitation, deleteGroupInvitation, getAllGroupInvitations}

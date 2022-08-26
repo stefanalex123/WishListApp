@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 
 
+
 const prisma = new PrismaClient();
 
 
@@ -9,15 +10,15 @@ const Verify_If_Contribution_Invitation_To_Item_Is_Not_Sent= async ( req, res, n
 
 
 try{
-    const contributioninvitation= await prisma.contributionInvitation.findMany({
+    const contributionInvitation= await prisma.contributionInvitation.findMany({
         where: {
-            itemid:req.params.itemid,
-            usercontributerid:req.auth.userid
+            itemId:req.params.itemId,
+            userContributerId:req.auth.userId
         },
     })
 
 
-if(contributioninvitation[0].itemid==req.params.itemid && contributioninvitation[0].usercontributerid==req.auth.userid){
+if(contributionInvitation[0].itemId==req.params.itemId && contributionInvitation[0].usercontributerId==req.auth.userId){
 res.send("Aceasta invitatie exista deja")
 
 }

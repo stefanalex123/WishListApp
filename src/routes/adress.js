@@ -15,7 +15,7 @@ router.route('/')
      ], 
      validationMiddleware,
      jwtMiddleware,
-     adressController.getalladresses)  
+     adressController.getAllAdresses)  
 
 
     .post([
@@ -45,7 +45,7 @@ router.route('/')
         .exists()
         .withMessage('Flat is required'),
 
-        check("postalcode")
+        check("postalCode")
         .exists()
         .withMessage('Postal Code is required')
         .isNumeric()
@@ -57,7 +57,7 @@ router.route('/')
     ], 
     validationMiddleware,
     jwtMiddleware, 
-    adressController.createadress) 
+    adressController.createAdress) 
 
 
     router.route('/:id')
@@ -89,7 +89,7 @@ router.route('/')
         .optional().exists()
         .withMessage('Flat is required'),
 
-        check("postalcode")
+        check("postalCode")
         .optional().exists()
         .withMessage('Postal Code is required')
         .optional().isNumeric()
@@ -100,7 +100,7 @@ router.route('/')
     validationMiddleware,
     jwtMiddleware,
     Verify_If_Acces_Wrong_Adress,
-    adressController.updateadress)
+    adressController.updateAdress)
 
     
     .delete([
@@ -108,7 +108,7 @@ router.route('/')
     validationMiddleware, 
     jwtMiddleware,
     Verify_If_Acces_Wrong_Adress, 
-    adressController.deleteadress)
+    adressController.deleteAdress)
 
 
 

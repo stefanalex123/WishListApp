@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 
+
 const prisma = new PrismaClient();
 
 
@@ -8,14 +9,14 @@ const Verify_If_InvitationContr_To_User_Auth_Is_Sent= async ( req, res, next) =>
 
 
 try{
-    const contributioninvitation= await prisma.contributionInvitation.findUnique({
+    const contributIoninvitation= await prisma.contributionInvitation.findUnique({
         where: {
-            id:req.params.invitationid
+            id:req.params.invitationId
         },
     })
 
 
-if(contributioninvitation.useraskedid==req.auth.userid){
+if(contributionInvitation.userAskedId==req.auth.userId){
 
    next()
 }

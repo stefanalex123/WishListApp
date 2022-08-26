@@ -1,10 +1,8 @@
-import notificationsServices from "../services/notifications.js"
+import notificationsServices from "../services/notifications.js";
 
-const getallnotifications = async (req, res, next) => {
-    try {
-
-        
-        res.json(await notificationsServices.getallnotifications(req.auth.userid));
+const getAllNotifications = async (req, res, next) => {
+    try {     
+        res.json(await notificationsServices.getAllNotifications(req.auth.userId));
     } catch (err) {
         next(err);
     }
@@ -12,8 +10,4 @@ const getallnotifications = async (req, res, next) => {
 
 
 
-
-
-
-
-  export default {getallnotifications}
+  export default {getAllNotifications}

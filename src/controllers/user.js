@@ -1,18 +1,17 @@
+import userServices from "../services/user.js";
 
-import userservices from "../services/user.js";
-
-const adduser = async (req, res, next) => {
+const addUser = async (req, res, next) => {
     try {
-        const newuser = await userservices.adduser(req.body.username, req.body.password);
-        res.json(newuser);
+        const newUser = await userServices.addUser( req.body.username, req.body.password);
+        res.json(newUser);
     } catch (err) {
         next(err);
     }
 };
 
-const loginuser = async (req, res, next) => {
+const loginUser = async (req, res, next) => {
     try {
-        const token = await userservices.loginuser(req.body.username, req.body.password);
+        const token = await userServices.loginUser(req.body.username, req.body.password);
         if(token=="InvalidUser"){
             res.send("The username is incorrect")
         }
@@ -32,4 +31,4 @@ const loginuser = async (req, res, next) => {
 
 
 
-export default { adduser, loginuser};
+export default { addUser, loginUser};

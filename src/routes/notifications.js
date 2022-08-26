@@ -14,7 +14,7 @@ router.route('/')
         ], 
         validationMiddleware,
         jwtMiddleware,
-        notificationController.getallnotifications
+        notificationController.getAllNotifications
         )  
 
 

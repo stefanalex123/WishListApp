@@ -1,8 +1,8 @@
-import wishlistServices from "../services/wishlist.js"
+import wishlistServices from "../services/wishlist.js";
 
 const getAllWishlists = async (req, res, next) => {
     try {
-        res.json(await wishlistServices.getAllWishlists(req.auth.userid));
+        res.json(await wishlistServices.getAllWishlists(req.auth.userId));
     } catch (err) {
         next(err);
     }
@@ -11,8 +11,8 @@ const getAllWishlists = async (req, res, next) => {
 
 const createWishlist = async (req,res,next) => {
     try{
-        const newWishList= await wishlistServices.createWishlist(req.auth.userid,req.body.wishlistname, req.body.wishlistdescription)
-        res.json(newWishList);
+        const newWishlist= await wishlistServices.createWishlist(req.auth.userId,req.body.wishlistName, req.body.wishlistDescription)
+        res.json(newWishlist);
     } catch (err){
         next(err);
     }
@@ -21,17 +21,17 @@ const createWishlist = async (req,res,next) => {
 
 const updateWishlist = async (req, res, next) => {
     try {
-      const wishlist= await wishlistServices.getWishList(req.params.id);
+      const wishlist= await wishlistServices.getWishlist(req.params.id);
       if (!wishlist) {
         throw { message: "Wishlist not found" };
       }
   
-      const response = await wishlistServices.updateWishList(req.params.id, {
-        userid: req.auth.userid || wishlist.userid,
-        wishlistname: req?.body?.wishlistname || wishlist.wishlistname,
-        wishlistdescription: req?.body?.wishlistdescription || wishlist.wishlistdescription,
+      const response = await wishlistServices.updateWishlist(req.params.id, {
+        userId: req.auth.userId || wishlist.userId,
+        wishlistName: req?.body?.wishlistName || wishlist.wishlistName,
+        wishlistDescription: req?.body?.wishlistDescription || wishlist.wishlistdDescription,
         status: wishlist.status,
-        wishlistnritems:wishlist.wishlistnritems,
+        wishlistNrItems:wishlist.wishlistNrItems,
         updatedAt:new Date()
       });
   

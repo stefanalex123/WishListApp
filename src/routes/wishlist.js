@@ -87,7 +87,7 @@ router.route('/')
      validationMiddleware,
      jwtMiddleware, 
      Verify_If_User_Is_Owner_Of_WishList,  
-     itemtowishlistController.getwishlistallitems)  
+     itemtowishlistController.getWishListAllItems)  
 
     .post([ 
     ],
@@ -96,7 +96,7 @@ router.route('/')
     Verify_If_User_Is_Owner_Of_WishList,   
     Verify_If_User_Is_Owner_Of_Item_Body,     
     Verify_If_Item_Body_Is_Not_Shared_In_WishList,  
-    itemtowishlistController.createitemtowishlist)   
+    itemtowishlistController.createItemToWishlist)   
 
 
     router.route('/:id/items/:itemid')
@@ -106,7 +106,7 @@ router.route('/')
     jwtMiddleware,
     Verify_If_User_Is_Owner_Of_WishList, 
     Verify_If_Item_Params_Is_Shared_In_WishList, 
-    itemtowishlistController.deleteitemfromwhishlist) 
+    itemtowishlistController.deleteItemFromWishlist) 
     
     .put([    
     ],
@@ -116,7 +116,7 @@ router.route('/')
     Verify_If_Item_Params_Is_Shared_In_WishList, 
     Verify_If_User_Is_Owner_Of_Item_Body, 
     Verify_If_Item_Body_Is_Not_Shared_In_WishList, 
-    itemtowishlistController.updateitemtowishlist) 
+    itemtowishlistController.updateItemToWishlist) 
 
 
 

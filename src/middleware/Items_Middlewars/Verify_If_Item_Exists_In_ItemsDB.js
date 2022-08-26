@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 
@@ -11,7 +12,7 @@ const Verify_if_Item_Exists_In_ItemsDB = async ( req, res, next) => {
     
     })
     
-    if(item.userid==req.auth.userid){
+    if(item.userId==req.auth.userId){
        next();
     }
     else {

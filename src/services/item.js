@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const deleteitem = async (id) => {
+const deleteItem = async (id) => {
   const item = await prisma.items.delete({
       where: {
           id: id
@@ -11,7 +11,7 @@ const deleteitem = async (id) => {
   return item;
 };
 
-const getitem= async (id) => {
+const getItem= async (id) => {
     const item = await prisma.items.findUnique({
       where: {
         id:id
@@ -29,19 +29,19 @@ const getitem= async (id) => {
     return item;
   };
 
-  const getallitems= async (id) => {
+  const getAllItems= async (id) => {
     const item = await prisma.items.findMany({
       where: {
-        userid:id
+        userId:id
       }
     })
     return item;
   };
 
-  const getallitemsWishlist= async (id) => {
+  const getAllItemsWishlist= async (id) => {
     const item = await prisma.items.findMany({
       where: {
-        userid:id
+        userId:id
       }
     })
     return item;
@@ -51,20 +51,20 @@ const getitem= async (id) => {
 
 
 
-const createitem= async (itemname, userid ,itemlink, itemdescription) =>{
+const createItem= async (itemName, userId ,itemLink, itemDescription) =>{
     const item=await prisma.items.create({
         data: {
-            itemname:itemname,
-            userid:userid,
-            itemlink:itemlink,
-            itemdescription:itemdescription
+            itemName:itemName,
+            userId:userId,
+            itemLink:itemLink,
+            itemDescription:itemDescription
         }
     });
         return item;
 };
 
 
-const updateitem = async (id, itemInfo) => {
+const updateItem = async (id, itemInfo) => {
     const item = await prisma.items.update({
       where: {
         id: id
@@ -74,4 +74,4 @@ const updateitem = async (id, itemInfo) => {
     return item;
   };
 
-export default {createitem, updateitem, getitem, getallitems}
+export default {createItem, updateItem, getItem, getAllItems}

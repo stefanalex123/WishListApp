@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -7,15 +8,15 @@ const Verify_If_Invitation_To_User_Params_Is_Sent = async ( req, res, next) => {
 
 
 try{
-const groupinvitation = await prisma.groupInvitations.findMany({
+const groupInvitation = await prisma.groupInvitations.findMany({
     where: {
-        groupid:req.params.id,
-        userinvitedid:req.params.userinvitedid
+        groupId:req.params.id,
+        userInvitedId:req.params.userInvitedId
     },
 })
 
 
-if(groupinvitation[0].userinvitedid==req.params.userinvitedid && groupinvitation[0].groupid==req.params.id && groupinvitation[0].status=="PENDING"){
+if(groupInvitation[0].userInvitedId==req.params.userInvitedId && groupInvitation[0].groupId==req.params.id && groupInvitation[0].status=="PENDING"){
     next();
 }
 

@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -7,15 +8,15 @@ const Verify_If_User_Is_Member_Of_Group = async ( req, res, next) => {
 
 
 try{
-const groupinvitation = await prisma.groupInvitations.findMany({
+const groupInvitation = await prisma.groupInvitations.findMany({
     where: {
-        groupid:req.params.id,
-        userinvitedid:req.auth.userid
+        groupId:req.params.id,
+        userInvitedId:req.auth.userId
     },
 })
 
-if(groupinvitation[0].status=="ACCEPTED" && groupinvitation[0].groupid==req.params.id &&
-groupinvitation[0].userinvitedid==req.auth.userid){
+if(groupInvitation[0].status=="ACCEPTED" && groupInvitation[0].groupId==req.params.id &&
+groupInvitation[0].userInvitedId==req.auth.userId){
     next();
 }
 

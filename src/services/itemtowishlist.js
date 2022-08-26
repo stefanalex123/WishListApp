@@ -3,47 +3,47 @@ const prisma = new PrismaClient();
 
 import wishlistServices from "../services/wishlist.js"
 
-const deleteitemfromshishlist= async (wishlistid, itemid) => {
+const deleteItemFromWishlist= async (wishlistId, itemId) => {
 
 
-  const itemtowishlist = await prisma.itemtowishlist.findMany({
+  const itemToWishlist = await prisma.itemToWishlist.findMany({
     where: {
-      wishlistid:wishlistid,
-      itemid:itemid
+      wishlistId:wishlistId,
+      itemid:itemId
     }
   })
 
-  const itemtowishlistdeleted = await prisma.itemtowishlist.delete({
+  const itemToWishlistDeleted = await prisma.itemToWishlist.delete({
     where: {
-      id:itemtowishlist[0].id
+      id:itemToWishlist[0].id
     }
    
   })
 
 
-  return itemtowishlistdeleted;
+  return itemToWishlistDeleted;
 };
 
-const getallwishlistItems= async (id) => {
-  const itemtowishlist = await prisma.itemtowishlist.findMany({
+const getAllWishlistItems= async (id) => {
+  const itemToWishlist = await prisma.itemToWishlist.findMany({
     where: {
-      wishlistid:id
+      wishlistId:id
     },
     include: {
      items:true,
          
   }
   })
-  return itemtowishlist;
+  return itemToWishlist;
 };
 
 
 
 
-const getallitemtowishlist= async (id) => {
-    const itemtowishlist = await prisma.itemtowishlist.findMany({
+const getAllItemToWishlist= async (id) => {
+    const itemToWishlist = await prisma.itemToishlist.findMany({
       where: {
-        wishlistid:id
+        wishlistId:id
       },
       include: {
        items:true,
@@ -51,50 +51,50 @@ const getallitemtowishlist= async (id) => {
            
     }
     })
-    return itemtowishlist;
+    return itemToWishlist;
   };
 
-  const getitemtowishlist= async (wishlistid, itemid) => {
-    const itemtowishlist = await prisma.itemtowishlist.findMany({
+  const getItemToWishlist= async (wishlistId, itemId) => {
+    const itemToWishlist = await prisma.itemToWishlist.findMany({
       where: {
-        wishlistid:wishlistid,
-        itemid:itemid
+        wishlistId:wishlistId,
+        itemId:itemId
       }
     })
-    return itemtowishlist;
+    return itemToWishlist;
   };
 
 
 
 
 
-const createitemtowishlist= async (wishlistid ,itemid) =>{
-    const itemtowishlist=await prisma.itemtowishlist.create({
+const createItemToWishlist= async (wishlistId ,itemId) =>{
+    const itemToWishlist=await prisma.itemToWishlist.create({
         data: {
-            wishlistid:wishlistid,
-            itemid:itemid,
-            createdat:new Date()
+            wishlistId:wishlistId,
+            itemId:itemId,
+            createdAt:new Date()
         }
     });
    
 
-        return itemtowishlist;
+        return itemToWishlist;
 };
 
 
-const updateitemtowishlist= async (id, itemtowishlistInfo) => {
+const updateItemToWishlist= async (id, itemToWishlistInfo) => {
 
-  const itemtowishlistupdated = await prisma.itemtowishlist.update({
+  const itemToWishlistUpdated = await prisma.itemToWishlist.update({
     where: {
       id:id
     },
-    data: { ...itemtowishlistInfo}
+    data: { ...itemToWishlistInfo}
   })
-  return itemtowishlistupdated;
+  return itemToWishlistUpdated;
 };
 
 
 
 
 
-export default {createitemtowishlist, getallwishlistItems,getallitemtowishlist, deleteitemfromshishlist, updateitemtowishlist, getitemtowishlist}
+export default {createItemToWishlist, getAllWishlistItems,getAllItemToWishlist, deleteItemFromWishlist, updateItemToWishlist, getItemToWishlist}

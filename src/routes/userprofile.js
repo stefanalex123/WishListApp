@@ -32,7 +32,7 @@ const router = express.Router();
         .matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter"),
 
-        check("phonenumber")
+        check("phoneNumber")
         .exists()
         .withMessage("Phone Number is required")
         .isMobilePhone()
@@ -59,7 +59,7 @@ const router = express.Router();
         .optional().matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter"),
 
-        check("phonenumber")
+        check("phoneNumber")
         .optional().exists()
         .withMessage("Phone Number is required")
         .optional().isMobilePhone()

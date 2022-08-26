@@ -1,21 +1,21 @@
-import groupsinvitationservices from "../services/groupsinvitations.js"
+import groupsInvitationServices from "../services/groupsinvitations.js";
 import notificationsServices from "../services/notifications.js";
-import groupServices from "../services/groups.js"
-import userprofileServices from "../services/userprofile.js"
+import groupServices from "../services/groups.js";
+import userProfileServices from "../services/userprofile.js";
 
-const updategroupinvitation = async (req, res, next) => {
+const updateGroupInvitation = async (req, res, next) => {
     try {
     
-      const response = await groupsinvitationservices.updategroupinvitation(req.params.invitationid, {
+      const response = await groupsInvitationServices.updateGroupInvitation(req.params.invitationId, {
          status:req.body.status,    
       });
 
       //Trimitem o notificare ownerului grupului cu raspunsul la invitatia acestuia
-       const user=await userprofileServices.getUserProfile(req.auth.userid)
-       const groupinvitation=await groupsinvitationservices.getgroupinvitationbyid(req.params.invitationid)
-       const group=await groupServices.getgroup(groupinvitation.groupid)
-      const newnotificaton= await notificationsServices.createnotification(
-         "Utilizatorul" + user.nickname + "a raspuns invitatiei cu " + req.body.status + "pentru grupul" + group.grouptitle, Date.now(), group.groupownerid
+       const user=await userProfileServices.getUserProfile(req.auth.userId)
+       const groupInvitation=await groupsInvitationServices.getGroupinvitationById(req.params.invitationId)
+       const group=await groupServices.getGroup(groupInvitation.groupId)
+      const newNotificaton= await notificationsServices.createNotification(
+         "Utilizatorul" + user.nickname + "a raspuns invitatiei cu " + req.body.status + "pentru grupul" + group.groupTitle, Date.now(), group.groupOwnerId
       )
       res.json("Group Invitation Updated");
     } catch (err) {
@@ -25,24 +25,24 @@ const updategroupinvitation = async (req, res, next) => {
   };
 
 
-const getgroupallinvitations = async (req, res, next) => {
+const getGroupAllInvitations = async (req, res, next) => {
     try {
-        var groupallinvitations=await groupsinvitationservices.getallgroupinvitations(req.params.id);
-        res.json(groupallinvitations)
+        var groupAllInvitations=await groupsInvitationServices.getAllGroupInvitations(req.params.id);
+        res.json(groupAllInvitations)
     } catch (err) {
         next(err);
     }
   };
 
-const creategroupinvitation = async (req,res,next) => {
+const createGroupInvitation = async (req,res,next) => {
     try{
-        const newgroupinvitation= await groupsinvitationservices.creategroupinvitation(req.params.id, req.body.userinvitedid)
+        const newGroupInvitation= await groupsInvitationServices.createGroupInvitation(req.params.id, req.body.userInvitedId)
         //Trimitem o notificare catre userinvitedid ca fost invitat sa acceseze un grup
-        const group=await groupServices.getgroup(req.params.id)
-        const newnotificaton= await notificationsServices.createnotification(
-        "Ai primit o invitatie de la grupul " + group.grouptitle +" " , Date.now(),req.body.userinvitedid
+        const group=await groupServices.getGroup(req.params.id)
+        const newNotificaton= await notificationsServices.createNotification(
+        "Ai primit o invitatie de la grupul " + group.groupTitle +" " , Date.now(),req.body.userInvitedId
         )
-        res.json(newgroupinvitation);
+        res.json(newGroupInvitation);
     } catch (err){
         next(err);
     }
@@ -50,23 +50,23 @@ const creategroupinvitation = async (req,res,next) => {
 };
 
 
-const deletegroupinvitation = async (req, res, next) => {
+const deleteGroupInvitation = async (req, res, next) => {
     try {
-        await groupsinvitationservices.deletegroupinvitation(req.params.id, req.params.userInvitedid);
+        await groupsInvitationServices.deleteGroupInvitation(req.params.id, req.params.userInvitedId);
         res.send("Group invitation deleted");
     } catch (err) {
         next(err);
     }
   };
 
-  const getallinvitationsforuser = async (req, res, next) => {
+  const getAllInvitationsForUser = async (req, res, next) => {
     try {
-        const allinvitationsforuser=await groupsinvitationservices.getallinvitationsforuser(req.auth.id);
-        res.json(allinvitationsforuser)
+        const allInvitationsForUser=await groupsInvitationServices.getAllInvitationsForUser(req.auth.id);
+        res.json(allInvitationsForUser)
     } catch (err) {
         next(err);
     }
   };
 
 
-export default {updategroupinvitation, getallinvitationsforuser , creategroupinvitation, deletegroupinvitation, getgroupallinvitations}
+export default {updateGroupInvitation, getAllInvitationsForUser , createGroupInvitation, deleteGroupInvitation, getGroupAllInvitations}

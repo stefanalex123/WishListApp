@@ -1,9 +1,9 @@
-import userprofileService from "../services/userprofile.js"
+import userProfileService from "../services/userprofile.js";
 import user from "./user.js";
 
 const deleteUserProfile = async (req, res, next) => {
     try {
-        await userprofileService.deleteUserProfile(req.auth.userid);
+        await userProfileService.deleteUserProfile(req.auth.userId);
         res.send("UserProfile deleted");
     } catch (err) {
         next(err);
@@ -12,7 +12,7 @@ const deleteUserProfile = async (req, res, next) => {
 
 const getUserProfile = async (req,res,next)=>{
     try {
-      res.json(await userprofileService.getUserProfile(req.auth.userid));
+      res.json(await userProfileService.getUserProfile(req.auth.userId));
     } catch (err){
       next(err);
     }
@@ -21,9 +21,9 @@ const getUserProfile = async (req,res,next)=>{
 
 const createUserProfile = async (req,res,next) => {
     try {
-       const newuserprofile= await userprofileService.createuserprofile(req.auth.userid,req.body.email, 
-        req.body.nickname, req.body.phonenumber)
-        res.json(newuserprofile);
+       const newUserProfile= await userProfileService.createUserProfile(req.auth.userId,req.body.email, 
+        req.body.nickname, req.body.phoneNumber)
+        res.json(newUserProfile);
     } catch (err){
         next (err);
     }
@@ -34,17 +34,17 @@ const createUserProfile = async (req,res,next) => {
 
 const updateUserProfile = async (req, res, next) => {
     try {
-      const userprofile = await userprofileService.getUserProfile(req.auth.userid);
+      const userProfile = await userProfileService.getUserProfile(req.auth.userId);
   
-      if (!userprofile) {
+      if (!userProfile) {
         throw { message: "User Profile not found" };
       }
   
-      const response = await userprofileService.updateUserProfile(req.auth.userid, {
-        userid: req.auth.userid || userprofile.userid,
-        email: req?.body?.email || userprofile.email,
-        nickname: req?.body?.nickname || userprofile.nickname,
-        phonenumber:req?.body?.phonenumber || userprofile.phonenumber,
+      const response = await userProfileService.updateUserProfile(req.auth.userId, {
+        userId: req.auth.userid || userProfile.userId,
+        email: req?.body?.email || userProfile.email,
+        nickname: req?.body?.nickname || userProfile.nickname,
+        phoneNumber:req?.body?.phonenumber || userProfile.phoneNumber,
       });
   
       res.json(response);

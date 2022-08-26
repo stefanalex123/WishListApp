@@ -2,105 +2,105 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-const deletecontributioninvitation= async (itemid, usercontributerid) => {
+const deleteContributionInvitation= async (itemId, userContributerId) => {
 
 
-    const contributioninvitation = await prisma.contributionInvitation.findMany({
+    const contributionInvitation = await prisma.contributionInvitation.findMany({
       where: {
-        itemid:itemid,
-        usercontributerid:usercontributerid
+        itemId:itemId,
+        userContributerId:userContributerId
       }
     })
   
-    const contributioninvitationdeleted = await prisma.contributionInvitation.delete({
+    const contributionInvitationDeleted = await prisma.contributionInvitation.delete({
       where: {
-        id:contributioninvitation[0].id
+        id:contributionInvitation[0].id
       }
      
     })
 
-    return contributioninvitationdeleted;
+    return contributionInvitationDeleted;
 
 }
   
 
-const getcontributioninvitation= async (itemid, usercontributerid) => {
-    const contributioninvitation = await prisma.contributionInvitation.findMany({
+const getContributionInvitation= async (itemId, userContributerId) => {
+    const contributionInvitation = await prisma.contributionInvitation.findMany({
       where: {
-        itemid:itemid,
-        usercontributerid:usercontributerid
+        itemId:itemId,
+        userContributerId:userContributerId
       }
     })
-    return contributioninvitation;
+    return contributionInvitation;
   };
 
-  const getcontributioninvitation2= async (id) => {
-    const contributioninvitation = await prisma.contributionInvitation.findUnique({
+  const getContributionInvitation2= async (id) => {
+    const contributionInvitation = await prisma.contributionInvitation.findUnique({
       where: {
       id:id
       }
     })
-    return contributioninvitation;
+    return contributionInvitation;
   };
 
 
 
 
 
-const createcontributioninvitation= async (itemid, usercontributerid,useraskedid) =>{
-    const contributioninvitation=await prisma.contributionInvitation.create({
+const createContributionInvitation= async (itemId, userContributerId,userAskedId) =>{
+    const contributionInvitation=await prisma.contributionInvitation.create({
         data: {
-            itemid:itemid,
-            usercontributerid:usercontributerid,
+            itemId:itemId,
+            userContributerId:userContributerId,
             status:"PENDING",
-            useraskedid:useraskedid
+            userAskedId:userAskedId
         }
     });
-        return contributioninvitation;
+        return contributionInvitation;
 };
 
 
-  const getallcontributioninvitationsforuser= async (id) => {
-    const allcontributioninvitations = await prisma.contributionInvitation.findMany({
+  const getAllContributionInvitationsForUser= async (id) => {
+    const allContributionInvitations = await prisma.contributionInvitation.findMany({
       where: {
-        useraskedid:id
+        userAskedId:id
       }
     })
 
 
-    return allcontributioninvitations;
+    return allContributionInvitations;
   };
 
 
 
-  const updatecontributioninvitation= async (id, contributioninvitationInfo) => {
+  const updateContributionInvitation= async (id, contributionInvitationInfo) => {
 
-    const contributioninvitation = await prisma.contributionInvitation.update({
+    const contributionInvitation = await prisma.contributionInvitation.update({
       where: {
         id:id
       },
-      data: { ...contributioninvitationInfo}
+      data: { ...contributionInvitationInfo}
     })
-    return updatecontributioninvitation;
+    return contributionInvitation;
   };
 
-  const getcontributorsforitem= async (id) => {
-    const contributorsforitem = await prisma.contributionInvitation.findMany({
+  const getContributorsForItem= async (id) => {
+    const contributorsForItem = await prisma.contributionInvitation.findMany({
       where: {
-        itemid:id
+        itemId:id
       },
       include: {
        user:true
       }
     })
 
-return contributorsforitem;
+return contributorsForItem;
 }
   
 
 
 
 
-export default {getcontributorsforitem, createcontributioninvitation, getcontributioninvitation2 ,updatecontributioninvitation, deletecontributioninvitation, getallcontributioninvitationsforuser, getcontributioninvitation}
+export default {getContributorsForItem, createContributionInvitation, getContributionInvitation2 ,updateContributionInvitation, deleteContributionInvitation, getAllContributionInvitationsForUser, getContributionInvitation}
 
 

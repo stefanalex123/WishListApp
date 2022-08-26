@@ -18,10 +18,10 @@ router.route('/')
         ], 
         validationMiddleware,
         jwtMiddleware,
-        itemController.getallitems)  
+        itemController.getAllItems)  
 
         .post([
-        check("itemtitle")
+        check("itemName")
         .exists()
         .withMessage('is required')
         .isLength({ min: 4})
@@ -29,13 +29,13 @@ router.route('/')
         .matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter"),
 
-        check("itemlink")
+        check("itemLink")
         .exists()
         .withMessage('is required')
         .isURL()
         .withMessage('You have to introduce a link'),
 
-        check("itemdescription")
+        check("itemDescription")
         .exists()
         .withMessage('is required')
         .isLength({ min: 10})
@@ -48,7 +48,7 @@ router.route('/')
         ],
         validationMiddleware,
         jwtMiddleware, 
-        itemController.createitem) 
+        itemController.createItem) 
     
         router.route('/:id')
         
@@ -56,20 +56,20 @@ router.route('/')
         ], 
         validationMiddleware,
         jwtMiddleware,
-        itemController.getitem)  
+        itemController.getItem)  
 
         .put([
-        check("itemtitle")
+        check("itemName")
         .optional().isLength({ min: 4})
         .withMessage("Item Title need at least 4 characters")
         .optional().matches(/^[a-zA-Z][\w\s-]+/)
         .withMessage("It has to start with a letter"),
 
-        check("itemlink")
+        check("itemLink")
         .optional().isURL()
         .withMessage('You have to introduce a link'),
 
-        check("itemdescription")
+        check("itemDescription")
         .optional().isLength({ min: 10})
         .exists()
         .withMessage('is required')
@@ -83,14 +83,14 @@ router.route('/')
     validationMiddleware,
     jwtMiddleware, 
     Verify_If_Item_Exists_In_ItemsDB,
-    itemController.updateitem)
+    itemController.updateItem)
 
     .delete([   
     ],
     validationMiddleware, 
     jwtMiddleware,
     Verify_If_Item_Exists_In_ItemsDB,
-    itemController.deleteitem
+    itemController.deleteItem
     )
 
 

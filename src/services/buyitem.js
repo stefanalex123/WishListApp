@@ -1,30 +1,30 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-const createbuyitem= async (userbuyerid ,itemid) =>{
-    const buyitem=await prisma.buyItem.create({
+const createBuyItem= async (userBuyerId ,itemId) =>{
+    const buyItem=await prisma.buyItem.create({
         data: {
-            itemid:itemid,
-            userbuyerid:userbuyerid,
-            userstatus:"FirstBuyer"
+            itemId:itemId,
+            userBuyerId:userBuyerId,
+            userStatus:"FirstBuyer"
         }
     });
    
 
-        return buyitem;
+        return buyItem;
 };
 
-const getbuyersforitem= async (id) => {
-    const buyersforitem = await prisma.buyItem.findMany({
+const getBuyersForItem= async (id) => {
+    const buyersForItem = await prisma.buyItem.findMany({
       where: {
-        itemid:id
+        itemId:id
       },
       include: {
         user:true
       }
     })
 
-return buyersforitem;
+return buyersForItem;
 }
 
 
@@ -35,4 +35,4 @@ return buyersforitem;
 
 
 
-export default {createbuyitem, getbuyersforitem}
+export default {createBuyItem, getBuyersForItem}

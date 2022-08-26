@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -7,14 +8,14 @@ const Verify_If_Item_Params_Is_Shared_In_WishList = async ( req, res, next) => {
 
 
 try{
-const itemtowishlist = await prisma.itemtowishlist.findMany({
+const itemToWishlist = await prisma.itemToWishlist.findMany({
     where: {
-        wishlistid:req.params.wishlistid,
-        itemid:req.params.itemid
+        wishlistId:req.params.wishlistId,
+        itemId:req.params.itemId
     },
 })
 
-if(itemtowishlist[0].itemid==req.params.itemid && itemtowishlist[0].wishlistid==req.params.wishlistid){
+if(itemToWishlist[0].itemId==req.params.itemId && itemToWishlist[0].wishlistId==req.params.wishlistId){
    //Acest item exista in wishlist ca sa il modificam/stergem
    next()
 }

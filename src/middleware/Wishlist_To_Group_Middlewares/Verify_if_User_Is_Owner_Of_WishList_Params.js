@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -9,11 +10,11 @@ const Verify_if_User_Is_Owner_Of_WishList_Params = async ( req, res, next) => {
 try{
 const wishlist = await prisma.wishlist.findUnique({
     where: {
-        id:req.params.wishlistid
+        id:req.params.wishlistId
     },
 })
 
-if(wishlist.userid==req.auth.userid){
+if(wishlist.userId==req.auth.userId){
 // Userul detine acest wishlit
     next()
 }

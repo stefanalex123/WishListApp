@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
+
 const prisma = new PrismaClient();
 
 
@@ -7,15 +8,15 @@ const Verify_If_User_Body_Exists = async ( req, res, next) => {
 
 
 try{
-const userprofile = await prisma.userProfile.findUnique({
+const userProfile = await prisma.userProfile.findUnique({
     where: {
-        userid:req.body.userinvitedid
+        userId:req.body.userInvitedId
     
     },
 })
 
 
-if(userprofile.userid==req.body.userinvitedid){
+if(userProfile.userId==req.body.userInvitedId){
    //Userul caruia ii trimitem invitatie exista
    next()
 }

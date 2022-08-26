@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 const getAllWishlists= async (id) => {
     const wishlist = await prisma.wishlist.findMany({
       where: {
-        userid:id
+        userId:id
       }
     })
     return wishlist;
@@ -13,7 +13,7 @@ const getAllWishlists= async (id) => {
 
 
 
-const getWishList= async (id) => {
+const getWishlist= async (id) => {
     const wishlist = await prisma.wishlist.findUnique({
       where: {
         id:id
@@ -22,12 +22,12 @@ const getWishList= async (id) => {
     return wishlist;
   };
 
-const createWishlist= async (userid ,wishlistname, wishlistdescription) =>{
+const createWishlist= async (userId ,wishlistName, wishlistDescription) =>{
     const wishlist=await prisma.wishlist.create({
         data: {
-            userid:userid,
-            wishlistname:wishlistname,
-            wishlistdescription:wishlistdescription,
+            userId:userId,
+            wishlistName:wishlistName,
+            wishlistDescription:wishlistDescription,
         }
     });
         return wishlist;
@@ -54,4 +54,4 @@ const updateWishList = async (id, wishlistInfo) => {
     return wishlist;
   };
 
-export default {createWishlist, getWishList, updateWishList, getAllWishlists, deleteWishlist}
+export default {createWishlist, getWishlist, updateWishList, getAllWishlists, deleteWishlist}

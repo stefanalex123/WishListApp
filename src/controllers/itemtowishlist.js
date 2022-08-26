@@ -1,19 +1,18 @@
-import itemtowishlistservices from "../services/itemtowishlist.js";
+import itemToWishlistServices from "../services/itemtowishlist.js";
 import wishlist from "./wishlist.js";
-import itemService from "../services/item.js"
+import itemService from "../services/item.js";
 import item from "./item.js";
-import wishlistServices from "../services/wishlist.js"
+import wishlistServices from "../services/wishlist.js";
 
-
-const updateitemtowishlist = async (req, res, next) => {
+const updateItemToWishlist = async (req, res, next) => {
     try {
-      const itemtowishlist = await itemtowishlistservices.getitemtowishlist(req.params.id, req.params.itemid);
-      if (!itemtowishlist) {
+      const itemToWishlist = await itemToWishlistServices.getItemToWishlist(req.params.id, req.params.itemId);
+      if (!itemToWishlist) {
         throw { message: "Item not found in wishlist" };
       }
-      const response = await itemtowishlistservices.updateitemtowishlist(itemtowishlist[0].id, {
-        itemid:req.body.itemid || itemtowishlist.itemid,
-         updatedat: new Date(),
+      const response = await itemToWishlistServices.updateItemToWishlist(itemToWishlist[0].id, {
+        itemId:req.body.itemId || itemToWishlist.itemId,
+         updatedAt: new Date(),
       });
       res.json("Item Updated");
     } catch (err) {
@@ -24,29 +23,29 @@ const updateitemtowishlist = async (req, res, next) => {
 
 
 
-const deleteitemfromwhishlist = async (req, res, next) => {
+const deleteItemFromWishlist = async (req, res, next) => {
     try {
-        await itemtowishlistservices.deleteitemfromshishlist(req.params.id,req.params.itemid);
+        await itemToWishlistServices.deleteItemFromWishlist(req.params.id,req.params.itemId);
         //Daca stergem si ramane wishlistul gol schimbam statusul
-        const wishlist= await wishlistServices.getWishList(req.params.id);
-        if(wishlist.wishlistnritems==0){
+        const wishlist= await wishlistServices.getWishlist(req.params.id);
+        if(wishlist.wishlistNrItems==0){
           
-        await wishlistServices.updateWishList(req.params.id, {
-        userid: wishlist.userid,
-        wishlistname: wishlist.wishlistname,
-        wishlistdescription: wishlist.wishlistdescription,
+        await wishlistServices.updateWishlist(req.params.id, {
+        userId: wishlist.userId,
+        wishlistName: wishlist.wishlistName,
+        wishlistDescription: wishlist.wishlistDescription,
         status:"UNAVAILABLE",
-        wishlistnritems:wishlist.wishlistnritems-1,
+        wishlistNrItems:wishlist.wishlistNrItems-1,
         updatedAt:new Date()
   });
 }
 else {
-  await wishlistServices.updateWishList(req.params.id, {
-    userid: wishlist.userid,
-    wishlistname: wishlist.wishlistname,
-    wishlistdescription: wishlist.wishlistdescription,
+  await wishlistServices.updateWishlist(req.params.id, {
+    userId: wishlist.userid,
+    wishlistName: wishlist.wishlistName,
+    wishlistDescription: wishlist.wishlistDescription,
     status:"Unavailable, add at least one item to it",
-    wishlistnritems:wishlist.wishlistnritems-1,
+    wishlistNrItems:wishlist.wishlistNrItems-1,
     updatedAt:new Date()
 });
 
@@ -61,38 +60,38 @@ else {
 
 
 
-const getwishlistallitems = async (req, res, next) => {
+const getWishListAllItems = async (req, res, next) => {
     try {
-        var wishlistallitems=await itemtowishlistservices.getallwishlistItems(req.params.wishlistid);
-        res.json(wishlistallitems)
+        var wishlistAllItems=await itemToWishlistServices.getAllWishlistItems(req.params.wishlistId);
+        res.json(wishlistAllItems)
     } catch (err) {
         next(err);
     }
   };
 
 
-const createitemtowishlist = async (req,res,next) => {
+const createItemToWishlist = async (req,res,next) => {
     try{
-        const newitemtowishlist= await itemtowishlistservices.createitemtowishlist(req.params.id, req.body.itemid)
+        const newItemToWishlist= await itemToWishlistServices.createItemToWishlist(req.params.id, req.body.itemId)
         //Am adaugat item in wishlist, acuma facem update la statusul din wihhlist (available)
-        const wishlist= await wishlistServices.getWishList(req.params.id);
+        const wishlist= await wishlistServices.getWishlist(req.params.id);
         await wishlistServices.updateWishList(req.params.id, {
-        userid: wishlist.userid,
-        wishlistname: wishlist.wishlistname,
-        wishlistdescription: wishlist.wishlistdescription,
+        userId: wishlist.userId,
+        wishlistName: wishlist.wishlistName,
+        wishlistDescription: wishlist.wishlistDescription,
         status:"AVAILABLE",
-        wishlistnritems:wishlist.wishlistnritems+1,
+        wishlistNrItems:wishlist.wishlistNrItems+1,
         updatedAt:new Date()
   });
 
 
 
 
-        res.json(newitemtowishlist);
+        res.json(newItemToWishlist);
     } catch (err){
         next(err);
     }
 
 };
 
-export default {createitemtowishlist, getwishlistallitems, deleteitemfromwhishlist, updateitemtowishlist}
+export default {createItemToWishlist, getWishListAllItems, deleteItemFromWishlist, updateItemToWishlist}
