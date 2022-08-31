@@ -20,9 +20,10 @@ model User {
   userProfile   UserProfile[] @relation ("userprofile")
   userAdresses  Adress[]      @relation ("useradresses")
   itemBoughtByUsers BuyItem[] @relation ("itemsboughtbyuser")
-  itemsBoughtByUserWithContribution ContributionInvitation[] @relation ("itemsboughtbyuserwithcontribution")
-  usersAskedForContribution         ContributionInvitation[] @relation ("usersaskedforcontribution")
-  notifications                     Notifications[]          @relation("notificantions")
+  itemsBoughtByUserWithContribution ContributionInvitation[]    @relation ("itemsboughtbyuserwithcontribution")
+  usersAskedForContribution         ContributionInvitation[]    @relation ("usersaskedforcontribution")
+  notifications                     Notifications[]             @relation("notificantions")
+  referralsInvitations              mailsReferralsInvitations[] @relation("referralsinvitations")
   @@map("users")
 }
 
@@ -32,6 +33,8 @@ user             User     @relation("userprofile", fields: [userId], references:
 email            String
 nickname         String   @unique
 phoneNumber      String
+mailsNotifications String
+socketId            String
 user_group_invitation GroupInvitations[] @relation ("usergroupinvitation")
 }
 
@@ -43,7 +46,7 @@ itemName           String
 itemLink           String
 itemDescription    String
 status             String  @default ("DISPONIBLE")
-wishlists          Itemtowishlist[]      @relation ("wishlists")
+wishlists          ItemToWishlist[]      @relation ("wishlists")
 itemBoughtBy       BuyItem[]             @relation ("itemboughtby")
 itemBoughtByItemBoughtByCountribution     ContributionInvitation[]            @relation ("itemboughtbycountribution")
   @@map ("items")
@@ -71,12 +74,12 @@ status                 String @default("Unavailable, add at least one item to it
 wishlistNrItems        Int @default(0)
 createdAt              DateTime @default(now())
 updatedAt              DateTime @default(now())
-wishlistItems          Itemtowishlist[]      @relation ("wishlistitems")
-wishlistGroups         Wishlisttogroup[]     @relation ("wishlistgroups")
+wishlistItems          ItemToWishlist[]      @relation ("wishlistitems")
+wishlistGroups         WishlistToGroup[]     @relation ("wishlistgroups")
   @@map ("wishlist")
 }
 
-model Itemtowishlist {
+model ItemToWishlist {
 id            String   @id @default(uuid())
 wishlistId    String
 wishlist      Wishlist     @relation("wishlistitems", fields: [wishlistId], references: [id], onDelete: Cascade)
@@ -92,12 +95,13 @@ id                String   @id @default(uuid())
 groupTitle        String
 groupDescription  String
 groupOwnerId      String
-groupWishlists    Wishlisttogroup[]     @relation ("groupswihslists")
+groupWishlists    WishlistToGroup[]     @relation ("groupswihslists")
 invitations_to_this_group  GroupInvitations[] @relation ("invitationtothisgroup")
+referralsInvitations  mailsReferralsInvitations[]   @relation("referralsinvitations2")
 @@map ("group")
 }
 
-model Wishlisttogroup {
+model WishlistToGroup {
 id            String   @id @default(uuid())
 wishlistId    String
 wishlist      Wishlist     @relation("wishlistgroups", fields: [wishlistId], references: [id], onDelete: Cascade)
@@ -143,7 +147,22 @@ notificationDescription   String
 deliverAt                 DateTime @default(now())
 userdeliverId             String  
 user                      User      @relation ("notificantions",  fields: [userdeliverId], references: [id], onDelete: Cascade)
+ 
 }
+
+
+model mailsReferralsInvitations{
+id             String   @id @default(uuid())
+userDeliverId  String
+user           User                 @relation ("referralsinvitations",  fields: [userDeliverId], references: [id], onDelete: Cascade)        
+groupId        String
+group          Group                @relation ("referralsinvitations2",  fields: [groupId], references: [id], onDelete: Cascade)        
+emailSend          String
+status              String
+}
+
+
+
 
 
 

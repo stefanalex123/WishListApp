@@ -51,7 +51,7 @@ const updateItem = async (req, res, next) => {
   
       const response = await itemService.updateItem(req.params.id, {
         userId: req.auth.userId || item.userId,
-        itemTitle: req?.body?.itemTitle || item.itemTitle,
+        itemName: req?.body?.itemName || item.itemTitle,
         itemLink: req?.body?.itemLink || item.itemLink,
         itemDescription:req?.body?.itemDescription || item.itemDescription,
       });

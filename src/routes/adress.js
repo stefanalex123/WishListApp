@@ -3,8 +3,7 @@ import validationMiddleware from "../middleware/others_Middlewares/validationMid
 import { check } from "express-validator";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 import adressController from "../controllers/adress.js"
-import Verify_If_Acces_Wrong_Adress from "../middleware/Adress_Middlewares/Verify_If_Acces_Wrong_Adress.js";
-
+import accesWrongAdressMiddleware from "../middleware/Adress_Middlewares/accesWrongAdressMiddleware.js";
 
 
 const router = express.Router();
@@ -99,7 +98,7 @@ router.route('/')
     ],
     validationMiddleware,
     jwtMiddleware,
-    Verify_If_Acces_Wrong_Adress,
+    accesWrongAdressMiddleware, //Verify_If_Acces_Wrong_Adress,
     adressController.updateAdress)
 
     
@@ -107,7 +106,7 @@ router.route('/')
            ], 
     validationMiddleware, 
     jwtMiddleware,
-    Verify_If_Acces_Wrong_Adress, 
+    accesWrongAdressMiddleware, //Verify_If_Acces_Wrong_Adress, 
     adressController.deleteAdress)
 
 

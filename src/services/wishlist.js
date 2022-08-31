@@ -34,7 +34,7 @@ const createWishlist= async (userId ,wishlistName, wishlistDescription) =>{
 };
 
 
-const updateWishList = async (id, wishlistInfo) => {
+const updateWishlist = async (id, wishlistInfo) => {
     const wishlist = await prisma.wishlist.update({
       where: {
         id: id
@@ -54,4 +54,4 @@ const updateWishList = async (id, wishlistInfo) => {
     return wishlist;
   };
 
-export default {createWishlist, getWishlist, updateWishList, getAllWishlists, deleteWishlist}
+export default {createWishlist, getWishlist, updateWishlist, getAllWishlists, deleteWishlist}

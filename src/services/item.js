@@ -18,13 +18,7 @@ const getItem= async (id) => {
       },
       include: {
         user:true
-      }
-       
-      
-    
-      
-     
-      
+      }   
     })
     return item;
   };

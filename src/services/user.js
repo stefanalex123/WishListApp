@@ -4,6 +4,18 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 
+const getUser = async(username) => {
+   
+            const user =await prisma.user.findMany({
+                where: {    
+                    username:username                     
+                }
+      });
+
+ 
+    return user;
+    };
+
 
 const addUser = async(username, password) => {
     const salt = bcrypt.genSaltSync(10);
@@ -44,6 +56,26 @@ const loginUser = async (username,password) => {
 }
 
 
+const addUserByReferralLink = async(username, password) => {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(password, salt);
+
+            const user =await prisma.user.create({
+                data: {
+               
+                    username:username,
+                    password:hash,
+                    
+                }
+      });
+
+ 
+    return user;
 
 
-export default { addUser,loginUser};
+    };
+
+
+
+
+export default { addUser,loginUser, addUserByReferralLink, getUser};

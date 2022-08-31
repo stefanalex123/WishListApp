@@ -34,12 +34,26 @@ const updateContributionInvitation = async (req, res, next) => {
       const newNotificaton= await notificationsServices.createNotification(
       "Utilizatorul" + user.nickname + "a raspuns invitatiei cu " + req.body.status + "pentru itemul " + item.itemname, Date.now(), theContributionInvitation.userAskedId
       )
+      if(user.mailsNotifications=="ON"){
+        sendmail("Notification", "Utilizatorul" + user.nickname + "a raspuns invitatiei cu " + req.body.status + "pentru itemul " + item.itemName, user.email)
+      }
+
+
+
         if(req.body.status=="ACCEPTED"){
       // Trimitem notificare utilizatorului care detine itemul ca are un nou colaborator
       const newNotificaton= await notificationsServices.createNotification(
-        "Utilizatorul " + user.nickname + " este un nou colaborator pentru itemul " + item.itemname, Date.now(), item.userId
+        "Utilizatorul " + user.nickname + " este un nou colaborator pentru itemul " + item.itemName, Date.now(), item.userId
       )
+
+
+      if(user.mailsNotifications=="ON"){
+        sendmail("Notification", "Utilizatorul " + user.nickname + " este un nou colaborator pentru itemul " + item.itemName, user.email)
       }
+
+      }
+
+      
 
       res.send("Ai raspuns la invitatie")
       
@@ -65,9 +79,13 @@ const updateContributionInvitation = async (req, res, next) => {
           const item= await itemService.getItem(req.params.itemId)
           const user=await userProfileServices.getUserProfile(req.auth.userId)
           const newNotification= await notificationsServices.createNotification(
-          "Ai primit o invitatie de colaborare pentru itemul  " + item.itemname + "de la utilizatorul " + " " + user.nickname , Date.now(),req.body.userAskedId
+          "Ai primit o invitatie de colaborare pentru itemul  " + item.itemName + "de la utilizatorul " + " " + user.nickname , Date.now(),req.body.userAskedId
            )
-    
+
+           if(user.mailsNotifications=="ON"){
+            sendmail("Notification", "Ai primit o invitatie de colaborare pentru itemul  " + item.itemName + "de la utilizatorul " + " " + user.nickname + item.itemName, user.email)
+          }
+
         res.json(newContributionInvitation);
     } catch (err){
         next(err);

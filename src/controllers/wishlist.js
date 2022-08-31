@@ -26,10 +26,10 @@ const updateWishlist = async (req, res, next) => {
         throw { message: "Wishlist not found" };
       }
   
-      const response = await wishlistServices.updateWishlist(req.params.id, {
+      const response = await wishlistServices.updateWishList(req.params.id, {
         userId: req.auth.userId || wishlist.userId,
         wishlistName: req?.body?.wishlistName || wishlist.wishlistName,
-        wishlistDescription: req?.body?.wishlistDescription || wishlist.wishlistdDescription,
+        wishlistDescription: req?.body?.wishlistDescription || wishlist.wishlistDescription,
         status: wishlist.status,
         wishlistNrItems:wishlist.wishlistNrItems,
         updatedAt:new Date()

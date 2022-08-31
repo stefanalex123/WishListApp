@@ -4,8 +4,8 @@ import itemController from "../controllers/item.js"
 import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
+import itemExistsMiddleware from "../middleware/Items_Middlewars/itemExistsMiddleware.js";
 
-import Verify_If_Item_Exists_In_ItemsDB from "../middleware/Items_Middlewars/Verify_If_Item_Exists_In_ItemsDB.js"
 
 
 
@@ -82,14 +82,14 @@ router.route('/')
     ], 
     validationMiddleware,
     jwtMiddleware, 
-    Verify_If_Item_Exists_In_ItemsDB,
+     itemExistsMiddleware,                       //Verify_If_Item_Exists_In_ItemsDB,
     itemController.updateItem)
 
     .delete([   
     ],
     validationMiddleware, 
     jwtMiddleware,
-    Verify_If_Item_Exists_In_ItemsDB,
+    itemExistsMiddleware,                          //Verify_If_Item_Exists_In_ItemsDB,
     itemController.deleteItem
     )
 

@@ -4,8 +4,7 @@ import { check } from "express-validator";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 
 import userprofileController from "../controllers/userprofile.js"
-//import Verify_if_Nickname_is_taken from "../middleware/User_Profile_Middlewares/Verify_if_Nickname_is_taken.js";
-import Verify_if_Nickname_taken from "../middleware/User_Profile_Middlewares/Verify_if_Nickname_taken.js"
+import nicknameTakenMiddleware from "../middleware/User_Profile_Middlewares/nicknameTakenMiddleware.js";
 const router = express.Router();
 
 
@@ -36,12 +35,16 @@ const router = express.Router();
         .exists()
         .withMessage("Phone Number is required")
         .isMobilePhone()
-        .withMessage("Phone Number Invalid")
+        .withMessage("Phone Number Invalid"),
+
+        check("mailsNotifications")
+        .exists()
+        .withMessage("MailsNotifications is required")
         
     ],
     validationMiddleware,
     jwtMiddleware,
-    Verify_if_Nickname_taken,
+    nicknameTakenMiddleware, //Verify_if_Nickname_taken,
     userprofileController.createUserProfile)
 
     .put([
@@ -69,7 +72,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-    Verify_if_Nickname_taken,
+    nicknameTakenMiddleware,              //Verify_if_Nickname_taken,
     userprofileController.updateUserProfile)
 
     .get([

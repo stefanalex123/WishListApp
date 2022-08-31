@@ -22,7 +22,7 @@ const getUserProfile = async (req,res,next)=>{
 const createUserProfile = async (req,res,next) => {
     try {
        const newUserProfile= await userProfileService.createUserProfile(req.auth.userId,req.body.email, 
-        req.body.nickname, req.body.phoneNumber)
+        req.body.nickname, req.body.phoneNumber, req.body.mailsNotifications)
         res.json(newUserProfile);
     } catch (err){
         next (err);
@@ -41,10 +41,13 @@ const updateUserProfile = async (req, res, next) => {
       }
   
       const response = await userProfileService.updateUserProfile(req.auth.userId, {
-        userId: req.auth.userid || userProfile.userId,
+        userId: req.auth.userId || userProfile.userId,
         email: req?.body?.email || userProfile.email,
         nickname: req?.body?.nickname || userProfile.nickname,
         phoneNumber:req?.body?.phonenumber || userProfile.phoneNumber,
+        mailsNotifications:req.body.mailsNotifications || userProfile.mailsNotifications,
+        socketId:userProfile.socketId
+        
       });
   
       res.json(response);

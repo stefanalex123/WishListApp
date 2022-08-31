@@ -25,11 +25,10 @@ const deleteGroupInvitation= async (groupId, userInvitedId) => {
 }
   
 
-const getGroupInvitation= async (groupId, userInvitedId) => {
-    const groupInvitation = await prisma.groupInvitations.findMany({
+const getGroupInvitation= async (id) => {
+    const groupInvitation = await prisma.groupInvitations.findUnique({
       where: {
-        groupId:groupId,
-        userInvitedId:userInvitedId
+      id:id
       }
     })
     return groupInvitation;

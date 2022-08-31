@@ -23,13 +23,16 @@ const getUserProfile= async (id) => {
 
 
 
-const createUserProfile= async (userId, email ,nickname, phoneNumber) =>{
+const createUserProfile= async (userId, email ,nickname, phoneNumber, mailsNotifications, socketId) =>{
     const userProfile=await prisma.userProfile.create({
         data: {
             userId:userId,
             email:email,
             nickname:nickname,
-            phoneNumber:phoneNumber
+            phoneNumber:phoneNumber,
+            mailsNotifications:mailsNotifications,
+            socketId:"0"
+            
         }
     });
         return userProfile;
@@ -39,7 +42,7 @@ const createUserProfile= async (userId, email ,nickname, phoneNumber) =>{
 const updateUserProfile = async (id, userProfileInfo) => {
     const userProfile = await prisma.userProfile.update({
       where: {
-        userid: id
+        userId: id
       },
       data: { ...userProfileInfo }
     })

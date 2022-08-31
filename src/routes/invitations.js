@@ -3,12 +3,15 @@ import validationMiddleware from "../middleware/others_Middlewares/validationMid
 import { check } from "express-validator";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 import groupController from "../controllers/groups.js"
-import Verify_if_Owner_Group from "../middleware/Group_Middlewares/Verify_if_Owner_Group.js" 
+import owenerGroupMiddleware from "../middleware/Group_Middlewares/owenerGroupMiddleware.js";
+import invitationUserSentMiddleware from "../middleware/Group_Invitations_Middleware/invitationUserSentMiddleware.js";
+import invitationContributionUserSentMiddleware from "../middleware/Contribution_Invitations_Middleware/invitationContributionUserSentMiddleware.js"
+
+
+
 import groupinvitationController from "../controllers/groupsinvitations.js"
 import wishlisttogroupController from "../controllers/wishlisttogroup.js"
-import Verify_If_Invitation_To_User_Auth_Is_Sent from "../middleware/Group_Invitations_Middleware/Verify_If_Invitation_To_User_Auth_Is_Sent.js"
 import statusMiddleware from "../middleware/Group_Invitations_Middleware/statusMiddleware.js";
-import Verify_If_InvitationContr_To_User_Auth_Is_Sent from "../middleware/Contribution_Invitations_Middleware/Verify_If_InvitationContr_To_User_Auth_Is_Sent.js"
 import contributionInvitationController from "../controllers/contributioninvitations.js"
 const router = express.Router();
 
@@ -22,13 +25,13 @@ jwtMiddleware,
 groupinvitationController.getAllInvitationsForUser)   
 
 
-router.route('/groupinvitations/:invitationid/status')
+router.route('/groupinvitations/:invitationId/status')
 .put([ 
 ],
 statusMiddleware,
 validationMiddleware,
 jwtMiddleware,
-Verify_If_Invitation_To_User_Auth_Is_Sent,  
+invitationUserSentMiddleware, //Verify_If_Invitation_To_User_Auth_Is_Sent,  
 groupinvitationController.updateGroupInvitation)
 
 
@@ -47,7 +50,7 @@ router.route('/contributioninvitations/:invitationid/status')
 statusMiddleware,
 validationMiddleware,
 jwtMiddleware,
-Verify_If_InvitationContr_To_User_Auth_Is_Sent, 
+invitationUserSentMiddleware,  //Verify_If_InvitationContr_To_User_Auth_Is_Sent, 
 contributionInvitationController.updateContributionInvitation,
 ) 
 

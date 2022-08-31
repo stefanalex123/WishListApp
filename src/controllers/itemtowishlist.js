@@ -28,7 +28,7 @@ const deleteItemFromWishlist = async (req, res, next) => {
         await itemToWishlistServices.deleteItemFromWishlist(req.params.id,req.params.itemId);
         //Daca stergem si ramane wishlistul gol schimbam statusul
         const wishlist= await wishlistServices.getWishlist(req.params.id);
-        if(wishlist.wishlistNrItems==0){
+        if(wishlist.wishlistNrItems==1){
           
         await wishlistServices.updateWishlist(req.params.id, {
         userId: wishlist.userId,
@@ -41,10 +41,10 @@ const deleteItemFromWishlist = async (req, res, next) => {
 }
 else {
   await wishlistServices.updateWishlist(req.params.id, {
-    userId: wishlist.userid,
+    userId: wishlist.userId,
     wishlistName: wishlist.wishlistName,
     wishlistDescription: wishlist.wishlistDescription,
-    status:"Unavailable, add at least one item to it",
+    status:"AVAILABLE",
     wishlistNrItems:wishlist.wishlistNrItems-1,
     updatedAt:new Date()
 });
@@ -60,7 +60,7 @@ else {
 
 
 
-const getWishListAllItems = async (req, res, next) => {
+const getWishlistAllItems = async (req, res, next) => {
     try {
         var wishlistAllItems=await itemToWishlistServices.getAllWishlistItems(req.params.wishlistId);
         res.json(wishlistAllItems)
@@ -70,12 +70,13 @@ const getWishListAllItems = async (req, res, next) => {
   };
 
 
+
 const createItemToWishlist = async (req,res,next) => {
     try{
         const newItemToWishlist= await itemToWishlistServices.createItemToWishlist(req.params.id, req.body.itemId)
         //Am adaugat item in wishlist, acuma facem update la statusul din wihhlist (available)
         const wishlist= await wishlistServices.getWishlist(req.params.id);
-        await wishlistServices.updateWishList(req.params.id, {
+        await wishlistServices.updateWishlist(req.params.id, {
         userId: wishlist.userId,
         wishlistName: wishlist.wishlistName,
         wishlistDescription: wishlist.wishlistDescription,
@@ -94,4 +95,4 @@ const createItemToWishlist = async (req,res,next) => {
 
 };
 
-export default {createItemToWishlist, getWishListAllItems, deleteItemFromWishlist, updateItemToWishlist}
+export default {createItemToWishlist, getWishlistAllItems, deleteItemFromWishlist, updateItemToWishlist}

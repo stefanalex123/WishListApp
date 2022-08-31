@@ -6,6 +6,8 @@ import { check } from "express-validator";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 import notificationController from "../controllers/notifications.js"
 
+
+
 const router = express.Router();
 
 router.route('/')
@@ -16,6 +18,11 @@ router.route('/')
         jwtMiddleware,
         notificationController.getAllNotifications
         )  
+
+     
+
+
+
 
 
 

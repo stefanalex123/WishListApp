@@ -1,6 +1,9 @@
 import buyItemServices from "../services/buyitem.js";
 import itemservice from "../services/item.js";
 import userprofileService from "../services/userprofile.js";
+import notificationsServices from "../services/notifications.js"
+
+import sendmail from "../../sendmail.js"
 
 
 const getAllBuyersForItem= async (req, res, next) => {
@@ -27,13 +30,13 @@ const createBuyItem = async (req,res,next) => {
         // modificam statusul itemului in indisponibil
         try {
     
-            const item = await itemService.getItem(req.params.itemId);
+            const item = await itemservice.getItem(req.params.itemId);
         
             if (!item) {
               throw { message: "Item not found" };
             }
         
-            const response = await itemService.updateItem(req.params.itemId, {
+            const response = await itemservice.updateItem(req.params.itemId, {
               userId: item.userId,
               itemTitle: item.itemTitle,
               itemLink: item.itemLink,
@@ -46,11 +49,15 @@ const createBuyItem = async (req,res,next) => {
           }
 
           // Trimitem o notificare catre proprietarul itemului ca a fost cumparat
-        const item= await itemService.getItem(req.params.itemId)
-        const user=await userProfileService.getUserProfile(req.auth.userId) 
+        const item= await itemservice.getItem(req.params.itemId)
+        const user=await userprofileService.getUserProfile(req.auth.userId) 
         const newNotification= await notificationsServices.createNotification(
         "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " " , Date.now(), item.userId
         )
+        if(user.mailsNotifications=="ON"){
+          sendmail("Notification", "Itemul pe care il detii " + "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " ", user.email)
+        }
+
         res.json(newBuyItem);
 
     } catch (err){

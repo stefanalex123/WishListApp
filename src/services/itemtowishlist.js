@@ -9,7 +9,7 @@ const deleteItemFromWishlist= async (wishlistId, itemId) => {
   const itemToWishlist = await prisma.itemToWishlist.findMany({
     where: {
       wishlistId:wishlistId,
-      itemid:itemId
+      itemId:itemId
     }
   })
 
@@ -41,7 +41,7 @@ const getAllWishlistItems= async (id) => {
 
 
 const getAllItemToWishlist= async (id) => {
-    const itemToWishlist = await prisma.itemToishlist.findMany({
+    const itemToWishlist = await prisma.itemToWishlist.findMany({
       where: {
         wishlistId:id
       },

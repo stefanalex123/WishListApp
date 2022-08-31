@@ -1,6 +1,7 @@
 import express, { request } from "express";
 import usersController from "../controllers/user.js";
-import Verify_if_Username_exists_in_UsersDB from "../middleware/Register_Middlewares/Verify_if_Username_exists_in_UsersDB.js";
+
+import usernameExistsMiddleware from "../middleware/Register_Middlewares/usernameExistsMiddleware.js";
 import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
 import errorsMiddleware from "../middleware/others_Middlewares/errorsMiddleware.js";
@@ -32,7 +33,7 @@ const router = express.Router();
         
     ], 
     validationMiddleware,
-    Verify_if_Username_exists_in_UsersDB, 
+    usernameExistsMiddleware,               //Verify_if_Username_exists_in_UsersDB, 
     usersController.addUser)
 
     router.route('/login')
