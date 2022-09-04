@@ -15,8 +15,10 @@ CREATE TABLE `UserProfile` (
     `nickname` VARCHAR(191) NOT NULL,
     `phoneNumber` VARCHAR(191) NOT NULL,
     `mailsNotifications` VARCHAR(191) NOT NULL,
+    `verifiedAccount` VARCHAR(191) NOT NULL,
     `socketId` VARCHAR(191) NOT NULL,
 
+    UNIQUE INDEX `UserProfile_email_key`(`email`),
     UNIQUE INDEX `UserProfile_nickname_key`(`nickname`),
     PRIMARY KEY (`userId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -144,6 +146,28 @@ CREATE TABLE `mailsReferralsInvitations` (
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
+-- CreateTable
+CREATE TABLE `mailsForgotPassword` (
+    `id` VARCHAR(191) NOT NULL,
+    `emailUsed` VARCHAR(191) NOT NULL,
+    `code` VARCHAR(191) NOT NULL,
+    `status` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `mailsForgotPassword_emailUsed_key`(`emailUsed`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `verifyAccount` (
+    `id` VARCHAR(191) NOT NULL,
+    `emailUsed` VARCHAR(191) NOT NULL,
+    `code` VARCHAR(191) NOT NULL,
+    `status` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `verifyAccount_emailUsed_key`(`emailUsed`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
 -- AddForeignKey
 ALTER TABLE `UserProfile` ADD CONSTRAINT `UserProfile_userId_fkey` FOREIGN KEY (`userId`) REFERENCES `users`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
@@ -197,3 +221,9 @@ ALTER TABLE `mailsReferralsInvitations` ADD CONSTRAINT `mailsReferralsInvitation
 
 -- AddForeignKey
 ALTER TABLE `mailsReferralsInvitations` ADD CONSTRAINT `mailsReferralsInvitations_groupId_fkey` FOREIGN KEY (`groupId`) REFERENCES `group`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `mailsForgotPassword` ADD CONSTRAINT `mailsForgotPassword_emailUsed_fkey` FOREIGN KEY (`emailUsed`) REFERENCES `UserProfile`(`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `verifyAccount` ADD CONSTRAINT `verifyAccount_emailUsed_fkey` FOREIGN KEY (`emailUsed`) REFERENCES `UserProfile`(`email`) ON DELETE CASCADE ON UPDATE CASCADE;

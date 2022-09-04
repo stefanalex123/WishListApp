@@ -4,6 +4,7 @@ import { check } from "express-validator";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 
 import userprofileController from "../controllers/userprofile.js"
+import verifyAccountController from "../controllers/verifyaccount.js"
 import nicknameTakenMiddleware from "../middleware/User_Profile_Middlewares/nicknameTakenMiddleware.js";
 const router = express.Router();
 
@@ -36,6 +37,10 @@ const router = express.Router();
         .withMessage("Phone Number is required")
         .isMobilePhone()
         .withMessage("Phone Number Invalid"),
+
+        check("birthday")
+        .exists()
+        .withMessage('Birthday is required'),
 
         check("mailsNotifications")
         .exists()
@@ -86,6 +91,50 @@ const router = express.Router();
     validationMiddleware,
     jwtMiddleware,
     userprofileController.deleteUserProfile)
+
+
+    router.route('/verifyaccount')
+    .post([     
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+     //
+     verifyAccountController.createVerifyAccount
+    )
+
+    router.route('/verifyaccount/:verifyAccountId')
+    .post([
+        check("code")
+        .exists()
+        .withMessage('is required'), 
+
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    //
+     userprofileController.updateUserProfileVerifiedAccount
+    )
+
+    router.route('/deleteaccount')
+    .post([
+        check("code")
+        .exists()
+        .withMessage('is required'), 
+
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    //
+     userprofileController.updateUserProfileVerifiedAccount
+    )
+
+
+
+
+
+
+
+
 
 
     export default router;

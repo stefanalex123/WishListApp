@@ -6,6 +6,7 @@ import validationMiddleware from "../middleware/others_Middlewares/validationMid
 import { check } from "express-validator";
 import errorsMiddleware from "../middleware/others_Middlewares/errorsMiddleware.js";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
+import requestForgotPasswordController from "../controllers/forgotpassword.js"
 
 const router = express.Router();
 
@@ -45,6 +46,49 @@ const router = express.Router();
     validationMiddleware,
     usersController.loginUser)
 
+
+    router.route('/forgotpassword')
+
+    .post([
+        check("email")
+        .exists()
+        .withMessage('is required')
+        .isLength({ min: 7 })
+        .withMessage("Password need at least 7 characters")
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{7,}$/, "i")
+        .withMessage("Password need at least one letter, one number and one special character"),
+        
+    ], 
+    validationMiddleware,
+    usernameExistsMiddleware,
+    //Verify if request for change password is not sent       
+    requestForgotPasswordController.createForgotPassword)
+
+    router.route('/changepassword/:forgotPasswordId')
+
+    .post([
+        check("code")
+        .exists()
+        .withMessage('is required'),
+
+        check("newPassword")
+        .exists()
+        .withMessage('is required')
+        .isLength({ min: 7 })
+        .withMessage("Password need at least 7 characters")
+        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{7,}$/, "i")
+        .withMessage("Password need at least one letter, one number and one special character"),
+
+        check("confirmNewPassword")
+        .exists()
+        .withMessage('is required'),
+        
+    ], 
+    validationMiddleware,
+    usernameExistsMiddleware,
+    //Verify if request exists, is active and code is valid
+    //Verify if email exist in database         
+    usersController.updateUserPassword)
 
 
 

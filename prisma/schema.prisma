@@ -30,11 +30,18 @@ model User {
 model UserProfile{
 userId           String @id
 user             User     @relation("userprofile", fields: [userId], references: [id], onDelete: Cascade)
-email            String
+email            String   @unique
 nickname         String   @unique
 phoneNumber      String
 mailsNotifications String
+birthday            String
+verifiedAccount     String
 socketId            String
+
+usersAskedForNewPassword       mailsForgotPassword[]    @relation ("forgotpassword")
+verifiedAccountRequest         verifyAccount[]    @relation ("verifyaccount")
+deleteAccountRequest           deleteAccount[]    @relation("deleteaccount")
+
 user_group_invitation GroupInvitations[] @relation ("usergroupinvitation")
 }
 
@@ -161,6 +168,35 @@ emailSend          String
 status              String
 }
 
+
+model mailsForgotPassword {
+id             String   @id @default(uuid())
+emailUsed        String   @unique
+userprofile    UserProfile  @relation ("forgotpassword",  fields: [emailUsed], references: [email], onDelete: Cascade)        
+code              String
+status            String
+
+}
+
+
+
+model verifyAccount{
+id             String   @id @default(uuid())
+emailUsed        String   @unique
+userprofile    UserProfile  @relation ("verifyaccount",  fields: [emailUsed], references: [email], onDelete: Cascade)        
+code              String
+status            String
+}
+
+
+model deleteAccount{
+id             String   @id @default(uuid())
+emailUsed        String   @unique
+userprofile    UserProfile  @relation ("deleteaccount",  fields: [emailUsed], references: [email], onDelete: Cascade)        
+code              String
+status            String
+
+}
 
 
 

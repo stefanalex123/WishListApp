@@ -21,9 +21,20 @@ const getUserProfile= async (id) => {
     return userProfile;
   };
 
+  const getUserProfileByEmail= async (email) => {
+    const userProfile = await prisma.userProfile.findUnique({
+      where: {
+        email:email
+      }
+    })
+    return userProfile;
+  };
 
 
-const createUserProfile= async (userId, email ,nickname, phoneNumber, mailsNotifications, socketId) =>{
+
+
+
+const createUserProfile= async (userId, email ,nickname, phoneNumber, mailsNotifications, birthday) =>{
     const userProfile=await prisma.userProfile.create({
         data: {
             userId:userId,
@@ -31,7 +42,10 @@ const createUserProfile= async (userId, email ,nickname, phoneNumber, mailsNotif
             nickname:nickname,
             phoneNumber:phoneNumber,
             mailsNotifications:mailsNotifications,
-            socketId:"0"
+            birthday:birthday,
+            socketId:"0",
+            verifiedAccount:"UNVERIFIED"
+    
             
         }
     });
@@ -49,4 +63,4 @@ const updateUserProfile = async (id, userProfileInfo) => {
     return userProfile;
   };
 
-export default {createUserProfile, updateUserProfile, getUserProfile, deleteUserProfile};
+export default {createUserProfile, updateUserProfile, getUserProfile, deleteUserProfile, getUserProfileByEmail};

@@ -33,6 +33,11 @@ const getAllGroupsWhereOwner= async (id) => {
   };
   
 
+  const getAllGroups = async () => {
+    const groups = await prisma.group.findMany()
+    return groups;
+  };
+
 
 const createGroup= async (groupTitle, groupDescription, groupOwnerId) =>{
     const group=await prisma.group.create({
@@ -55,4 +60,4 @@ const deleteGroup = async (id) => {
 };
 
 
-export default {createGroup, getAllGroupsWhereOwner, updateGroup, getGroup, deleteGroup}
+export default {createGroup, getAllGroupsWhereOwner, updateGroup, getGroup, deleteGroup, getAllGroups}

@@ -37,6 +37,7 @@ const updateGroupInvitation = async (req, res, next) => {
 const getGroupAllInvitations = async (req, res, next) => {
     try {
         var groupAllInvitations=await groupsInvitationServices.getAllGroupInvitations(req.params.id);
+        
         res.json(groupAllInvitations)
     } catch (err) {
         next(err);

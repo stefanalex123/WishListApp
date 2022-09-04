@@ -16,6 +16,18 @@ const getUser = async(username) => {
     return user;
     };
 
+    const getUserById = async(id) => {
+   
+        const user =await prisma.user.findUnique({
+            where: {    
+                id:id                 
+            }
+  });
+
+
+return user;
+};
+
 
 const addUser = async(username, password) => {
     const salt = bcrypt.genSaltSync(10);
@@ -33,6 +45,19 @@ const addUser = async(username, password) => {
  
     return user;
     };
+
+    const updatePasswordUser = async (id, userInfo) => {
+        const userNewPassword = await prisma.user.update({
+          where: {
+            id: id
+          },
+          data: { ...userInfo }
+        })
+        return userNewPassword;
+      };
+
+
+
 
 const loginUser = async (username,password) => {
     const existingUser = await prisma.user.findUnique({
@@ -78,4 +103,4 @@ const addUserByReferralLink = async(username, password) => {
 
 
 
-export default { addUser,loginUser, addUserByReferralLink, getUser};
+export default { addUser,loginUser, addUserByReferralLink, getUser, updatePasswordUser, getUserById};

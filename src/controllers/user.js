@@ -4,6 +4,9 @@ import notificationsServices from "../services/notifications.js";
 import groupServices from "../services/groups.js";
 import userProfileServices from "../services/userprofile.js";
 import refferalInvitationsService from "../services/referralsinvitations.js"
+import forgotPasswordServices from "../services/forgotpassword.js"
+import sendmail from "../../sendmail.js"
+import bcrypt from "bcrypt";
 
 
 const addUser = async (req, res, next) => {
@@ -41,6 +44,7 @@ const addUserByReferralLink = async (req, res, next) => {
     try {
         const newUser = await userServices.addUser( req.body.username, req.body.password);
         const user=await userServices.getUser(req.body.username)
+        
 
         const userProfile=await userProfileServices.createUserProfile(user[0].id, "De adaugat", req.body.username, "De adaugat", "ON")
         //Se creeaza un profil utilizatorului
@@ -74,4 +78,49 @@ const addUserByReferralLink = async (req, res, next) => {
 
 
 
-export default { addUser, loginUser, addUserByReferralLink};
+const updateUserPassword = async (req, res, next) => {
+    try {
+    const salt = bcrypt.genSaltSync(10);
+    const hash = bcrypt.hashSync(req.body.newPassword, salt);
+
+
+      const forgotPassword= await forgotPasswordServices.getForgotPasswordById(req.params.forgotPasswordId)
+      const userProfile=await userProfileServices.getUserProfileByEmail(forgotPassword.emailUsed)
+      const user = await userServices.getUserById(userProfile.userId);
+  
+      if (!user) {
+        throw { message: "User not found" };
+      }
+  
+      const newUser = await userServices.updatePasswordUser(user.id, {
+        username:user.username,
+        password:hash
+      });
+
+      // modificam statusul cererii Forgot Password in "EXPIRED"
+
+
+      try {
+
+          const newPasswordRequest = await forgotPasswordServices.updateForgotPassword(req.params.forgotPasswordId ,{
+            emailUsed:forgotPassword.emailUsed,
+            code:forgotPassword.code,
+            status:"EXPIRED",
+          });
+        } catch (err) {
+          console.error(`Error while updating request New Password`);
+          next(err);
+        }
+        
+      res.json(newUser);
+    } catch (err) {
+      console.error(`Error while updating User Password`);
+      next(err);
+    }
+  };
+
+
+
+
+
+export default { addUser, loginUser, addUserByReferralLink, updateUserPassword};

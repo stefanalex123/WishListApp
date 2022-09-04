@@ -2,6 +2,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { Server } from "socket.io";
 
+import nodeCron from "node-cron"
 import nodemailer from "nodemailer";
 import bodyParser from "body-parser";
 import userRouter from "./src/routes/user.js";
@@ -9,6 +10,7 @@ import itemRouter from "./src/routes/items.js"
 import userprofileRouter from "./src/routes/userprofile.js"
 import cors from 'cors'
 import userprofile from "./src/services/userprofile.js";
+
 import useradressRouter from"./src/routes/adress.js";
 import wishlistRouter from "./src/routes/wishlist.js"
 import groupRouter from "./src/routes/groups.js"
@@ -25,6 +27,7 @@ import session from "express-session";
 import "./auth.js";
 import sendmail from "./sendmail.js";
 import { PrismaClient } from "@prisma/client";
+import job from "./birthdayNotification.js"
 
 
 
@@ -42,9 +45,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 
 
-
 //Link router to app
 //app.use('/courses', router);
+
+
+
+
 
 
 app.use("/users", userRouter);
@@ -56,6 +62,7 @@ app.use ("/groups", groupRouter)
 app.use("/invitations",invitationsRouter)
 app.use("/notifications", notificationRouter)
 app.use("/referral", referralRouter)
+
 const prisma = new PrismaClient()
 
 async function creategoogletoken(req, res, next) {
@@ -150,6 +157,11 @@ app.post('/mail', (req, res) => {
       console.log(`http://localhost:${PORT}`);
   });
   
+
+  
+  
+//BIRTHDAY NOTIFICATION
+  job.start();
   
 
 /////////////socket.io
