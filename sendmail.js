@@ -4,14 +4,16 @@ function sendmail(subject, text, adress){
     const transporter = nodemailer.createTransport({
        service:"hotmail",
            auth: {
-                user: 'wishlistapp99@outlook.com',
-                pass: '123456789baaA',
+                user: 'stefan.focan@365.univ-ovidius.ro',
+                pass: 'wtf112likeE',
              },
         secure: false,
         });
+        
     
+
     var mailOptions = {
-      from: 'wishlistapp99@outlook.com',
+      from: 'stefan.focan@365.univ-ovidius.ro',
       to: adress,
       subject: subject,
       text: text

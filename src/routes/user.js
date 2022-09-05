@@ -7,7 +7,10 @@ import { check } from "express-validator";
 import errorsMiddleware from "../middleware/others_Middlewares/errorsMiddleware.js";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 import requestForgotPasswordController from "../controllers/forgotpassword.js"
-
+import verifyForgotPasswordNotSentMiddleware from "../middleware/Forgot_Password_Middlewares/verifyForgotPasswordNotSentMiddleware.js";
+import verifyUserProfileVerifiedMiddleware from "../middleware/Forgot_Password_Middlewares/verifyUserProfileVerifiedMiddleware.js";
+import verifyForgotPasswordSentActiveAndAccesCodeMiddleware from "../middleware/Forgot_Password_Middlewares/verifyForgotPasswordSentActiveAndAccesCodeMiddleware.js";
+import confirmNewPasswordMiddleware from "../middleware/Forgot_Password_Middlewares/confirmNewPasswordMiddleware.js";
 const router = express.Router();
 
 
@@ -61,7 +64,9 @@ const router = express.Router();
     ], 
     validationMiddleware,
     usernameExistsMiddleware,
-    //Verify if request for change password is not sent       
+    verifyUserProfileVerifiedMiddleware,
+    verifyForgotPasswordNotSentMiddleware, //+ if is active or expired
+      
     requestForgotPasswordController.createForgotPassword)
 
     router.route('/changepassword/:forgotPasswordId')
@@ -86,8 +91,8 @@ const router = express.Router();
     ], 
     validationMiddleware,
     usernameExistsMiddleware,
-    //Verify if request exists, is active and code is valid
-    //Verify if email exist in database         
+    verifyForgotPasswordSentActiveAndAccesCodeMiddleware, //Verify if request exists, is active and code is valid
+    confirmNewPasswordMiddleware,     //Verify if newPassword and confirmNewPassword equal
     usersController.updateUserPassword)
 
 

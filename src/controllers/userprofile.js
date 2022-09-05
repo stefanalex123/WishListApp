@@ -66,11 +66,12 @@ const updateUserProfile = async (req, res, next) => {
     try {
 
       const verifyAccount= await verifyAccountServices.getVerifyAccountById(req.params.verifyAccountId)
-      const userProfile = await userProfileService.getUserProfile(verifyAccount.emailUsed);
+      const userProfile = await userProfileService.getUserProfileByEmail(verifyAccount.emailUsed);
   
       if (!userProfile) {
         throw { message: "User Profile not found" };
       }
+     
   
       const userProfileVerified = await userProfileService.updateUserProfile(userProfile.userId, {
         userId: userProfile.userId,

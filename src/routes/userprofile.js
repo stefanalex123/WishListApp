@@ -2,14 +2,18 @@ import express, { request } from "express";
 import validationMiddleware from "../middleware/others_Middlewares/validationMiddleware.js";
 import { check } from "express-validator";
 import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
-
+import birthdayMiddleware from "../middleware/User_Profile_Middlewares/birthdayMiddleware.js";
 import userprofileController from "../controllers/userprofile.js"
 import verifyAccountController from "../controllers/verifyaccount.js"
 import nicknameTakenMiddleware from "../middleware/User_Profile_Middlewares/nicknameTakenMiddleware.js";
+import verifyAccountNotSentAndAccountUnverifiedMiddleware from "../middleware/VerifyAccount_Middlewares/verifyAccountNotSentAndAccountUnverifiedMiddleware.js";
+import verifyAccountSentActiveAndAccesCodeMiddleware from "../middleware/VerifyAccount_Middlewares/verifyAccountSentActiveAndAccesCodeMiddleware.js";
 const router = express.Router();
 
 
   
+
+
 
 
 
@@ -49,6 +53,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
+    birthdayMiddleware,
     nicknameTakenMiddleware, //Verify_if_Nickname_taken,
     userprofileController.createUserProfile)
 
@@ -77,6 +82,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
+    birthdayMiddleware,                    //Verify_birthday_correct format
     nicknameTakenMiddleware,              //Verify_if_Nickname_taken,
     userprofileController.updateUserProfile)
 
@@ -98,7 +104,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-     //
+    verifyAccountNotSentAndAccountUnverifiedMiddleware, // And if user profile is created
      verifyAccountController.createVerifyAccount
     )
 
@@ -111,9 +117,14 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-    //
-     userprofileController.updateUserProfileVerifiedAccount
+    //Verify_If_Code_Is_Correct
+    //Verify_If_emailUsed_Is_related_to_user_profile
+    //Verify_If_Verify_Account_is_Active
+    verifyAccountSentActiveAndAccesCodeMiddleware,
+    userprofileController.updateUserProfileVerifiedAccount
     )
+
+
 
     router.route('/deleteaccount')
     .post([
