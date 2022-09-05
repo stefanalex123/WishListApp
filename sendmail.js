@@ -5,7 +5,7 @@ function sendmail(subject, text, adress){
        service:"hotmail",
            auth: {
                 user: 'stefan.focan@365.univ-ovidius.ro',
-                pass: 'wtf112likeE',
+                pass: '*******',
              },
         secure: false,
         });
