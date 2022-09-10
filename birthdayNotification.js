@@ -7,8 +7,8 @@ import nodeCron from "node-cron"
 const prisma = new PrismaClient();
 
 
-
-const job = nodeCron.schedule("12 12 12 12 *", async function jobYouNeedToExecute() {
+// * * * * * => Cron schedule
+const jobBirthdayNotification = nodeCron.schedule("12 12 12 12 *", async function jobYouNeedToExecute() {
     
     
 
@@ -23,6 +23,8 @@ const job = nodeCron.schedule("12 12 12 12 *", async function jobYouNeedToExecut
             },
           })
 
+          
+
       
             for(let j=0; j<allGroupInvitations.length; j++){
                 const userprofile=await userProfileService.getUserProfile(allGroupInvitations[j].userInvitedId)
@@ -35,8 +37,8 @@ const job = nodeCron.schedule("12 12 12 12 *", async function jobYouNeedToExecut
                 const currentDay=date.getDate()
                 const currentMonth=date.getMonth()+1
                 const currentYear=date.getFullYear()
-                  if(currentMonth==userBirthdayDay && userBirthdayDay-currentDay>=1 && userBirthdayDay-currentDay<=7){
-                    console.log("aici?")
+                  if(currentMonth==userBirthdayMonth && userBirthdayDay-currentDay>=1 && userBirthdayDay-currentDay<=7){
+                    console.log('test')
 
                     // Mai sunt userBirhDay- currentDay zile pana la ziua lui user
                       for(let l=0; l<allGroupInvitations.length; l++){
@@ -156,4 +158,4 @@ const job = nodeCron.schedule("12 12 12 12 *", async function jobYouNeedToExecut
   });
   
 
-  export default job;
+  export default jobBirthdayNotification;

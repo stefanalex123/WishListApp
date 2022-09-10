@@ -17,13 +17,13 @@ const owenerGroupMiddleware= async ( req, res, next) => {
         next();
     }
     else {
-        res.send("Nu esti owner in acest grup")
+        res.send("You are not the owner of this group!")
     }
 
        
     }  catch(err) {
     
-       res.send("Acest grup nu exista in baza de date")
+       res.send("This group doesn't exists!")
     }
     }
 

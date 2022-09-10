@@ -17,7 +17,7 @@ const updateGroup = async (id, groupInfo) => {
 const getAllGroupsWhereOwner= async (id) => {
     const allGroupsWhereOwner = await prisma.group.findMany({
       where: {
-        groupOwnerid:id
+        groupOwnerId:id
       }
     })
     return allGroupsWhereOwner;

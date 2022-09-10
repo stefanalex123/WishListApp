@@ -52,7 +52,13 @@ const updateAdress = async (req, res, next) => {
 
   const getAllAdresses = async (req, res, next) => {
     try {
-        res.json(await adressService.getAllAdresses(req.auth.userId));
+        const adresses=await adressService.getAllAdresses(req.auth.userId);
+        if(adresses.length==0){
+          res.send("You don't have any adresses added!")
+        }
+        else {
+          res.send(adresses)
+        }
     } catch (err) {
         next(err);
     }

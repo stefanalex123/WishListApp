@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 
 
 //Verify_If_Invitation_To_User_Auth_Is_Sent
-const invitationUserSentMiddleware = async ( req, res, next) => {
+const contributionUserSentMiddleware = async ( req, res, next) => {
 
 
 try{
@@ -41,4 +41,4 @@ else {
    
 
   
-  export default invitationUserSentMiddleware;
+  export default contributionUserSentMiddleware;

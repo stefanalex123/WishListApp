@@ -16,11 +16,24 @@ const router = express.Router();
 
 router.route('/')
 
+.get([
+           
+], 
+validationMiddleware,
+jwtMiddleware,
+wishlistController.getAllWishlistPagination
+
+
+)  
+
 .get([    
 ],
  validationMiddleware,
  jwtMiddleware, 
  wishlistController.getAllWishlists)  
+
+
+
 
 .post([
         check("wishlistName")
@@ -67,14 +80,14 @@ router.route('/')
     ],
     validationMiddleware,
     jwtMiddleware,
-    wishlistExistsMiddleware,  //Verify_If_Wishlist_Exists_in_WishlistsDB,
+    wishlistExistsMiddleware,  //Verify if user is owner of wishlist and if wishlist exists
     wishlistController.updateWishlist)
 
     .delete([
     ],
     validationMiddleware,
     jwtMiddleware,
-    wishlistExistsMiddleware,                    //Verify_If_Wishlist_Exists_in_WishlistsDB,
+    wishlistExistsMiddleware,   //Verify if user is owner of wishlist and if wishlist exists
     wishlistController.deleteWishlist)
 
 
@@ -85,7 +98,7 @@ router.route('/')
     ],
      validationMiddleware,
      jwtMiddleware, 
-     userOwnerWishlistMiddleware,                      //Verify_If_User_Is_Owner_Of_WishList,  
+     userOwnerWishlistMiddleware,   //Verify if user is owner of wishlist and if wishlist exists
      itemtowishlistController.getWishlistAllItems)  
 
     .post([ 
@@ -95,9 +108,9 @@ router.route('/')
     ],
     validationMiddleware,
     jwtMiddleware,
-    userOwnerWishlistMiddleware,//Verify_If_User_Is_Owner_Of_WishList,   
-    userOwnerItemBodyMiddleware,//Verify_If_User_Is_Owner_Of_Item_Body,     
-    itemBodyNotSharedWishlistMiddleware,//Verify_If_Item_Body_Is_Not_Shared_In_WishList,  
+    userOwnerWishlistMiddleware,//Verify if user is owner of wishlist and if wishlist exists  
+    userOwnerItemBodyMiddleware,//Verify if user is owner of the item he wants to add and if item exists,     
+    itemBodyNotSharedWishlistMiddleware,//Verify if the item the user wants to add is not shared already in the wishlists 
     itemtowishlistController.createItemToWishlist)   
 
 
@@ -106,8 +119,8 @@ router.route('/')
     ],
     validationMiddleware,
     jwtMiddleware,
-    userOwnerWishlistMiddleware,        //Verify_If_User_Is_Owner_Of_WishList, 
-    itemParamsSharedWishlistMiddleware, //Verify_If_Item_Params_Is_Shared_In_WishList, 
+    userOwnerWishlistMiddleware,        //Verify if user is owner of wishlist and if wishlist exists  
+    itemParamsSharedWishlistMiddleware, //Verify if the item the user wants to delete is shared in wishlist
     itemtowishlistController.deleteItemFromWishlist) 
     
     .put([  
@@ -117,10 +130,10 @@ router.route('/')
     ],
     validationMiddleware,
     jwtMiddleware,
-     userOwnerWishlistMiddleware,           //Verify_If_User_Is_Owner_Of_WishList, 
-     itemParamsSharedWishlistMiddleware,    //Verify_If_Item_Params_Is_Shared_In_WishList, 
-    userOwnerItemBodyMiddleware,            //Verify_If_User_Is_Owner_Of_Item_Body, 
-    itemBodyNotSharedWishlistMiddleware,    //Verify_If_Item_Body_Is_Not_Shared_In_WishList, 
+     userOwnerWishlistMiddleware,          //Verify if user is owner of wishlist and if wishlist exists   
+     itemParamsSharedWishlistMiddleware,   //Verify if the item the user wants to modify is shared in wishlist
+    userOwnerItemBodyMiddleware,            //Verify if user is owner of the item he wants to add, 
+    itemBodyNotSharedWishlistMiddleware,    //Verify if the item the user wants to add is not already in the wishlist 
     itemtowishlistController.updateItemToWishlist) 
 
 

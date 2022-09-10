@@ -9,17 +9,15 @@ const referralLinkExistAndValidMiddleware = async ( req, res, next) => {
 
 
 try{
-const referralInvitation= await prisma.mailsReferralsInvitations.findMany({
+const referralInvitation= await prisma.mailsReferralsInvitations.findUnique({
     where: {
-       groupId:req.params.groupId,
-       userDeliverId:req.params.userDeliverId,
-       emailSend:req.params.email
+       id:req.params.referralInvitationId
     },
 })
 
 
-if(referralInvitation[0].groupId==req.params.groupId && referralInvitation[0].userDeliverId==req.params.userDeliverId && referralInvitation[0].emailSend==req.params.email
-    && referralInvitation[0].status=="AVAILABLE"){
+if(referralInvitation.id===req.params.referralInvitationId && referralInvitation.status==="AVAILABLE"){
+    console.log("test")
     next();
 }
 

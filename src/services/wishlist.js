@@ -54,4 +54,16 @@ const updateWishlist = async (id, wishlistInfo) => {
     return wishlist;
   };
 
-export default {createWishlist, getWishlist, updateWishlist, getAllWishlists, deleteWishlist}
+  const getAllWishlistPagination= async (id,page1,limitPage) => {
+ 
+    const allWishlists = await prisma.wishlist.findMany({
+      skip: (page1-1)*4,
+      take: (limitPage-page1)*4+4,
+      where:{
+        userId:id
+      }
+    })
+    return allWishlists;
+  };
+
+export default {createWishlist, getWishlist, updateWishlist, getAllWishlists, deleteWishlist, getAllWishlistPagination}

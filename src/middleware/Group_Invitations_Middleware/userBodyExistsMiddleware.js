@@ -22,11 +22,11 @@ if(userProfile.userId==req.body.userInvitedId){
    next()
 }
 else{
-    res.send("Userul pe care incerci sa il inviti nu exista sau nu si a completat profilul")
+    res.send("The user invited doesn't have a complete profile")
 }
 
 } catch(err) {
-    res.send("Userul pe care incerci sa il inviti nu exista sau nu si a completat profilul")
+    res.send("The user invited doesn't have a complete profile")
 }
     
 }

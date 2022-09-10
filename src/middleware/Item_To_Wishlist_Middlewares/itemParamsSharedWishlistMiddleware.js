@@ -11,21 +11,21 @@ const itemParamsSharedWishlistMiddleware = async ( req, res, next) => {
 try{
 const itemToWishlist = await prisma.itemToWishlist.findMany({
     where: {
-        wishlistId:req.params.id,
+        wishlistId:req.params.wishlistId,
         itemId:req.params.itemId
     },
 })
 
-if(itemToWishlist[0].itemId==req.params.itemId && itemToWishlist[0].wishlistId==req.params.id){
+if(itemToWishlist[0].itemId==req.params.itemId && itemToWishlist[0].wishlistId==req.params.wishlistId){
    //Acest item exista in wishlist ca sa il modificam/stergem
    next()
 }
 else{
-    res.send("Trebuie sa adaugati itemul in wishlist mai intai")
+    res.send("You need to add the item in the wishlist first")
 }
 
 } catch(err) {
-    res.send("Trebuie sa adaugati itemul in wishlist mai intai")
+    res.send("You need to add the item in the wishlist first")
 }
     
 }

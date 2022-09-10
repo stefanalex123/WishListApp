@@ -18,12 +18,13 @@ const accesWrongAdressMiddleware= async ( req, res, next) => {
        next();
     }
     else {
-        res.send("Incerci sa accesezi adresa altui utilizator")
+        res.send("You are not owner of this adress")
+
     }
        
     }  catch(err) {
     
-       res.send("Acesta adresa nu exista in baza de date")
+       res.send("This adress doesn't exists ")
     }
         
     }

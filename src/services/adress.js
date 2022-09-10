@@ -15,7 +15,7 @@ const getAdress= async (id) => {
   const getAllAdresses= async (id) => {
     const adress = await prisma.adress.findMany({
       where: {
-        userid:id
+        userId:id
       }
     })
     return adress;

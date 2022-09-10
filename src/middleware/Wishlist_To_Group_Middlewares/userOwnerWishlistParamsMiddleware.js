@@ -20,11 +20,11 @@ if(wishlist.userId==req.auth.userId){
     next()
 }
 else {
-    res.send("Incerci sa accesezi Wishlistul altui utilizator")
+    res.send("Whis wishlist is not available!")
 }
 
 } catch(err) {
-res.send("Acest WishList nu exista in baza de date")
+res.send("This wishlist doesn't exists!")
 }
     
 }

@@ -37,8 +37,8 @@ router.route('/')
         check("street")
         .exists()
         .withMessage('Street is required')
-        .isLength({ min: 10})
-        .withMessage("Street Description needs at least 10 characters"),
+        .isLength({ min: 5})
+        .withMessage("Street Description needs at least 5 characters"),
 
         check("flat")
         .exists()
@@ -81,8 +81,8 @@ router.route('/')
         check("street")
         .optional().exists()
         .withMessage('Street is required')
-        .optional().isLength({ min: 10})
-        .withMessage("Street Description needs at least 10 characters"),
+        .optional().isLength({ min: 5})
+        .withMessage("Street Description needs at least 5 characters"),
 
         check("flat")
         .optional().exists()
@@ -98,7 +98,7 @@ router.route('/')
     ],
     validationMiddleware,
     jwtMiddleware,
-    accesWrongAdressMiddleware, //Verify_If_Acces_Wrong_Adress,
+    accesWrongAdressMiddleware, //Verify If User ty to acces a wrong adress and if adress exists
     adressController.updateAdress)
 
     
@@ -106,9 +106,8 @@ router.route('/')
            ], 
     validationMiddleware, 
     jwtMiddleware,
-    accesWrongAdressMiddleware, //Verify_If_Acces_Wrong_Adress, 
+    accesWrongAdressMiddleware,//Verify If User ty to acces a wrong adress and if adress exists
     adressController.deleteAdress)
-
 
 
 

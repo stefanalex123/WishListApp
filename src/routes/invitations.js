@@ -31,7 +31,7 @@ router.route('/groupinvitations/:invitationId/status')
 statusMiddleware,
 validationMiddleware,
 jwtMiddleware,
-invitationUserSentMiddleware, //Verify_If_Invitation_To_User_Auth_Is_Sent,  
+invitationUserSentMiddleware, //Verify if the invitation is sent to the user,  
 groupinvitationController.updateGroupInvitation)
 
 
@@ -44,13 +44,13 @@ contributionInvitationController.getAllContributionInvitationForUserAsked
 )   
 
 
-router.route('/contributioninvitations/:invitationid/status')
+router.route('/contributioninvitations/:invitationId/status')
 .put([ 
 ],
 statusMiddleware,
 validationMiddleware,
 jwtMiddleware,
-invitationUserSentMiddleware,  //Verify_If_InvitationContr_To_User_Auth_Is_Sent, 
+invitationContributionUserSentMiddleware,  //Verify_If_InvitationContr_To_User_Auth_Is_Sent, 
 contributionInvitationController.updateContributionInvitation,
 ) 
 

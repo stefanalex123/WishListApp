@@ -13,16 +13,16 @@ const wishlistExistsMiddleware = async ( req, res, next) => {
     
     })
     
-    if(wishlist.userid==req.auth.userid){
+    if(wishlist.userId==req.auth.userId){
        next();
     }
     else {
-        res.send("Incerci sa accesezi Wishlistul altui utilizator")
+        res.send("You don't have acces to this wishlist")
     }
        
     }  catch(err) {
     
-       res.send("Acest wishlist nu exista in baza de date")
+       res.send("This wishlist doesn't exists")
     }
         
     }

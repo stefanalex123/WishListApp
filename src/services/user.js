@@ -6,7 +6,7 @@ const prisma = new PrismaClient();
 
 const getUser = async(username) => {
    
-            const user =await prisma.user.findMany({
+            const user =await prisma.user.findUnique({
                 where: {    
                     username:username                     
                 }
@@ -60,17 +60,13 @@ const addUser = async(username, password) => {
 
 
 const loginUser = async (username,password) => {
+    try {
     const existingUser = await prisma.user.findUnique({
         where: {
             username:username,
         }
     });
 
- 
-    if (!existingUser) {
-
-        return "InvalidUser";
-    }
 
     const validPassword = await bcrypt.compare(password, existingUser.password);
     if(!validPassword){
@@ -78,6 +74,11 @@ const loginUser = async (username,password) => {
     }
 
     return geneateAuthToken(existingUser.id);
+
+} catch(err){
+    return "InvalidUser"
+   
+}
 }
 
 

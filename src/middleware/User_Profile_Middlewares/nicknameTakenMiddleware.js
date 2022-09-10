@@ -42,7 +42,7 @@ const userprofile = await prisma.userProfile.findUnique({
 if(userprofile.nickname==req.body.nickname){
 
     var msg= await NumeSugestie(req.body.nickname);
-    res.send("Acest nickname este preluat de al utilizator, poti prelua acest username: "+ msg);
+    res.send("This nickname is not available, you can try this nickname: "+ msg);
 
    
 } } catch(err) {

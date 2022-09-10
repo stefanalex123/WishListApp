@@ -4,12 +4,19 @@ import userprofileService from "../services/userprofile.js";
 import notificationsServices from "../services/notifications.js"
 
 import sendmail from "../../sendmail.js"
+import e from "express";
+
 
 
 const getAllBuyersForItem= async (req, res, next) => {
   try {
-      var allBuyersForItem=await buyItemServices.getBuyersForItem(req.params.itemId);
+      const allBuyersForItem=await buyItemServices.getBuyersForItem(req.params.itemId);
+      if(allBuyersForItem.length==0){
+        res.send("This item doesn't have any principal buyer")
+      }
+      else {
       res.json(allBuyersForItem)
+      }
   } catch (err) {
       next(err);
   }
@@ -26,16 +33,18 @@ const getAllBuyersForItem= async (req, res, next) => {
 
 const createBuyItem = async (req,res,next) => {
     try{
-        const newBuyItem= await buyItemServices.createBuyItem(req.auth.userId, req.params.itemId)
+        const item = await itemservice.getItem(req.params.itemId);
+  
+
+       let  newBuyItem= await buyItemServices.createBuyItem(req.auth.userId, req.params.itemId)
+        
         // modificam statusul itemului in indisponibil
         try {
-    
-            const item = await itemservice.getItem(req.params.itemId);
-        
+
+  
             if (!item) {
               throw { message: "Item not found" };
             }
-        
             const response = await itemservice.updateItem(req.params.itemId, {
               userId: item.userId,
               itemTitle: item.itemTitle,
@@ -48,11 +57,13 @@ const createBuyItem = async (req,res,next) => {
             next(err);
           }
 
-          // Trimitem o notificare catre proprietarul itemului ca a fost cumparat
-        const item= await itemservice.getItem(req.params.itemId)
+        // Trimitem o notificare catre proprietarul itemului ca a fost cumparat
+        
+      
+        
         const user=await userprofileService.getUserProfile(req.auth.userId) 
         const newNotification= await notificationsServices.createNotification(
-        "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " " , Date.now(), item.userId
+        "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " " ,item.userId
         )
         if(user.mailsNotifications=="ON"){
           sendmail("Notification", "Itemul pe care il detii " + "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " ", user.email)

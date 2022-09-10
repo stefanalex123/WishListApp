@@ -2,7 +2,13 @@ import wishlistServices from "../services/wishlist.js";
 
 const getAllWishlists = async (req, res, next) => {
     try {
-        res.json(await wishlistServices.getAllWishlists(req.auth.userId));
+        const allWishlists=await wishlistServices.getAllWishlists(req.auth.userId);
+        if(allWishlists.length==0){
+          res.send("You don't have any wishlists added!")
+        }
+        else {
+          res.send(allWishlists);
+        }
     } catch (err) {
         next(err);
     }
@@ -12,6 +18,10 @@ const getAllWishlists = async (req, res, next) => {
 const createWishlist = async (req,res,next) => {
     try{
         const newWishlist= await wishlistServices.createWishlist(req.auth.userId,req.body.wishlistName, req.body.wishlistDescription)
+      
+
+
+
         res.json(newWishlist);
     } catch (err){
         next(err);
@@ -26,7 +36,7 @@ const updateWishlist = async (req, res, next) => {
         throw { message: "Wishlist not found" };
       }
   
-      const response = await wishlistServices.updateWishList(req.params.id, {
+      const response = await wishlistServices.updateWishlist(req.params.id, {
         userId: req.auth.userId || wishlist.userId,
         wishlistName: req?.body?.wishlistName || wishlist.wishlistName,
         wishlistDescription: req?.body?.wishlistDescription || wishlist.wishlistDescription,
@@ -53,5 +63,35 @@ const deleteWishlist = async (req, res, next) => {
   };
 
 
+  const getAllWishlistPagination = async (req, res, next) => {
+    try {
+      if(req.query.page1>=1 && req.query.limitPage>=1 && req.query.page1!=null && req.query.limitPage!=null){
+      const wishlists=await wishlistServices.getAllWishlistPagination(req.auth.userId, req.query.page1, req.query.limitPage)
+      res.json(wishlists)
+      }
+      else if(req.query.page1<=0 || req.query.limitPage<=0){
+        
+        res.send("Wrong pages format")
+      }
+      
+      else if(req.query.page1==null && req.query.limitPage==null){
+        next();
+      }
+      else if (req.query.page1==null || req.qeury.limitPage==null){
+        res.send("You need to introduce the first page and the limit page")
+      }
+  
+   
+     
+  
+    } catch (err) {
+        next(err);
+    }
+  
+  
+  };
+  
 
-export default {createWishlist, updateWishlist, getAllWishlists, deleteWishlist}
+
+
+export default {createWishlist, updateWishlist, getAllWishlists, deleteWishlist, getAllWishlistPagination}

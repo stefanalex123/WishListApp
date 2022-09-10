@@ -19,12 +19,12 @@ const itemNotPrincipalBuyerMiddleware = async ( req, res, next) => {
            next();
         }
         else {
-           res.send("Acest item are un cumparator principal, poti contrbui la el")
+           res.send("This item already has a principal buyer, you can contribute for it")
         }
            
         }  catch(err) {
         
-           res.send("Acest item nu exista in baza de date")
+           res.send("This item doesn't exists")
         }
             
         }

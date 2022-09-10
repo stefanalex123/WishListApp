@@ -16,6 +16,7 @@ const groupInvitation = await prisma.groupInvitations.findMany({
     },
 })
 
+
 if(groupInvitation[0].status=="ACCEPTED" && groupInvitation[0].groupId==req.params.id &&
 groupInvitation[0].userInvitedId==req.auth.userId){
     next();
@@ -28,7 +29,8 @@ else {
 
 
 } catch(err) {
-    res.send("Nu sunteti membru al acestui grup")
+   
+    res.send("Nu sunteti membru al acestui gruppp")
 }
     
 }

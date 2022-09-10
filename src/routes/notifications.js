@@ -19,6 +19,14 @@ router.route('/')
         notificationController.getAllNotifications
         )  
 
+router.route('/page')
+        .get([    
+        ], 
+        validationMiddleware,
+        jwtMiddleware,
+        notificationController.getAllNotificationsPage
+        )  
+
      
 
 

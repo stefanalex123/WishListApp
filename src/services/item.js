@@ -16,9 +16,6 @@ const getItem= async (id) => {
       where: {
         id:id
       },
-      include: {
-        user:true
-      }   
     })
     return item;
   };
@@ -30,6 +27,17 @@ const getItem= async (id) => {
       }
     })
     return item;
+  };
+  const getAllItemsPagination= async (id,page1,limitPage) => {
+ 
+    const allItems = await prisma.items.findMany({
+      skip: (page1-1)*4,
+      take: (limitPage-page1)*4+4,
+      where:{
+        userId:id
+      }
+    })
+    return allItems;
   };
 
   const getAllItemsWishlist= async (id) => {
@@ -68,4 +76,4 @@ const updateItem = async (id, itemInfo) => {
     return item;
   };
 
-export default {createItem, updateItem, getItem, getAllItems}
+export default {createItem, updateItem, getItem, getAllItems, deleteItem, getAllItemsPagination}

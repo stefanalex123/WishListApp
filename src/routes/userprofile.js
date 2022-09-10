@@ -8,16 +8,11 @@ import verifyAccountController from "../controllers/verifyaccount.js"
 import nicknameTakenMiddleware from "../middleware/User_Profile_Middlewares/nicknameTakenMiddleware.js";
 import verifyAccountNotSentAndAccountUnverifiedMiddleware from "../middleware/VerifyAccount_Middlewares/verifyAccountNotSentAndAccountUnverifiedMiddleware.js";
 import verifyAccountSentActiveAndAccesCodeMiddleware from "../middleware/VerifyAccount_Middlewares/verifyAccountSentActiveAndAccesCodeMiddleware.js";
+import mailsNotificationMiddleware from "../middleware/User_Profile_Middlewares/mailsNotificationsMiddleware.js";
+import userprofileCreatedMiddleware from "../middleware/User_Profile_Middlewares/userprofileCreadMiddleware.js"
+import accesWrongUserProfileMiddleware from "../middleware/User_Profile_Middlewares/accesWrongUserProfile.js";
+import emailTakenMiddleware from "../middleware/User_Profile_Middlewares/emailTakenMiddleware.js";
 const router = express.Router();
-
-
-  
-
-
-
-
-
-
 
     router.route('/')
 
@@ -53,8 +48,11 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-    birthdayMiddleware,
-    nicknameTakenMiddleware, //Verify_if_Nickname_taken,
+    userprofileCreatedMiddleware,//Verify if the userProfile is already created
+    birthdayMiddleware, // Verify if the birthday format is valid
+    mailsNotificationMiddleware, // Verify if the mailsNotification format is valid
+    nicknameTakenMiddleware, //Verify if Nickname taken by other user
+    emailTakenMiddleware, //Verify if the email taken by other user
     userprofileController.createUserProfile)
 
     .put([
@@ -76,14 +74,25 @@ const router = express.Router();
         .optional().exists()
         .withMessage("Phone Number is required")
         .optional().isMobilePhone()
-        .withMessage("Phone Number Invalid")
+        .withMessage("Phone Number Invalid"),
+
+        check("birthday")
+        .optional().exists()
+        .withMessage('Birthday is required'),
+
+        check("mailsNotifications")
+        .optional().exists()
+        .withMessage("MailsNotifications is required")
 
 
     ],
     validationMiddleware,
     jwtMiddleware,
-    birthdayMiddleware,                    //Verify_birthday_correct format
-    nicknameTakenMiddleware,              //Verify_if_Nickname_taken,
+    accesWrongUserProfileMiddleware,// Verify if the userprofile exists before you modify it
+    birthdayMiddleware, // Verify if the birthday format is valid
+    mailsNotificationMiddleware, // Verify if the mailsNotification format is valid              
+    nicknameTakenMiddleware, //Verify if Nickname taken by other user
+    emailTakenMiddleware, //Verify if the email taken by other user
     userprofileController.updateUserProfile)
 
     .get([
@@ -96,6 +105,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
+    accesWrongUserProfileMiddleware,// Verify if the userprofile exists before you delete it
     userprofileController.deleteUserProfile)
 
 
@@ -135,7 +145,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-    //
+
      userprofileController.updateUserProfileVerifiedAccount
     )
 

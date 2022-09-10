@@ -19,8 +19,8 @@ try{
     })
 
 
-if(contributionInvitation[0].itemId==req.params.itemId && contributionInvitation[0].usercontributerId==req.auth.userId){
-res.send("Aceasta invitatie exista deja")
+if(contributionInvitation[0].itemId==req.params.itemId && contributionInvitation[0].userContributerId==req.auth.userId){
+res.send("This invitation already exists!")
 
 }
 else{

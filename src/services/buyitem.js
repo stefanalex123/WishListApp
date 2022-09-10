@@ -20,7 +20,7 @@ const getBuyersForItem= async (id) => {
         itemId:id
       },
       include: {
-        user:true
+        item:true
       }
     })
 

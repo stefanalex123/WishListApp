@@ -90,7 +90,7 @@ const createContributionInvitation= async (itemId, userContributerId,userAskedId
         itemId:id
       },
       include: {
-       user:true
+       item:true
       }
     })
 

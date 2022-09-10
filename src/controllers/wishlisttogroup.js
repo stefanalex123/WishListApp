@@ -4,7 +4,7 @@ import wishlistToGroupServices from "../services/wishlisttogroup.js";
 
 const updateWishlistToGroup = async (req, res, next) => {
     try {
-      const wishlistToGroup = await wishlistTogroupServices.getWishlistToGroup(req.params.id, req.params.wishlistId);
+      const wishlistToGroup = await wishlistToGroupServices.getWishlistToGroup(req.params.id, req.params.wishlistId);
       if (!wishlistToGroup) {
         throw { message: "Whislist not found in group" };
       }
@@ -36,8 +36,13 @@ const deleteWishlistToGroup = async (req, res, next) => {
 
 const getGroupAllWishlists = async (req, res, next) => {
     try {
-        var groupAllWishlists=await wishlistToGroupServices.getAllWishlistToGroup(req.params.id);
+        const groupAllWishlists=await wishlistToGroupServices.getAllWishlistToGroup(req.params.id);
+        if(groupAllWishlists.length==0){
+          res.send("There is no wishlist in this group!")
+        }
+        else{
         res.json(groupAllWishlists)
+        }
     } catch (err) {
         next(err);
     }

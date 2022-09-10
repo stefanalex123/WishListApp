@@ -14,7 +14,13 @@ const deleteUserProfile = async (req, res, next) => {
 const getUserProfile = async (req,res,next)=>{
     try {
     
-      res.json(await userProfileService.getUserProfile(req.auth.userId));
+      const userProfile=await userProfileService.getUserProfile(req.auth.userId);
+      if(!userProfile){
+        res.send("You have not completed your userprofile")
+      }
+      else {
+        res.send(userProfile)
+      }
     } catch (err){
       next(err);
     }
@@ -47,6 +53,7 @@ const updateUserProfile = async (req, res, next) => {
         email: req?.body?.email || userProfile.email,
         nickname: req?.body?.nickname || userProfile.nickname,
         phoneNumber:req?.body?.phonenumber || userProfile.phoneNumber,
+        birthday:req?.body?.birthday || userProfile.birthday,
         mailsNotifications:req.body.mailsNotifications || userProfile.mailsNotifications,
         socketId:userProfile.socketId,
         verifiedAccount:userProfile.verifiedAccount

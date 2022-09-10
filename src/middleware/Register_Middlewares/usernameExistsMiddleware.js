@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-async function randomIntFromInterval(min, max) { // min and max included 
+async function randomIntFromInterval(min, max) { 
     return Math.floor(Math.random() * (max - min + 1) + min)
   }
 
@@ -38,7 +38,7 @@ const user = await prisma.user.findUnique({
 
 if(user.username==req.body.username){
     var msg= await NumeSugestie(req.body.username);
-    res.send("Acest username este preluat de al utilizator, poti prelua acest username: "+ msg);
+    res.send("This username is not available, you can take this username: "+ msg);
 
    
 } } catch(err) {
@@ -48,15 +48,4 @@ if(user.username==req.body.username){
     
 }
        
-       
-       
-     
-    
-
-  
-
-  
-   
-
-  
   export default usernameExistsMiddleware;

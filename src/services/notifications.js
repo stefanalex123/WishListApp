@@ -1,7 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-
+const getAllNotificationForAllUsers = async () => {
+  const allNotificationForAllUsers = await prisma.notifications.findMany()
+  return allNotificationForAllUsers;
+};
 
 const getAllNotifications= async (id) => {
     const allNotifications = await prisma.notifications.findMany({
@@ -17,8 +20,11 @@ const getAllNotifications= async (id) => {
         data: {
           notificationDescription:notificationDescription,
           userdeliverId:userdeliverId,
+          status:"PENDING"
+          
         }
     });
+
         return createNotification;
 };
 
@@ -43,6 +49,16 @@ const getNotification= async (id) => {
   return notification;
 };
 
+const deleteNotification = async (id) => {
+  const notification = await prisma.notifications.delete({
+      where: {
+          id:id
+      }
+  });
+  return notification;
+};
 
 
-  export default {getAllNotifications, createNotification, updateNotification, getNotification}
+
+  export default {getAllNotifications, createNotification, updateNotification, getNotification,
+                 getAllNotificationForAllUsers, deleteNotification}

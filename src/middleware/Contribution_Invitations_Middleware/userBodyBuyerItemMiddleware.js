@@ -17,16 +17,16 @@ try{
     })
 
 
-if(buyItem[0].userBuyerId==req.body.userAskedId){
+if(buyItem[0].userBuyerId==req.body.userId){
 
    next()
 }
 else{
-    res.send("Userul pe care l ai introdus nu este primul cumaparator al acestui item")
+    res.send("The user you introduced is not the first buyer of this itemmm!")
 }
 
 } catch(err) {
-    res.send("Userul pe care l ai introdus nu este primul cumaparator al acestui item")
+    res.send("The user you introduced is not the first buyer of this item!")
 }
     
 }

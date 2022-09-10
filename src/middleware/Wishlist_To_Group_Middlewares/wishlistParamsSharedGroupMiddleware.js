@@ -21,11 +21,11 @@ if(wishlistToGroup[0].wishlistId==req.params.wishlistId && wishlistToGroup[0].gr
   next();
 }
 else{
-  res.send("Acest wishlist nu a fost partajat pe grup")
+  res.send("The wishlist you try to delete/modify is not shared in the group")
 }
 
 } catch(err) {
-    res.send("Acest wishlist nu a fost partajat pe grup ")
+    res.send("The wishlist you try to delete/modify is not shared in the group")
 }
     
 }

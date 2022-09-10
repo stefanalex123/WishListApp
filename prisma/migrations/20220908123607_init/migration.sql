@@ -15,6 +15,7 @@ CREATE TABLE `UserProfile` (
     `nickname` VARCHAR(191) NOT NULL,
     `phoneNumber` VARCHAR(191) NOT NULL,
     `mailsNotifications` VARCHAR(191) NOT NULL,
+    `birthday` VARCHAR(191) NOT NULL,
     `verifiedAccount` VARCHAR(191) NOT NULL,
     `socketId` VARCHAR(191) NOT NULL,
 
@@ -131,6 +132,7 @@ CREATE TABLE `Notifications` (
     `notificationDescription` VARCHAR(191) NOT NULL,
     `deliverAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `userdeliverId` VARCHAR(191) NOT NULL,
+    `status` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -141,6 +143,7 @@ CREATE TABLE `mailsReferralsInvitations` (
     `userDeliverId` VARCHAR(191) NOT NULL,
     `groupId` VARCHAR(191) NOT NULL,
     `emailSend` VARCHAR(191) NOT NULL,
+    `code` VARCHAR(191) NOT NULL,
     `status` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)
@@ -165,6 +168,17 @@ CREATE TABLE `verifyAccount` (
     `status` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `verifyAccount_emailUsed_key`(`emailUsed`),
+    PRIMARY KEY (`id`)
+) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+-- CreateTable
+CREATE TABLE `deleteAccount` (
+    `id` VARCHAR(191) NOT NULL,
+    `emailUsed` VARCHAR(191) NOT NULL,
+    `code` VARCHAR(191) NOT NULL,
+    `status` VARCHAR(191) NOT NULL,
+
+    UNIQUE INDEX `deleteAccount_emailUsed_key`(`emailUsed`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -227,3 +241,6 @@ ALTER TABLE `mailsForgotPassword` ADD CONSTRAINT `mailsForgotPassword_emailUsed_
 
 -- AddForeignKey
 ALTER TABLE `verifyAccount` ADD CONSTRAINT `verifyAccount_emailUsed_fkey` FOREIGN KEY (`emailUsed`) REFERENCES `UserProfile`(`email`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `deleteAccount` ADD CONSTRAINT `deleteAccount_emailUsed_fkey` FOREIGN KEY (`emailUsed`) REFERENCES `UserProfile`(`email`) ON DELETE CASCADE ON UPDATE CASCADE;

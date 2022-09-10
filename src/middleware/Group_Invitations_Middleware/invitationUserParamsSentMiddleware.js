@@ -12,7 +12,7 @@ try{
 const groupInvitation = await prisma.groupInvitations.findMany({
     where: {
         groupId:req.params.id,
-        userInvitedId:req.params.userInvitedId
+        userInvitedId:req.params.userInvitedId,
     },
 })
 
@@ -22,11 +22,11 @@ if(groupInvitation[0].userInvitedId==req.params.userInvitedId && groupInvitation
 }
 
 else {
-    res.send("Aceeasta invitatie nu exista pentru a o putea sterge/modifica")
+    res.send("This invitation doesn't exists!")
 }
 
 } catch(err) {
-    res.send("Aceeasta invitatie nu exista pentru a o putea sterge/modifica")
+    res.send("This invitation doesn't exists!")
 }
     
 }

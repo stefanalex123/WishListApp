@@ -17,12 +17,19 @@ const createReferralInvitation= async (userDeliverId, groupId, emailSend, status
 
 
 
-const getReferralInvitation= async (groupId, userDeliverId, email) => {
+const getReferralInvitation= async (id) => {
+    const referralInvitation = await prisma.mailsReferralsInvitations.findUnique({
+      where: {
+       id:id
+      },
+    })
+    return referralInvitation;
+  };
+
+  const getReferralInvitationByEmailSend= async (emailSend) => {
     const referralInvitation = await prisma.mailsReferralsInvitations.findMany({
       where: {
-        groupId:groupId,
-        userDeliverId:userDeliverId,
-        emailSend:email
+      emailSend:emailSend
       },
     })
     return referralInvitation;
@@ -41,4 +48,4 @@ const getReferralInvitation= async (groupId, userDeliverId, email) => {
 
 
 
-export default {createReferralInvitation, updateReferralInvitation, getReferralInvitation, updateReferralInvitation}
+export default {createReferralInvitation, updateReferralInvitation, getReferralInvitation, updateReferralInvitation, getReferralInvitationByEmailSend}

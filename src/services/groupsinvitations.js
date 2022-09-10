@@ -56,6 +56,17 @@ const createGroupInvitation= async (groupId ,userInvitedId) =>{
         return groupInvitation;
 };
 
+const convertOwnerInMember= async (groupId ,userInvitedId) =>{
+  const groupInvitation=await prisma.groupInvitations.create({
+      data: {
+          status:"ACCEPTED",
+          groupId:groupId,
+          userInvitedId:userInvitedId
+      }
+  });
+      return groupInvitation;
+};
+
 const getAllGroupInvitations= async (id) => {
     const allGroupInvitations = await prisma.groupInvitations.findMany({
       where: {
@@ -78,13 +89,27 @@ const getAllGroupInvitations= async (id) => {
         group:true
       }
     })
-
-
-
-    
-
     return allGroupInvitations;
   };
+
+  const getAllInvitationsAcceptedForUser= async (id) => {
+    const allGroupInvitationsAccepted = await prisma.groupInvitations.findMany({
+      where: {
+        userInvitedId:id,
+        status:"ACCEPTED"
+      },
+      include: {
+        group:true
+      }
+    })
+    return allGroupInvitationsAccepted;
+  };
+
+
+
+
+
+
 
   const updateGroupInvitation= async (id, groupInvitationInfo) => {
 
@@ -96,9 +121,11 @@ const getAllGroupInvitations= async (id) => {
     })
     return groupInvitationUpdated;
   };
+
+
   
 
 
 
 
-export default {updateGroupInvitation,getGroupInvitationById, getAllInvitationsForUser, createGroupInvitation, getGroupInvitation, deleteGroupInvitation, getAllGroupInvitations}
+export default {updateGroupInvitation,getGroupInvitationById, getAllInvitationsForUser, createGroupInvitation, getGroupInvitation, deleteGroupInvitation, getAllGroupInvitations, getAllInvitationsAcceptedForUser, convertOwnerInMember}

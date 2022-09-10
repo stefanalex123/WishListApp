@@ -7,18 +7,32 @@ import { jwtMiddleware } from "../middleware/others_Middlewares/auth.js";
 import itemExistsMiddleware from "../middleware/Items_Middlewars/itemExistsMiddleware.js";
 
 
-
-
 const router = express.Router();
 
 
+
+
+
 router.route('/')
+
+
+        .get([
+           
+            ], 
+        validationMiddleware,
+        jwtMiddleware,
+        itemController.getAllItemsPagination
+
+
+)  
 
         .get([    
         ], 
         validationMiddleware,
         jwtMiddleware,
-        itemController.getAllItems)  
+        itemController.getAllItems) //All user's items
+
+    
 
         .post([
         check("itemName")
@@ -56,6 +70,7 @@ router.route('/')
         ], 
         validationMiddleware,
         jwtMiddleware,
+        itemExistsMiddleware, //Verify If user is the owner of the item and if item exists id db
         itemController.getItem)  
 
         .put([
@@ -82,16 +97,21 @@ router.route('/')
     ], 
     validationMiddleware,
     jwtMiddleware, 
-     itemExistsMiddleware,                       //Verify_If_Item_Exists_In_ItemsDB,
+    itemExistsMiddleware, //Verify If user is the owner of the item and if item exists in db
     itemController.updateItem)
 
     .delete([   
     ],
     validationMiddleware, 
     jwtMiddleware,
-    itemExistsMiddleware,                          //Verify_If_Item_Exists_In_ItemsDB,
+    itemExistsMiddleware,//Verify If user is the owner of the item and if item exists in db
     itemController.deleteItem
     )
+
+
+      
+
+    
 
 
 

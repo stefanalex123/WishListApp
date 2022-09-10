@@ -3,6 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import userProfileService from "../services/userprofile.js";
 import isLeapYear from "leap-year";
 import notificationsServices from "../services/notifications.js"
+import groupsinvitationsService from "../services/groupsinvitations.js";
 const prisma = new PrismaClient();
 
 
@@ -30,7 +31,13 @@ const updateGroup = async (req, res, next) => {
 
 const getAllGroupsWhereOwner = async (req, res, next) => {
     try {
-        res.json(await groupServices.getAllGroupsWhereOwner(req.auth.userId));
+        const allGroupsWhereUserOwner=await groupServices.getAllGroupsWhereOwner(req.auth.userId);
+        if(allGroupsWhereUserOwner.length==0){
+          res.send("You are not owner to any group!")
+        }
+        else {
+          res.send(allGroupsWhereUserOwner)
+        }
     } catch (err) {
         next(err);
     }
@@ -40,6 +47,9 @@ const getAllGroupsWhereOwner = async (req, res, next) => {
 const createGroup = async (req,res,next) => {
     try{
         const newGroup= await groupServices.createGroup(req.body.groupTitle, req.body.groupDescription, req.auth.userId)
+        //We will create an invitation for the owner to be also recognized as the member fo the group
+        const groupInvitation=await groupsinvitationsService.convertOwnerInMember(newGroup.id, req.auth.userId);
+
         res.json(newGroup);
     } catch (err){
         next(err);

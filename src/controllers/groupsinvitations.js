@@ -78,11 +78,33 @@ const deleteGroupInvitation = async (req, res, next) => {
   const getAllInvitationsForUser = async (req, res, next) => {
     try {
         const allInvitationsForUser=await groupsInvitationServices.getAllInvitationsForUser(req.auth.userId);
+        if(allInvitationsForUser.length==0){
+          res.send("You don't have any invitations")
+        }
+        else{
         res.json(allInvitationsForUser)
+        }
+    } catch (err) {
+        next(err);
+    }
+  };
+
+  const getAllInvitationsAcceptedForUser = async (req, res, next) => {
+    try {
+        const allInvitationsAcceptedForUser=await groupsInvitationServices.getAllInvitationsAcceptedForUser(req.auth.userId);
+        if(allInvitationsAcceptedForUser.length==0){
+          res.send("You are not part of any group!")
+        }
+        else {
+        res.json(allInvitationsAcceptedForUser)
+        }
     } catch (err) {
         next(err);
     }
   };
 
 
-export default {updateGroupInvitation, getAllInvitationsForUser , createGroupInvitation, deleteGroupInvitation, getGroupAllInvitations}
+
+
+
+export default {updateGroupInvitation, getAllInvitationsForUser , createGroupInvitation, deleteGroupInvitation, getGroupAllInvitations,getAllInvitationsAcceptedForUser}

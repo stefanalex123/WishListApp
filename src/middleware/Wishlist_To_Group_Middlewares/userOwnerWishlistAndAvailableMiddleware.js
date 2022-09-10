@@ -21,14 +21,14 @@ if(wishlist.userId==req.auth.userId && wishlist.status=="AVAILABLE"){
 }
 
 else if(wishlist.userId==req.auth.userId && wishlist.status!="AVAILABLE"){
-    res.send("Acest wihslit este gol, nu ii puteti face share")
+    res.send("This wishlist is empty, you can't share it")
     }
 else {
-    res.send("Incerci sa accesezi Wishlistul altui utilizator")
+    res.send("This wishlsit is not available")
 }
 
 } catch(err) {
-res.send("Acest WishList nu exista in baza de date")
+res.send("This wishlist doesn't exists")
 }
     
 }

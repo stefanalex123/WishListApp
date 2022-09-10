@@ -153,6 +153,7 @@ id                        String   @id @default(uuid())
 notificationDescription   String
 deliverAt                 DateTime @default(now())
 userdeliverId             String  
+status                    String
 user                      User      @relation ("notificantions",  fields: [userdeliverId], references: [id], onDelete: Cascade)
  
 }
@@ -164,7 +165,8 @@ userDeliverId  String
 user           User                 @relation ("referralsinvitations",  fields: [userDeliverId], references: [id], onDelete: Cascade)        
 groupId        String
 group          Group                @relation ("referralsinvitations2",  fields: [groupId], references: [id], onDelete: Cascade)        
-emailSend          String
+emailSend      String
+
 status              String
 }
 

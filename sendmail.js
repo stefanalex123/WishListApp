@@ -1,11 +1,74 @@
 import nodemailer from "nodemailer"
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function sendmail(subject, text, adress){
     const transporter = nodemailer.createTransport({
        service:"hotmail",
            auth: {
                 user: 'stefan.focan@365.univ-ovidius.ro',
-                pass: '*******',
+                pass: '****',
              },
         secure: false,
         });

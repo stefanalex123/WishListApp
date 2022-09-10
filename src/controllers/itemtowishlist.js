@@ -62,8 +62,13 @@ else {
 
 const getWishlistAllItems = async (req, res, next) => {
     try {
-        var wishlistAllItems=await itemToWishlistServices.getAllWishlistItems(req.params.wishlistId);
+        const wishlistAllItems=await itemToWishlistServices.getAllWishlistItems(req.params.wishlistId);
+        if(wishlistAllItems.length==0){
+          res.send("You don't have any items added in this wishlist!")
+        }
+        else {
         res.json(wishlistAllItems)
+        }
     } catch (err) {
         next(err);
     }

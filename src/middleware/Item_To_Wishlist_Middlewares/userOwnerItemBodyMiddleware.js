@@ -19,12 +19,12 @@ const userOwnerItemBodyMiddleware = async ( req, res, next) => {
        next();
     }
     else {
-        res.send("Incerci sa accesezi item-ul altui utilizator")
+        res.send("This item is not available")
     }
        
     }  catch(err) {
     
-       res.send("Acest item nu exista in baza de date")
+       res.send("This item doesn't exists")
     }
         
     }

@@ -17,7 +17,7 @@ try{
     })
 
 
-if(contributionInvitation.userAskedId==req.auth.userId){
+if(contributIoninvitation.userAskedId==req.auth.userId){
 
    next()
 }

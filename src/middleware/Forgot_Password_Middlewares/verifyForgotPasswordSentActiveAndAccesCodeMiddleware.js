@@ -24,12 +24,12 @@ try{
             res.send("The Forgot Password Request is expired")
         }
 
-         else if (forgotPassword[0].id==req.params.forgotPasswordId && forgotPassword[0].status=="PENDING"
+         else if (forgotPassword[0].id==req.params.forgotPasswordId && forgotPassword[0].status=="AVAILABLE"
               &&  validCode==true){
             next();
             }
 
-        else if (forgotPassword[0].id==req.params.forgotPasswordId && forgotPassword[0].status=="PENDING"
+        else if (forgotPassword[0].id==req.params.forgotPasswordId && forgotPassword[0].status=="AVAILABLE"
             &&  validCode==false){
                 res.send("Code invalid")
           }

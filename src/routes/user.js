@@ -41,10 +41,14 @@ const router = express.Router();
     usersController.addUser)
 
     router.route('/login')
-    
     .post([
-        check("username", "Invalid name, it must have at least 4 characters").isLength({ min: 4 }),
-        check("password", "Invalid password, it must have at least 4 characters").isLength({ min: 4 })
+        check("password")
+        .exists()
+        .withMessage('is required'),
+
+        check("username")
+        .exists()
+        .withMessage('is required')
     ],
     validationMiddleware,
     usersController.loginUser)
@@ -63,7 +67,7 @@ const router = express.Router();
         
     ], 
     validationMiddleware,
-    usernameExistsMiddleware,
+    //usernameExistsMiddleware,
     verifyUserProfileVerifiedMiddleware,
     verifyForgotPasswordNotSentMiddleware, //+ if is active or expired
       
@@ -90,7 +94,7 @@ const router = express.Router();
         
     ], 
     validationMiddleware,
-    usernameExistsMiddleware,
+    //usernameExistsMiddleware,
     verifyForgotPasswordSentActiveAndAccesCodeMiddleware, //Verify if request exists, is active and code is valid
     confirmNewPasswordMiddleware,     //Verify if newPassword and confirmNewPassword equal
     usersController.updateUserPassword)
