@@ -14,7 +14,7 @@ const userprofile = await prisma.userProfile.findUnique({
 
 if(userprofile.userId==req.auth.userId){
 
-    res.send("You can't create more than one userprofile");
+    res.status(409).send("You can't create more than one userprofile");
    
 }
 else{

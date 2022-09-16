@@ -3,6 +3,7 @@ CREATE TABLE `users` (
     `id` VARCHAR(191) NOT NULL,
     `username` VARCHAR(191) NOT NULL,
     `password` VARCHAR(191) NOT NULL,
+    `email` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `users_username_key`(`username`),
     PRIMARY KEY (`id`)
@@ -18,9 +19,9 @@ CREATE TABLE `UserProfile` (
     `birthday` VARCHAR(191) NOT NULL,
     `verifiedAccount` VARCHAR(191) NOT NULL,
     `socketId` VARCHAR(191) NOT NULL,
+    `status` VARCHAR(191) NOT NULL,
 
     UNIQUE INDEX `UserProfile_email_key`(`email`),
-    UNIQUE INDEX `UserProfile_nickname_key`(`nickname`),
     PRIMARY KEY (`userId`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -143,7 +144,6 @@ CREATE TABLE `mailsReferralsInvitations` (
     `userDeliverId` VARCHAR(191) NOT NULL,
     `groupId` VARCHAR(191) NOT NULL,
     `emailSend` VARCHAR(191) NOT NULL,
-    `code` VARCHAR(191) NOT NULL,
     `status` VARCHAR(191) NOT NULL,
 
     PRIMARY KEY (`id`)

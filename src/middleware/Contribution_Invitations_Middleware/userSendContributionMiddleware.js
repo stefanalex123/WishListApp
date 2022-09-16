@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 
-//Verify_If_User_Send_Contribution_Invitaiton=
+//Verify_If_User_Send_Contribution_Invitaiton
 const userSendContributionMiddleware= async ( req, res, next) => {
 
 
@@ -24,11 +24,11 @@ if(contributionInvitation[0].userContributerId==req.auth.userId && contributionI
    next()
 }
 else{
-    res.send("Nu ai trimis aceasta invitiatie ")
+    res.status(404).send("You didnt sent this invitation!")
 }
 
 } catch(err) {
-    res.send("Nu ai trimis aceasta invitatie ")
+    res.status(404).send("You didnt sent this invitation!")
 }
     
 }

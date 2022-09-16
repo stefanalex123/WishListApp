@@ -13,7 +13,7 @@ const emailTakenMiddleware = async ( req, res, next) => {
     })
     
     if(userprofile.email==req.body.email){
-        res.send("This email is used by other users!")
+        res.status(409).send("This email is used by other users!")
     }
     else {
         next();
@@ -22,7 +22,8 @@ const emailTakenMiddleware = async ( req, res, next) => {
 
 } catch(err) {
     
-       next();
+      console.log(err);
+      next();
     }
         
     }

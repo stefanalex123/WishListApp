@@ -12,7 +12,12 @@ import mailsNotificationMiddleware from "../middleware/User_Profile_Middlewares/
 import userprofileCreatedMiddleware from "../middleware/User_Profile_Middlewares/userprofileCreadMiddleware.js"
 import accesWrongUserProfileMiddleware from "../middleware/User_Profile_Middlewares/accesWrongUserProfile.js";
 import emailTakenMiddleware from "../middleware/User_Profile_Middlewares/emailTakenMiddleware.js";
+import statusProfileMiddleware from "../middleware/User_Profile_Middlewares/statusPorfileMiddleware.js";
+import publicUserProfileMiddleware from "../middleware/User_Profile_Middlewares/publicUserProfileMiddleware.js";
 const router = express.Router();
+
+    
+
 
     router.route('/')
 
@@ -90,7 +95,8 @@ const router = express.Router();
     jwtMiddleware,
     accesWrongUserProfileMiddleware,// Verify if the userprofile exists before you modify it
     birthdayMiddleware, // Verify if the birthday format is valid
-    mailsNotificationMiddleware, // Verify if the mailsNotification format is valid              
+    mailsNotificationMiddleware, // Verify if the mailsNotification format is valid    
+    statusProfileMiddleware,// Verify if the status of the profile is valid          
     nicknameTakenMiddleware, //Verify if Nickname taken by other user
     emailTakenMiddleware, //Verify if the email taken by other user
     userprofileController.updateUserProfile)
@@ -99,7 +105,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-    userprofileController.getUserProfile)
+    userprofileController.getMyCompleteProfile)
 
     .delete([
     ],

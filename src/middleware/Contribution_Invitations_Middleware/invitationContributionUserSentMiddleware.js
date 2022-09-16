@@ -22,11 +22,11 @@ if(contributIoninvitation.userAskedId==req.auth.userId){
    next()
 }
 else{
-    res.send("Nu ai primit aceasta inivtatie de a contribui")
+    res.status(403).send("You didnt recieve this invitation to contribute!")
 }
 
 } catch(err) {
-    res.send("Nu ai primit aceasta invitatie de a contribui")
+    res.status(403).send("You didnt recieve this invitation to contribute!")
 }
     
 }

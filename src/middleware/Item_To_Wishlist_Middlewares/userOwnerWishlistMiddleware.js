@@ -16,15 +16,15 @@ const wishlist = await prisma.wishlist.findUnique({
 })
 
 if(wishlist.userId==req.auth.userId){
-// Userul detine acest wishlit
+
     next()
 }
 else {
-    res.send("This wishlist is not available")
+    res.status(404).send("This wishlist is not available")
 }
 
 } catch(err) {
-res.send("This wishlist doesn't exists ")
+res.status(404).send("This wishlist doesn't exists ")
 }
     
 }

@@ -37,6 +37,7 @@ const addUser = async(username, password) => {
                 data: {
                
                     username:username,
+                    
                     password:hash,
                     
                 }
@@ -100,6 +101,13 @@ const addUserByReferralLink = async(username, password) => {
 
 
     };
+
+
+    
+
+  
+
+ 
 
 
 

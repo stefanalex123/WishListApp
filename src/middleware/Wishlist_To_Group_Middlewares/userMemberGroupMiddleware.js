@@ -23,14 +23,14 @@ groupInvitation[0].userInvitedId==req.auth.userId){
 }
 
 else {
-    res.send("Nu sunteti membru al acestui grup")
+    res.status(403).send("You are not a member of this group!")
 }
 
 
 
 } catch(err) {
    
-    res.send("Nu sunteti membru al acestui gruppp")
+    res.status(403).send("You are not a member of this group!")
 }
     
 }

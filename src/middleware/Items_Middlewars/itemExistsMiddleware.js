@@ -17,12 +17,12 @@ const itemExistsMiddleware = async ( req, res, next) => {
        next();
     }
     else {
-        res.send("You are not the owner of this item")
+        res.status(403).send("You are not the owner of this item")
     }
        
     }  catch(err) {
     
-       res.send("This item doesn't exists ")
+       res.status(404).send("This item doesn't exists ")
     }
         
     }

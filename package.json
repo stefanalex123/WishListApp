@@ -30,6 +30,7 @@
     "passport": "^0.6.0",
     "passport-google-oauth2": "^0.2.0",
     "prisma": "^4.1.1",
+    "random-email": "^1.0.3",
     "socket.io": "^4.5.1",
     "supertest": "^6.2.4",
     "validate-date": "^2.0.0"

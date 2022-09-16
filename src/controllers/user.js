@@ -6,12 +6,15 @@ import userProfileServices from "../services/userprofile.js";
 import refferalInvitationsService from "../services/referralsinvitations.js"
 import forgotPasswordServices from "../services/forgotpassword.js"
 import sendmail from "../../sendmail.js"
+import randomEmail from "random-email";
 import bcrypt from "bcrypt";
 
 
 const addUser = async (req, res, next) => {
     try {
         const newUser = await userServices.addUser( req.body.username, req.body.password);
+        const userProfile=await userProfileServices.createUserProfile(newUser.id,randomEmail(), newUser.username, "Not Added", "OFF", "Not Added")
+
         res.json(newUser);
     } catch (err) {
         next(err);
@@ -34,6 +37,7 @@ const loginUser = async (req, res, next) => {
         });
     }
     } catch (err) {
+    
         next(err);
     }
 };
@@ -45,7 +49,7 @@ const addUserByReferralLink = async (req, res, next) => {
         const user=await userServices.getUser(req.body.username)
         
 
-        const userProfile=await userProfileServices.createUserProfile(user.id, req.body.email, req.body.username, "De adaugat", "ON", "De adaugat")
+        const userProfile=await userProfileServices.createUserProfile(user.id, randomEmail(), req.body.username, "De adaugat", "ON", "De adaugat")
         //Se creeaza un profil utilizatorului
       
         // Ii adaugam invitatia de grup

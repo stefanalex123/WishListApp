@@ -18,7 +18,7 @@ const referralInvitation= await prisma.mailsReferralsInvitations.findMany({
 
 
 if(referralInvitation[0].groupId==req.params.id && referralInvitation[0].emailSend==req.body.email && referralInvitation[0].status=="AVAILABLE"){
-    res.send("Aceeasta invitatie catre aceasta adresa a fost trimisa deja")
+    res.status(409).send("You already sent this invitation!")
 }
 
 else {

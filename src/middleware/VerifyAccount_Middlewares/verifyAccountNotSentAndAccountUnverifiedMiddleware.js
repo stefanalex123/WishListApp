@@ -27,7 +27,7 @@ if(userprofile.verifiedAccount=="UNVERIFIED"){
 
 
         if(verifyAccount[0].emailUsed==userprofile.email && verifyAccount[0].status=="PENDING"){
-            res.send("The verify Account is already sent")
+            res.status(409).send("The verify Account is already sent")
         }
 
          else if (verifyAccount[0].emailUsed==userprofile.email && verifyAccount[0].status=="EXPIRED"){
@@ -36,7 +36,7 @@ if(userprofile.verifiedAccount=="UNVERIFIED"){
      }
 
     else {
-        res.send("This account is already verified")
+        res.status(409).send("This account is already verified")
     }
 
     }    catch(err) {

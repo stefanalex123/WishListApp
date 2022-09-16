@@ -21,7 +21,7 @@ const itemToWishlist = await prisma.itemToWishlist.findMany({
 
 if(itemToWishlist[0].itemId==req.body.itemId && itemToWishlist[0].wishlistId==req.params.id){
    //Acest item exista in wishlist ca sa il modificam/stergem
-res.send("This item is already shared in this wishlist")
+res.status(409).send("This item is already shared in this wishlist")
 }
 else{
     next()

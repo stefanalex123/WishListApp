@@ -21,14 +21,14 @@ if(wishlist.userId==req.auth.userId && wishlist.status=="AVAILABLE"){
 }
 
 else if(wishlist.userId==req.auth.userId && wishlist.status!="AVAILABLE"){
-    res.send("This wishlist is empty, you can't share it")
+    res.status(403).send("This wishlist is empty, you can't share it")
     }
 else {
-    res.send("This wishlsit is not available")
+    res.status(404).send("This wishlsit is not available")
 }
 
 } catch(err) {
-res.send("This wishlist doesn't exists")
+res.status(404).send("This wishlist doesn't exists")
 }
     
 }

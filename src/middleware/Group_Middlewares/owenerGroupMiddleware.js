@@ -17,13 +17,13 @@ const owenerGroupMiddleware= async ( req, res, next) => {
         next();
     }
     else {
-        res.send("You are not the owner of this group!")
+        res.status(403).send("You are not the owner of this group!")
     }
 
        
     }  catch(err) {
     
-       res.send("This group doesn't exists!")
+       res.status(404).send("This group doesn't exists!")
     }
     }
 

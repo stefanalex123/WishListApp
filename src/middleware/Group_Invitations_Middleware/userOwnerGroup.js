@@ -15,16 +15,16 @@ const group = await prisma.group.findUnique({
     },
 })
 
-if(group.groupownerid==req.auth.userid){
+if(group.groupOwnerId==req.auth.userId){
 // Userul este ownerul acestui grup
     next()
 }
 else {
-    res.send("Nu esti ownerul al acestui grup")
+    res.status(403).send("You are not the owner of the group!")
 }
 
 } catch(err) {
-res.send("Acest grup nu exista in baza de date")
+res.status(404).send("This group doesnt exists!")
 }
     
 }

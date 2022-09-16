@@ -18,7 +18,7 @@ const wishlistToGroup = await prisma.wishlistToGroup.findMany({
 
 
 if(wishlistToGroup[0].wishlistId==req.body.wishlistId && wishlistToGroup[0].groupId==req.params.id){
-   res.send("This wishlist is already shared in this group!")
+   res.status(409).send("This wishlist is already shared in this group!")
 }
 else{
   next();

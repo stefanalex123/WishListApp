@@ -20,7 +20,7 @@ try{
 
 
 if(contributionInvitation[0].itemId==req.params.itemId && contributionInvitation[0].userContributerId==req.auth.userId){
-res.send("This invitation already exists!")
+res.status(409).send("This invitation already exists!")
 
 }
 else{

@@ -15,17 +15,19 @@ try{
         },
     })
 
-
-        if(forgotPassword[0].emailUsed==req.body.email && verifyAccount[0].status=="PENDING"){
-            res.send("The Forgot Password request is already sent")
+    
+        if(forgotPassword[0].emailUsed==req.body.email && forgotPassword[0].status=="AVAILABLE"){
+            res.status(409).send("The Forgot Password request is already sent")
         }
 
          else if (forgotPassword[0].emailUsed==req.body.email && forgotPassword[0].status=="EXPIRED"){
+            
             next();
             }
      
 
     }    catch(err) {
+        console.log(err)
          next();
     }
     

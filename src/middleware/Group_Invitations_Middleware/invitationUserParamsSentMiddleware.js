@@ -22,11 +22,11 @@ if(groupInvitation[0].userInvitedId==req.params.userInvitedId && groupInvitation
 }
 
 else {
-    res.send("This invitation doesn't exists!")
+    res.status(404).send("This invitation doesn't exists!")
 }
 
 } catch(err) {
-    res.send("This invitation doesn't exists!")
+    res.status(404).send("This invitation doesn't exists!")
 }
     
 }

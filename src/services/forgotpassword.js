@@ -3,12 +3,24 @@ const prisma = new PrismaClient();
 
 
 
+const deleteForgotPassword = async (id) => {
+  const forgotPassword = await prisma.mailsForgotPassword.delete({
+      where: {
+          id:id
+      }
+  });
+  return forgotPassword;
+};
+
+
+
 const createForgotPassword= async (emailUsed, code,status) =>{
     const forgotPassword=await prisma.mailsForgotPassword.create({
         data: {
             emailUsed:emailUsed,
             code:code,
-            status:status
+            status:status,
+            //deliverAt:Date.now()
         }
     });
         return forgotPassword;
@@ -43,9 +55,16 @@ const getForgotPassword= async (emailUsed) => {
   };
 
 
+  const getAllForgotPasswords= async () => {
+    const allForgotPasswords = await prisma.mailsForgotPassword.findMany()
+
+    return allForgotPasswords;
+  };
 
 
 
 
 
-export default {createForgotPassword, getForgotPassword, getForgotPasswordById, updateForgotPassword}
+
+
+export default {deleteForgotPassword,getAllForgotPasswords,createForgotPassword, getForgotPassword, getForgotPasswordById, updateForgotPassword}

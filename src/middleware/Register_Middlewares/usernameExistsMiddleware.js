@@ -38,7 +38,7 @@ const user = await prisma.user.findUnique({
 
 if(user.username==req.body.username){
     var msg= await NumeSugestie(req.body.username);
-    res.send("This username is not available, you can take this username: "+ msg);
+    res.status(409).send("This username is not available, you can take this username: "+ msg);
 
    
 } } catch(err) {

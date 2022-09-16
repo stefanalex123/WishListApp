@@ -21,11 +21,11 @@ if(itemToWishlist[0].itemId==req.params.itemId && itemToWishlist[0].wishlistId==
    next()
 }
 else{
-    res.send("You need to add the item in the wishlist first")
+    res.status(403).send("You need to add the item in the wishlist first")
 }
 
 } catch(err) {
-    res.send("You need to add the item in the wishlist first")
+    res.status(403).send("You need to add the item in the wishlist first")
 }
     
 }

@@ -7,6 +7,7 @@ import e from "express";
 
 
 const birthdayMiddleware = async ( req, res, next) => {
+   
     try{
         var validBirthday=false;
         const date=new Date()
@@ -26,12 +27,12 @@ const birthdayMiddleware = async ( req, res, next) => {
                             next();
                         }
                         else {
-                            res.send("Invalid Date Format, Try: DD/MM/YYYY")
+                            res.status(404).send("Invalid Date Format, Try: DD/MM/YYYY")
                         }
 
                 }
                 else {
-                    res.send("Invalid Date Format, Try: DD/MM/YYYY");
+                    res.status(404).send("Invalid Date Format, Try: DD/MM/YYYY");
                     
                 }
 
@@ -50,11 +51,11 @@ const birthdayMiddleware = async ( req, res, next) => {
                         next();
                     }
                     else {
-                        res.send("Invalid Date Format, Try: DD/MM/YYYY")
+                        res.status(404).send("Invalid Date Format, Try: DD/MM/YYYY")
                     }
                 }
                 else {
-                    res.send("Invalid Format, Try: DD/MM/YYYY")
+                    res.status(404).send("Invalid Format, Try: DD/MM/YYYY")
                 }
 
     }
@@ -70,12 +71,12 @@ const birthdayMiddleware = async ( req, res, next) => {
                         next();
                     }
                     else {
-                        res.send("Invalid Date Format, Try DD/MM/YYYY")
+                        res.status(404).send("Invalid Date Format, Try DD/MM/YYYY")
                     }
 
                 }
                 else {
-                    res.send("Invalid Format, Try DD/MM/YYYY")
+                    res.status(404).send("Invalid Format, Try DD/MM/YYYY")
                 }
 
 }
@@ -91,26 +92,27 @@ const birthdayMiddleware = async ( req, res, next) => {
                     next();
                 }
                 else {
-                    res.send("Invalid Format, Try DD/MM/YYYY")
+                    res.status(404).send("Invalid Format, Try DD/MM/YYYY")
                 }
 
             }
             else {
-                res.send("Invalid Format, Try DD/MM/YYYY")
+                res.status(404).send("Invalid Format, Try DD/MM/YYYY")
             }
 
 }
 
 else {
-    res.send("Invalid Date Format, Try DD/MM/YYYY")
+    res.status(404).send("Invalid Date Format, Try DD/MM/YYYY")
 }
 
 
 
     } catch(err) {
-        res.send("Format Date incorect")
+        res.status(404).send("Format Date incorect")
         console.log(err)
     }
 }
+
 
 export default birthdayMiddleware;

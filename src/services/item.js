@@ -40,7 +40,7 @@ const getItem= async (id) => {
     return allItems;
   };
 
-  const getAllItemsWishlist= async (id) => {
+/*   const getAllItemsWishlist= async (id) => {
     const item = await prisma.items.findMany({
       where: {
         userId:id
@@ -48,7 +48,7 @@ const getItem= async (id) => {
     })
     return item;
   };
-
+ */
 
 
 
@@ -59,7 +59,7 @@ const createItem= async (itemName, userId ,itemLink, itemDescription) =>{
             itemName:itemName,
             userId:userId,
             itemLink:itemLink,
-            itemDescription:itemDescription
+            itemDescription:itemDescription,
         }
     });
         return item;

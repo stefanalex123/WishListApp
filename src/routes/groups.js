@@ -8,7 +8,7 @@ import groupinvitationController from "../controllers/groupsinvitations.js"
 import referralsinvitationsController from "../controllers/referralsinvitations.js"
 import wishlisttogroupController from "../controllers/wishlisttogroup.js"
 import buyitemcontroller from "../controllers/buyitem.js"
-
+import userprofileController from "../controllers/userprofile.js"
 
 import itemNotPrincipalBuyerMiddleware from "../middleware/BuyItem_Middlewares/itemNotPrincipalBuyerMiddleware.js";
 import contributionItemSentMiddleware from "../middleware/Contribution_Invitations_Middleware/contributionItemSentMiddleware.js";
@@ -48,7 +48,25 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
-    groupinvitationController.getAllInvitationsAcceptedForUser) // get al the groups where user is member
+    groupinvitationController.getAllInvitationsAcceptedForUser)
+
+
+    router.route('/:id/mostPopularBuyer') // de testat
+    .get([    
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    userMemberGroupMiddleware, // Verify If User is member of the group
+    groupController.mostPopularBuyer)// get al the groups where user is member
+
+
+    router.route('/:id/mostPopularContributer') // de testat
+    .get([    
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    userMemberGroupMiddleware, // Verify If User is member of the group
+    groupController.mostPopularContributer)// get al the groups where user is member
 
 
     router.route('/')
@@ -72,6 +90,10 @@ const router = express.Router();
 
 
     router.route('/:id')
+
+
+
+
 
     .put([
     check("groupTitle")
@@ -164,7 +186,12 @@ const router = express.Router();
 
 //Sending invitations to user to groups
 
-
+    router.route('/:id/invite/allUsers')
+.   get([
+    ],
+    validationMiddleware,
+    jwtMiddleware,
+    userprofileController.getAllProfiles) 
 
     router.route('/:id/invite')
     .post([ 

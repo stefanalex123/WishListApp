@@ -21,11 +21,11 @@ if(groupInvitation.status=="PENDING" &&  groupInvitation.userInvitedId==req.auth
 }
 
 else {
-    res.send("Aceeasta invitatie nu exista pentru a o putea refuza/accepta")
+    res.status(404).send("You cant refuse or accept this invitation because it doesnt exists!")
 }
 
 } catch(err) {
-    res.send("Aceeasta invitatie nu exista pentru a o putea refuza/accepta")
+    res.status(404).send("You cant refuse or accept this invitation because it doesnt exists!")
 }
     
 }

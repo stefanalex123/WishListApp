@@ -22,11 +22,11 @@ if(userProfile.userId==req.body.userInvitedId){
    next()
 }
 else{
-    res.send("The user invited doesn't have a complete profile")
+    res.status(404).send("The user invited doesn't have a complete profile")
 }
 
 } catch(err) {
-    res.send("The user invited doesn't have a complete profile")
+    res.status(404).send("The user invited doesn't have a complete profile")
 }
     
 }

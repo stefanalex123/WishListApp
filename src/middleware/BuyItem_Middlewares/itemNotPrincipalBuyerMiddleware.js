@@ -19,12 +19,12 @@ const itemNotPrincipalBuyerMiddleware = async ( req, res, next) => {
            next();
         }
         else {
-           res.send("This item already has a principal buyer, you can contribute for it")
+           res.status(409).send("This item already has a principal buyer, you can contribute for it")
         }
            
         }  catch(err) {
         
-           res.send("This item doesn't exists")
+           res.status(404).send("This item doesn't exists")
         }
             
         }

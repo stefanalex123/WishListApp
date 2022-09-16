@@ -18,7 +18,7 @@ const createForgotPassword= async(req,res,next) =>{
       const newForgotPassword= await forgotPasswordServices.createForgotPassword(
         req.body.email,
         hash,
-        "AVAILABLE"
+        "AVAILABLE",
         )
    
 
@@ -60,6 +60,18 @@ const createForgotPassword= async(req,res,next) =>{
 }
 
 
+const getAllActiveForgotPasswords = async (req, res, next) => {
+  try {     
+
+      const allActiveForgotPasswords= await  forgotPasswordServices.getAllActiveForgotPasswords();
+      
+
+      res.json(allActiveForgotPasswords);
+  } catch (err) {
+      next(err);
+  }
+};
+
   
 
 
@@ -67,4 +79,4 @@ const createForgotPassword= async(req,res,next) =>{
 
 
 
-  export default {createForgotPassword}
+  export default {createForgotPassword, getAllActiveForgotPasswords}

@@ -18,11 +18,11 @@ const groupInvitation = await prisma.groupInvitations.findMany({
 
 
 if(groupInvitation[0].userInvitedId==req.body.userInvitedId && groupInvitation[0].groupId==req.params.id && groupInvitation[0].status=="PENDING"){
-    res.send("You already sent an invitation to this user!")
+    res.status(409).send("You already sent an invitation to this user!")
 }
 
 else if(groupInvitation[0].userInvitedId==req.body.userInvitedId && groupInvitation[0].groupId==req.params.id && groupInvitation[0].status=="ACCEPTED")
-    res.send("This user is already a member of this group!")
+    res.status(409).send("This user is already a member of this group!")
 else {
     next();
 }

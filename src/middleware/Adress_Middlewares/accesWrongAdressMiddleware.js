@@ -18,13 +18,14 @@ const accesWrongAdressMiddleware= async ( req, res, next) => {
        next();
     }
     else {
-        res.send("You are not owner of this adress")
+      res.status(403).send("You are not owner of this adress")
+        //res.send("You are not owner of this adress")
 
     }
        
     }  catch(err) {
-    
-       res.send("This adress doesn't exists ")
+      res.status(404).send("This adress doesn't exists");
+       //res.send("This adress doesn't exists")
     }
         
     }

@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `mailsforgotpassword` ADD COLUMN `deliverAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);

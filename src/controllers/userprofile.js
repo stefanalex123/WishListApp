@@ -27,6 +27,17 @@ const getUserProfile = async (req,res,next)=>{
   };
 
 
+  const getPublicUserProfile = async (req,res,next)=>{
+    try {
+    
+      const userProfile=await userProfileService.getUserProfile(req.params.userId);
+        res.send(userProfile)
+    } catch (err){
+      next(err);
+    }
+  };
+
+
 const createUserProfile = async (req,res,next) => {
     try {
        const newUserProfile= await userProfileService.createUserProfile(req.auth.userId,req.body.email, 
@@ -56,7 +67,8 @@ const updateUserProfile = async (req, res, next) => {
         birthday:req?.body?.birthday || userProfile.birthday,
         mailsNotifications:req.body.mailsNotifications || userProfile.mailsNotifications,
         socketId:userProfile.socketId,
-        verifiedAccount:userProfile.verifiedAccount
+        verifiedAccount:userProfile.verifiedAccount,
+        status:req.body.status || userProfile.status
         
       });
   
@@ -115,9 +127,25 @@ const updateUserProfile = async (req, res, next) => {
 
 
 
+  const getAllProfiles = async (req, res, next) => {
+    try {
+      res.json(await userProfileService.getAllProfiles());
+    } catch (err) {
+      console.error(`Error while getting profiles`);
+      next(err);
+    }
+  };
+
+  const getMyCompleteProfile = async (req, res, next) => {
+    try {
+      res.json(await userProfileService.getMyCompleteProfile(req.auth.userId));
+    } catch (err) {
+      console.error(`Error while getting profile`);
+      next(err);
+    }
+  };
 
 
 
 
-
-export default {createUserProfile, updateUserProfile, getUserProfile, deleteUserProfile, updateUserProfileVerifiedAccount}
+export default {getMyCompleteProfile,getAllProfiles,getPublicUserProfile,createUserProfile, updateUserProfile, getUserProfile, deleteUserProfile, updateUserProfileVerifiedAccount}

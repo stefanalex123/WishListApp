@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import refferalInvitationsService from "../../services/referralsinvitations.js"
 import groupsInvitationServices from "../../services/groupsinvitations.js"
 
+import randomEmail from "random-email";
 import userProfileServices from "../../services/userprofile.js";
 const prisma = new PrismaClient();
 
@@ -10,7 +11,7 @@ const prisma = new PrismaClient();
 
 
 const createGoogleReferralGroupInvitation = async (req, res, next) => {
-    console.log(req.params.referralInvitationId)
+    
 
     try {
     
@@ -40,18 +41,30 @@ const createGoogleReferralGroupInvitation = async (req, res, next) => {
         
 
        const token=geneateAuthToken(req.user.id, req.user.emails[0].value)
-       const userProfile=await userProfileServices.createUserProfile(existingUser.id, req.user.emails[0].value, req.user.family_name, "De adaugat", "ON", "De adaugat")
+       const userProfile=await userProfileServices.createUserProfile(existingUser.id, randomEmail(), req.user.family_name, "De adaugat", "ON", "De adaugat")
        const refferalInvitation= await refferalInvitationsService.getReferralInvitationByEmailSend(req.user.emails[0].value)
        //console.log(refferalInvitation.groupId)
        
        const newGroupInvitation= await groupsInvitationServices.createGroupInvitation(refferalInvitation[0].groupId, existingUser.id);
-       res.send(token)
+
+       
+       const response = await refferalInvitationsService.updateReferralInvitation(refferalInvitation[0].id ,{
+        userDeliverId: refferalInvitation.userDeliverId,
+        groupId: refferalInvitation.groupId,
+        emailSend:refferalInvitation.emailSend,
+        status:"EXPIRED",
+        
+      });
+
+
+
+       res.status(200).send(token)
       }
      else {
       next();
      }
     } catch (error) {
-       res.send("You have to login with the email account where you recieved the referral link")
+       res.status(409).send("You already sing up with this email!")
     next();
     }
     

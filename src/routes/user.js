@@ -14,6 +14,7 @@ import confirmNewPasswordMiddleware from "../middleware/Forgot_Password_Middlewa
 const router = express.Router();
 
 
+
     router.route('/register')
 
     .post([
@@ -59,16 +60,12 @@ const router = express.Router();
     .post([
         check("email")
         .exists()
-        .withMessage('is required')
-        .isLength({ min: 7 })
-        .withMessage("Password need at least 7 characters")
-        .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9]).{7,}$/, "i")
-        .withMessage("Password need at least one letter, one number and one special character"),
+        .withMessage('is required'),
         
     ], 
     validationMiddleware,
-    //usernameExistsMiddleware,
-    verifyUserProfileVerifiedMiddleware,
+
+    verifyUserProfileVerifiedMiddleware, // verify if the email introduces is verified
     verifyForgotPasswordNotSentMiddleware, //+ if is active or expired
       
     requestForgotPasswordController.createForgotPassword)

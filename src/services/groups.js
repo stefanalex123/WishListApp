@@ -31,6 +31,23 @@ const getAllGroupsWhereOwner= async (id) => {
     })
     return group;
   };
+
+  const getGroupAllMembers= async (id) => {
+    const groupAllMembers = await prisma.group.findUnique({
+      where: {
+        id:id
+      },
+        include:{
+            invitations_to_this_group:{
+              include:{
+                userProfile:true
+              }
+            }
+
+        } 
+    })
+    return groupAllMembers;
+  };
   
 
   const getAllGroups = async () => {
@@ -60,4 +77,4 @@ const deleteGroup = async (id) => {
 };
 
 
-export default {createGroup, getAllGroupsWhereOwner, updateGroup, getGroup, deleteGroup, getAllGroups}
+export default {createGroup, getAllGroupsWhereOwner, updateGroup, getGroup, deleteGroup, getAllGroups,getGroupAllMembers}

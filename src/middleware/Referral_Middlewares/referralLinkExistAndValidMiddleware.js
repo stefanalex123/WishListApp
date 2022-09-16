@@ -17,16 +17,16 @@ const referralInvitation= await prisma.mailsReferralsInvitations.findUnique({
 
 
 if(referralInvitation.id===req.params.referralInvitationId && referralInvitation.status==="AVAILABLE"){
-    console.log("test")
+    
     next();
 }
 
 else {
-    res.send("Acest refferal link nu este valavil")
+    res.status(409).send("This referral Link expired")
 }
 
 } catch(err) {
-    res.send("Acest refferal link nu este valabil")
+    res.status(409).send("This referral Link expired")
 }
     
 }

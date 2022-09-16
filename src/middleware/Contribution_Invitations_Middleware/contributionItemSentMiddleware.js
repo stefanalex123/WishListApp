@@ -19,16 +19,16 @@ try{
     })
 
 
-if(contributionInvitation[0].itemId==req.params.itemId && contributionInvitation[0].usercontributerId==req.auth.userId){
+if(contributionInvitation[0].itemId==req.params.itemId && contributionInvitation[0].userContributerId==req.auth.userId){
 next();
 
 }
 else{
-   res.send("Invittatia nu exista")
+   res.status(404).send("Invitation doesnt exists!")
 }
 
 } catch(err) {
-    res.send("Invitatia nu exista")
+    res.status(404).send("Invitation doesnt exists!")
 }
     
 }

@@ -13,11 +13,11 @@ try{
         }
 
         else if (req.body.newPassword!=req.body.confirmNewPassword){
-            res.send("Passwords don't match")
+            res.status(404).send("Passwords don't match")
         }
 
     }    catch(err) {
-        res.send("Passwords don't match")
+        res.status(404).send("Passwords don't match")
     }
     
     }

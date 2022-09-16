@@ -99,7 +99,8 @@ const getAllGroupInvitations= async (id) => {
         status:"ACCEPTED"
       },
       include: {
-        group:true
+        group:true,
+        
       }
     })
     return allGroupInvitationsAccepted;

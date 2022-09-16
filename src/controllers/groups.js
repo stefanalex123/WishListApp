@@ -57,6 +57,14 @@ const createGroup = async (req,res,next) => {
 };
 
 
+const getAllMembersGroup = async (req, res, next) => {
+  try {
+      const allMemeberInGroup=await groupServices.getGroupAllMembers(req.params.id);
+      res.send(allMemeberInGroup);
+  } catch (err) {
+      next(err);
+  }
+};
 
 
 const deleteGroup = async (req, res, next) => {
@@ -69,6 +77,171 @@ const deleteGroup = async (req, res, next) => {
   };
 
 
+
+
+  const mostPopularBuyer= async (req, res, next) =>{
+    let mostPopularBuyers=[];
+    try {
+      const allMembers = await prisma.groupInvitations.findMany({
+        where: {
+        groupId:req.params.id,
+        status:"ACCEPTED"
+        },
+      })
+
+      let MaximumNumberOfItemsBoughtByUser=0;
+      for(let i=0;i<allMembers.length;i++){
+        const numberOfItemsBoughtByUser=await prisma.buyItem.findMany({
+          where:{
+            userBuyerId:allMembers[i].userInvitedId
+          }
+      })
+
+    
+
+        if(numberOfItemsBoughtByUser.length>=MaximumNumberOfItemsBoughtByUser){
+          MaximumNumberOfItemsBoughtByUser=numberOfItemsBoughtByUser.length;
+        }
+      }
+
+      console.log(MaximumNumberOfItemsBoughtByUser)
+
+      for(let i=0;i<allMembers.length;i++){
+        const numberOfItemsBoughtByUser=await prisma.buyItem.findMany({
+          where:{
+            userBuyerId:allMembers[i].userInvitedId
+          }
+      })
+
+      console.log(numberOfItemsBoughtByUser)
+      if(numberOfItemsBoughtByUser.length==MaximumNumberOfItemsBoughtByUser){
+
+        for(let t=0;t<numberOfItemsBoughtByUser.length;t++){
+           const itemsUserBought=await prisma.items.findMany({
+              where:{
+                id:numberOfItemsBoughtByUser[t].itemId
+              }
+        })
+
+        for(let j=0;j<itemsUserBought.length;j++){
+        let mostPopularBuyer = [
+          
+            {
+              "MostPopularBuyerId":numberOfItemsBoughtByUser[0].userBuyerId,
+              "numberOfItemsBought":numberOfItemsBoughtByUser.length,
+              "itemsUserBought":[
+                {
+                  "itemId:": itemsUserBought[j].id,
+                  "itemName": itemsUserBought[j].itemName,
+                  "itemDescription":itemsUserBought[j].itemDescription,
+                  "itemLink":itemsUserBought[j].itemLink,
+
+                }
+              ]
+               
+           }
+        ]
+        mostPopularBuyers.push(mostPopularBuyer);
+      }
+
+    }
+  }
+}
+
+    if(MaximumNumberOfItemsBoughtByUser==0){
+      res.send("Nobody bought any items!")
+    }
+    else {
+      res.json(mostPopularBuyers);
+    }
+
+    } catch(err){
+      next(err)
+    }
+  }
+
+
+
+  
+  const mostPopularContributer= async (req, res, next) =>{
+    let mostPopularContributers=[];
+    try {
+      const allMembers = await prisma.groupInvitations.findMany({
+        where: {
+        groupId:req.params.id,
+        status:"ACCEPTED"
+        },
+      })
+      let maximumNumberOfItemsContributedByUser=0;
+      for(let i=0;i<allMembers.length;i++){
+        const numberOfItemsContributedByUser=await prisma.contributionInvitation.findMany({
+          where:{
+            userContributerId:allMembers[i].userInvitedId,
+            status:"ACCEPTED"
+          }
+      })
+
+
+      
+        if(numberOfItemsContributedByUser.length>=maximumNumberOfItemsContributedByUser){
+        maximumNumberOfItemsContributedByUser=numberOfItemsContributedByUser.length;
+        }
+      }
+
+      for(let i=0;i<allMembers.length;i++){
+
+        const numberOfItemsContributedByUser=await prisma.contributionInvitation.findMany({
+          where:{
+            userContributerId:allMembers[i].userInvitedId
+          }
+      })
+      if(numberOfItemsContributedByUser.length==maximumNumberOfItemsContributedByUser){
+        for(let t=0;t<numberOfItemsContributedByUser.length;t++){
+        const itemsUserContributed=await prisma.items.findMany({
+          where:{
+            id:numberOfItemsContributedByUser[t].itemId
+          }
+       })
+
+
+    
+    for(let j=0;j<itemsUserContributed.length;j++){
+
+        let mostPopularContributer= [
+            {
+              "mostPopularContributerId":numberOfItemsContributedByUser[0].userContributerId,
+              "numberOfItemsUserContributed":numberOfItemsContributedByUser.length,
+              "itemsUserContributed":[
+                {
+                  "itemId:": itemsUserContributed[j].id,
+                  "itemName": itemsUserContributed[j].itemName,
+                  "itemDescription":itemsUserContributed[j].itemDescription,
+                  "itemLink":itemsUserContributed[j].itemLink,
+
+                }
+              ]
+
+           }
+        ]
+        mostPopularContributers.push(mostPopularContributer);
+      }
+    }
+
+    }
+  }
+    if(maximumNumberOfItemsContributedByUser==0){
+      res.send("Nobody contributed to this item!")
+    }
+    else {
+      res.json(mostPopularContributers);
+    }
+    
+    } catch(err){
+      next(err)
+    }
+  }
+
+
   
 
-export default {createGroup, getAllGroupsWhereOwner, updateGroup, deleteGroup}
+export default {createGroup, getAllGroupsWhereOwner, updateGroup, deleteGroup, mostPopularContributer, mostPopularBuyer, getAllMembersGroup}

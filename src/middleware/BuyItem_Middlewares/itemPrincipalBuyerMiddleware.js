@@ -16,7 +16,7 @@ const itemPrincipalBuyerMiddleware= async ( req, res, next) => {
         })
         
         if(item.status=="INDISPONIBLE"){
-           res.send("Nu a cumparat nimeni acest item ca sa poti contirbui")
+           res.status(403).send("You can't contribute for this item becuase it doesnt have a principal buyer!")
         }
         else {
             next();
@@ -24,7 +24,7 @@ const itemPrincipalBuyerMiddleware= async ( req, res, next) => {
            
         }  catch(err) {
         
-           res.send("Acest item nu exista in baza de date")
+           res.status(404).send("Acest item nu exista in baza de date")
         }
 }
        

@@ -19,7 +19,7 @@ try{
     const validCode = await bcrypt.compare(req.body.code, verifyAccount[0].code);
 
         if(verifyAccount[0].id==req.params.verifyAccountId && verifyAccount[0].status=="EXPIRED"){
-            res.send("The Invitation is expired")
+            res.status().send("The Invitation is expired")
         }
 
          else if (verifyAccount[0].id==req.params.verifyAccountId && verifyAccount[0].status=="PENDING"
@@ -28,14 +28,14 @@ try{
             }
         else if (verifyAccount[0].id==req.params.verifyAccountId && verifyAccount[0].status=="PENDING"
             &&  validCode==false){
-                res.send("Code invalid")
+                res.status().send("Invalid Code!")
           }
       
         
     
 
     }catch(err) {
-        res.send("Invitatia nu exista")
+        res.status(404).send("Invitation doesnt exists!")
         console.log(err)
     }
     

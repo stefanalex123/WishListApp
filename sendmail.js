@@ -1,74 +1,13 @@
 import nodemailer from "nodemailer"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import dotenv from "dotenv";
 
 
 function sendmail(subject, text, adress){
     const transporter = nodemailer.createTransport({
        service:"hotmail",
            auth: {
-                user: 'stefan.focan@365.univ-ovidius.ro',
-                pass: '****',
+                user: process.env.EMAIL_ID,
+                pass: process.env.EMAIL_PASS
              },
         secure: false,
         });

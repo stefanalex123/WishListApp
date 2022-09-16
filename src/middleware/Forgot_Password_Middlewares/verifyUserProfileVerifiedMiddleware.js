@@ -12,7 +12,7 @@ try{
     const userprofile=await userprofileServices.getUserProfileByEmail(req.body.email)
 
     if(userprofile.verifiedAccount=="UNVERIFIED"){
-        res.send("You didn't have a verified account")
+        res.status(403).send("You didn't have a verified account")
     }
 
     else if (userprofile.verifiedAccount=="VERIFIED"){
@@ -23,7 +23,7 @@ try{
       
 
     }    catch(err) {
-         res.send("This email doesn't exist")
+         res.status(404).send("This email doesn't exist")
     }
     
     }

@@ -14,16 +14,16 @@ datasource db {
 model User {
   id            String        @id @default(uuid())
   username      String        @unique() 
-  password      String     
-  userItems     Items[]       @relation("useritems")
-  userWishlists Wishlist[]    @relation("userwishlists")
+  password      String
+
   userProfile   UserProfile[] @relation ("userprofile")
-  userAdresses  Adress[]      @relation ("useradresses")
-  itemBoughtByUsers BuyItem[] @relation ("itemsboughtbyuser")
-  itemsBoughtByUserWithContribution ContributionInvitation[]    @relation ("itemsboughtbyuserwithcontribution")
-  usersAskedForContribution         ContributionInvitation[]    @relation ("usersaskedforcontribution")
-  notifications                     Notifications[]             @relation("notificantions")
-  referralsInvitations              mailsReferralsInvitations[] @relation("referralsinvitations")
+
+
+ 
+
+
+
+  
   @@map("users")
 }
 
@@ -31,12 +31,21 @@ model UserProfile{
 userId           String @id
 user             User     @relation("userprofile", fields: [userId], references: [id], onDelete: Cascade)
 email            String   @unique
-nickname         String   @unique
+nickname         String   
 phoneNumber      String
 mailsNotifications String
 birthday            String
 verifiedAccount     String
+status              String
 socketId            String
+userItems     Items[]       @relation("useritems")
+userWishlists Wishlist[]    @relation("userwishlists")
+userAdresses  Adress[]      @relation ("useradresses")
+itemBoughtByUsers BuyItem[] @relation ("itemsboughtbyuser")
+itemsBoughtByUserWithContribution ContributionInvitation[]    @relation ("itemsboughtbyuserwithcontribution")
+usersAskedForContribution         ContributionInvitation[]    @relation ("usersaskedforcontribution")
+notifications                     Notifications[]             @relation("notificantions")
+referralsInvitations              mailsReferralsInvitations[] @relation("referralsinvitations")
 
 usersAskedForNewPassword       mailsForgotPassword[]    @relation ("forgotpassword")
 verifiedAccountRequest         verifyAccount[]    @relation ("verifyaccount")
@@ -47,8 +56,8 @@ user_group_invitation GroupInvitations[] @relation ("usergroupinvitation")
 
 model Items {
 id                 String   @id @default(uuid())
-userId          String 
-user              User    @relation("useritems", fields: [userId], references: [id], onDelete: Cascade)
+userId             String 
+UserProfile        UserProfile    @relation("useritems", fields: [userId], references: [userId], onDelete: Cascade)
 itemName           String 
 itemLink           String
 itemDescription    String
@@ -62,7 +71,7 @@ itemBoughtByItemBoughtByCountribution     ContributionInvitation[]            @r
 model Adress {
 id          String   @id @default(uuid())
 userId      String 
-user        User     @relation("useradresses", fields: [userId], references: [id], onDelete: Cascade)
+UserProfile UserProfile     @relation("useradresses", fields: [userId], references: [userId], onDelete: Cascade)
 country     String 
 city        String
 street      String
@@ -74,10 +83,11 @@ postalCode  String
 model Wishlist{
 id                     String   @id @default(uuid())
 userId                 String 
-user                   User     @relation("userwishlists", fields: [userId], references: [id], onDelete: Cascade)
+UserProfile            UserProfile     @relation("userwishlists", fields: [userId], references: [userId], onDelete: Cascade)
 wishlistName           String 
 wishlistDescription    String
 status                 String @default("Unavailable, add at least one item to it")
+
 wishlistNrItems        Int @default(0)
 createdAt              DateTime @default(now())
 updatedAt              DateTime @default(now())
@@ -133,7 +143,7 @@ id            String   @id @default(uuid())
 itemId        String    
 item          Items     @relation("itemboughtby", fields: [itemId], references: [id], onDelete: Cascade)
 userBuyerId   String
-user          User      @relation ("itemsboughtbyuser",  fields: [userBuyerId], references: [id], onDelete: Cascade)
+UserProfile   UserProfile      @relation ("itemsboughtbyuser",  fields: [userBuyerId], references: [userId], onDelete: Cascade)
 userStatus    String
 }
 
@@ -142,10 +152,10 @@ id                 String   @id @default(uuid())
 itemId             String    
 item               Items     @relation("itemboughtbycountribution", fields: [itemId], references: [id], onDelete: Cascade)
 userContributerId  String
-user               User      @relation ("itemsboughtbyuserwithcontribution",  fields: [userContributerId], references: [id], onDelete: Cascade)
+UserProfile        UserProfile     @relation ("itemsboughtbyuserwithcontribution",  fields: [userContributerId], references: [userId], onDelete: Cascade)
 status             String
 userAskedId        String
-usersAskedForContribution          User      @relation ("usersaskedforcontribution",  fields: [userAskedId], references: [id], onDelete: Cascade)
+usersAskedForContribution      UserProfile      @relation ("usersaskedforcontribution",  fields: [userAskedId], references: [userId], onDelete: Cascade)
 }
 
 model Notifications {
@@ -154,7 +164,7 @@ notificationDescription   String
 deliverAt                 DateTime @default(now())
 userdeliverId             String  
 status                    String
-user                      User      @relation ("notificantions",  fields: [userdeliverId], references: [id], onDelete: Cascade)
+UserProfile               UserProfile      @relation ("notificantions",  fields: [userdeliverId], references: [userId], onDelete: Cascade)
  
 }
 
@@ -162,7 +172,7 @@ user                      User      @relation ("notificantions",  fields: [userd
 model mailsReferralsInvitations{
 id             String   @id @default(uuid())
 userDeliverId  String
-user           User                 @relation ("referralsinvitations",  fields: [userDeliverId], references: [id], onDelete: Cascade)        
+UserProfile    UserProfile                 @relation ("referralsinvitations",  fields: [userDeliverId], references: [userId], onDelete: Cascade)        
 groupId        String
 group          Group                @relation ("referralsinvitations2",  fields: [groupId], references: [id], onDelete: Cascade)        
 emailSend      String
@@ -173,8 +183,9 @@ status              String
 
 model mailsForgotPassword {
 id             String   @id @default(uuid())
-emailUsed        String   @unique
-userprofile    UserProfile  @relation ("forgotpassword",  fields: [emailUsed], references: [email], onDelete: Cascade)        
+emailUsed        String   
+userprofile    UserProfile  @relation ("forgotpassword",  fields: [emailUsed], references: [email], onDelete: Cascade)  
+deliverAt                 DateTime @default(now())      
 code              String
 status            String
 
@@ -184,7 +195,7 @@ status            String
 
 model verifyAccount{
 id             String   @id @default(uuid())
-emailUsed        String   @unique
+emailUsed        String   
 userprofile    UserProfile  @relation ("verifyaccount",  fields: [emailUsed], references: [email], onDelete: Cascade)        
 code              String
 status            String
@@ -199,6 +210,9 @@ code              String
 status            String
 
 }
+
+
+
 
 
 

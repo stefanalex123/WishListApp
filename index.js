@@ -26,6 +26,7 @@ import sendmail from "./sendmail.js";
 import { PrismaClient } from "@prisma/client";
 import jobBirthdayNotification from "./birthdayNotification.js"
 import createGoogleToken from "./src/middleware/Google_Middlewares/createGoogleToken.js";
+import jobDeleteActiveForgotPassword from "./ExpireForgotPasswords.js";
 
 
 const prisma = new PrismaClient()
@@ -65,7 +66,7 @@ app.use("/gmail", gmailRouter)
   
 //BIRTHDAY NOTIFICATION
   //jobBirthdayNotification.start();
-  
+  jobDeleteActiveForgotPassword.start();
 
 
 
@@ -104,6 +105,8 @@ io.use ((socket, next) => {
       userId:socket.decoded.userId
     }
   })
+
+  
   console.log(userProfileConectted.socketId)
 
   try {

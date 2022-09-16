@@ -53,7 +53,7 @@ router.route('/:referralInvitationId')
 ], 
 validationMiddleware,
 usernameExistsMiddleware,               //Verify_if_Username_exists_in_UsersDB, 
-referralLinkExistsAndValidMiddleware,                                      //Verify if refferal link exists and is still Valid
+referralLinkExistsAndValidMiddleware,      //Verify if refferal link exists and is still Valid
 usersController.addUserByReferralLink)
 
 //GMAIL LOGIN

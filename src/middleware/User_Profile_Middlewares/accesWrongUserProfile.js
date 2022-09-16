@@ -18,15 +18,17 @@ if(userprofile.userId==req.auth.userId){
    
 }
 else{
-    res.send("You can't acces this userprofile")
+    res.status(403).send("You can't acces this userprofile")
 }
 
 
 } catch(err) {
 
-   res.send("This userprofoile doesn't exists")
+   res.status(404).send("This userprofoile doesn't exists")
 }
     
 }
        
   export default accesWrongUserProfileMiddleware;
+
+  

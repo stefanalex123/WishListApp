@@ -17,12 +17,12 @@ const wishlistExistsMiddleware = async ( req, res, next) => {
        next();
     }
     else {
-        res.send("You don't have acces to this wishlist")
+        res.status(403).send("You don't have acces to this wishlist")
     }
        
     }  catch(err) {
     
-       res.send("This wishlist doesn't exists")
+       res.status(404).send("This wishlist doesn't exists")
     }
         
     }

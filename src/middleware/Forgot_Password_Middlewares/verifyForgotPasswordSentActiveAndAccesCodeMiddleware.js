@@ -21,7 +21,7 @@ try{
     const validCode = await bcrypt.compare(req.body.code, forgotPassword[0].code);
 
         if(forgotPassword[0].id==req.params.forgotPasswordId && forgotPassword[0].status=="EXPIRED"){
-            res.send("The Forgot Password Request is expired")
+            res.status(409).send("The Forgot Password Request is expired")
         }
 
          else if (forgotPassword[0].id==req.params.forgotPasswordId && forgotPassword[0].status=="AVAILABLE"
@@ -31,7 +31,7 @@ try{
 
         else if (forgotPassword[0].id==req.params.forgotPasswordId && forgotPassword[0].status=="AVAILABLE"
             &&  validCode==false){
-                res.send("Code invalid")
+                res.status(404).send("Code invalid")
           }
       
         

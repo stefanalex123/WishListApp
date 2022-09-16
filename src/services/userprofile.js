@@ -1,4 +1,6 @@
 import { PrismaClient } from "@prisma/client";
+
+
 const prisma = new PrismaClient();
 
 
@@ -44,7 +46,8 @@ const createUserProfile= async (userId, email ,nickname, phoneNumber, mailsNotif
             mailsNotifications:mailsNotifications,
             birthday:birthday,
             socketId:"0",
-            verifiedAccount:"UNVERIFIED"
+            verifiedAccount:"UNVERIFIED",
+            status:'PUBLIC'
     
             
         }
@@ -63,4 +66,83 @@ const updateUserProfile = async (id, userProfileInfo) => {
     return userProfile;
   };
 
-export default {createUserProfile, updateUserProfile, getUserProfile, deleteUserProfile, getUserProfileByEmail};
+
+
+
+
+  const getAllProfiles = async () => {
+    const allProfiles = await prisma.userProfile.findMany({
+      where:{
+        status:"PUBLIC",
+      },
+      include:{
+        userItems:true,
+        userWishlists:{
+          include:{
+            wishlistItems:true,
+          }
+        },
+      }
+    })
+    return allProfiles;
+  };
+
+
+
+  const getMyCompleteProfile = async (userId) => {
+    const myCompleteProfile = await prisma.userProfile.findMany({
+    where:{
+      userId:userId,
+    },
+    include:{
+      userItems:true,
+      userWishlists:{
+        include:{
+          wishlistItems:true,
+          wishlistGroups:true,
+        }
+      },
+      user_group_invitation:{
+        include:{
+          group:true,
+        }
+      },
+      userAdresses:true,
+      itemBoughtByUsers:true,
+      itemsBoughtByUserWithContribution:true,
+      usersAskedForContribution:true,
+      referralsInvitations:true,
+      notifications:true,
+    }
+    })
+    return myCompleteProfile;
+  };
+
+  const getAllPublicProfiles = async (userId) => {
+    const allPublicProfiles = await prisma.userProfile.findMany({
+    where:{
+      status:"PUBLIC"
+    },
+    include:{
+      userItems:true,
+      userWishlists:{
+        where:{
+          wishlistItems:true,
+          wishlistGroups:true,
+        }
+      },
+      userAdresses:true,
+      itemBoughtByUsers:true,
+      itemsBoughtByUserWithContribution:true,
+      usersAskedForContribution:true,
+      referralsInvitations:true,
+      //notifications:true,
+    }
+    })
+    return allPublicProfiles;
+  };
+
+
+
+  
+export default {getMyCompleteProfile,createUserProfile, updateUserProfile, getUserProfile, deleteUserProfile, getUserProfileByEmail, getAllProfiles};

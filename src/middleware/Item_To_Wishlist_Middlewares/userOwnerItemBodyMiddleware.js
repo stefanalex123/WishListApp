@@ -15,16 +15,16 @@ const userOwnerItemBodyMiddleware = async ( req, res, next) => {
 
     
     if(item.userId==req.auth.userId){
-    //Userul este ownerul acestui item
+
        next();
     }
     else {
-        res.send("This item is not available")
+        res.status(404).send("This item is not available")
     }
        
     }  catch(err) {
     
-       res.send("This item doesn't exists")
+       res.status(404).send("This item doesn't exists")
     }
         
     }
