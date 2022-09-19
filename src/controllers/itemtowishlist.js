@@ -7,11 +7,12 @@ import wishlistServices from "../services/wishlist.js";
 const updateItemToWishlist = async (req, res, next) => {
     try {
       const itemToWishlist = await itemToWishlistServices.getItemToWishlist(req.params.id, req.params.itemId);
+      console.log(itemToWishlist)
       if (!itemToWishlist) {
         throw { message: "Item not found in wishlist" };
       }
       const response = await itemToWishlistServices.updateItemToWishlist(itemToWishlist[0].id, {
-        itemId:req.body.itemId || itemToWishlist.itemId,
+        itemId:req?.body?.itemId || itemToWishlist.itemId,
          updatedAt: new Date(),
       });
       res.json("Item Updated");

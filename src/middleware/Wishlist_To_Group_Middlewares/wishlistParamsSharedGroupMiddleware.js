@@ -21,11 +21,11 @@ if(wishlistToGroup[0].wishlistId==req.params.wishlistId && wishlistToGroup[0].gr
   next();
 }
 else{
-  res.status(404).send("The wishlist you try to delete/modify is not shared in the group")
+  res.status(404).send("This wishlist is not shared in the group")
 }
 
 } catch(err) {
-    res.status(404).send("The wishlist you try to delete/modify is not shared in the group")
+    res.status(404).send("This wishlist is not shared in the group")
 }
     
 }

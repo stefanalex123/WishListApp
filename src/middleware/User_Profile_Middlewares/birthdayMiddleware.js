@@ -27,12 +27,12 @@ const birthdayMiddleware = async ( req, res, next) => {
                             next();
                         }
                         else {
-                            res.status(404).send("Invalid Date Format, Try: DD/MM/YYYY")
+                            res.status(400).send("Invalid Date Format, Try: DD/MM/YYYY")
                         }
 
                 }
                 else {
-                    res.status(404).send("Invalid Date Format, Try: DD/MM/YYYY");
+                    res.status(400).send("Invalid Date Format, Try: DD/MM/YYYY");
                     
                 }
 
@@ -51,11 +51,11 @@ const birthdayMiddleware = async ( req, res, next) => {
                         next();
                     }
                     else {
-                        res.status(404).send("Invalid Date Format, Try: DD/MM/YYYY")
+                        res.status(400).send("Invalid Date Format, Try: DD/MM/YYYY")
                     }
                 }
                 else {
-                    res.status(404).send("Invalid Format, Try: DD/MM/YYYY")
+                    res.status(400).send("Invalid Format, Try: DD/MM/YYYY")
                 }
 
     }
@@ -71,12 +71,12 @@ const birthdayMiddleware = async ( req, res, next) => {
                         next();
                     }
                     else {
-                        res.status(404).send("Invalid Date Format, Try DD/MM/YYYY")
+                        res.status(400).send("Invalid Date Format, Try DD/MM/YYYY")
                     }
 
                 }
                 else {
-                    res.status(404).send("Invalid Format, Try DD/MM/YYYY")
+                    res.status(400).send("Invalid Format, Try DD/MM/YYYY")
                 }
 
 }
@@ -92,24 +92,24 @@ const birthdayMiddleware = async ( req, res, next) => {
                     next();
                 }
                 else {
-                    res.status(404).send("Invalid Format, Try DD/MM/YYYY")
+                    res.status(400).send("Invalid Format, Try DD/MM/YYYY")
                 }
 
             }
             else {
-                res.status(404).send("Invalid Format, Try DD/MM/YYYY")
+                res.status(400).send("Invalid Format, Try DD/MM/YYYY")
             }
 
 }
 
 else {
-    res.status(404).send("Invalid Date Format, Try DD/MM/YYYY")
+    res.status(400).send("Invalid Date Format, Try DD/MM/YYYY")
 }
 
 
 
     } catch(err) {
-        res.status(404).send("Format Date incorect")
+        res.status(400).send("Format Date incorect")
         console.log(err)
     }
 }

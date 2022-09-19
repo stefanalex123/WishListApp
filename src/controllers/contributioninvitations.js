@@ -3,6 +3,7 @@ import itemService from "../services/item.js";
 import userProfile from "../services/userprofile.js";
 import userProfileServices from "../services/userprofile.js";
 import notificationsServices from "../services/notifications.js";
+import sendmail from "../../sendmail.js";
 
 const getAllContributorsForItem= async (req, res, next) => {
   try {
@@ -35,13 +36,14 @@ const updateContributionInvitation = async (req, res, next) => {
       const userAsked=await userProfileServices.getUserProfile(contributionInvitationUpdated.userAskedId)
       const userContributer=await userProfileServices.getUserProfile(contributionInvitationUpdated.userContributerId)
       const item=await itemService.getItem(contributionInvitationUpdated.itemId)
+      const ownerItem=await userProfileServices.getUserProfile(item.userId)
     
       // Trimitem notificare celui care a facut invitatia de colaboare ca am refuzat/acceptat
       const newNotificaton= await notificationsServices.createNotification(
-      "Utilizatorul" + userAsked.nickname + "a raspuns invitatiei cu " + req.body.status + "pentru itemul " + item.itemName, contributionInvitationUpdated.userContributerId
+      "Utilizatorul" + " " + userAsked.nickname + " "+"a raspuns invitatiei cu" + " " + req.body.status + " "+ "pentru itemul" + " "+ item.itemName, contributionInvitationUpdated.userContributerId
       )
       if(userContributer.mailsNotifications=="ON"){
-        sendmail("Notification", "Utilizatorul" + userAsked.nickname + "a raspuns invitatiei cu " + req.body.status + "pentru itemul " + item.itemName, userContributer.email)
+        sendmail("Notification", "Utilizatorul" + " "+ userAsked.nickname + " "+ "a raspuns invitatiei cu" + " " + req.body.status +" "+"pentru itemul " + item.itemName, userContributer.email)
       }
 
 
@@ -49,12 +51,12 @@ const updateContributionInvitation = async (req, res, next) => {
         if(req.body.status=="ACCEPTED"){
       // Trimitem notificare utilizatorului care detine itemul ca are un nou colaborator
       const newNotificaton= await notificationsServices.createNotification(
-        "Utilizatorul " + userContributer.nickname + " este un nou colaborator pentru itemul " + item.itemName, item.userId
+        "Utilizatorul" + " "+ userContributer.nickname + " " + " este un nou colaborator pentru itemul " +" " + item.itemName, item.userId
       )
 
 
-      if(userAsked.mailsNotifications=="ON"){
-        sendmail("Notification", "Utilizatorul " + userContributer.nickname + " este un nou colaborator pentru itemul " + item.itemName, userAsked.email)
+      if(ownerItem.mailsNotifications=="ON"){
+        sendmail("Notification", "Utilizatorul" +" "+ userContributer.nickname + " " +  " este un nou colaborator pentru itemul " + " " + item.itemName, ownerItem.email)
       }
 
       }
@@ -83,13 +85,14 @@ const updateContributionInvitation = async (req, res, next) => {
         const newContributionInvitation= await contributionInvitationsServices.createContributionInvitation(req.params.itemId, req.auth.userId, req.body.userId)
         //Trimitem o notificare catre utilizator cu care vrem sa colaboram
           const item= await itemService.getItem(req.params.itemId)
-          const user=await userProfileServices.getUserProfile(req.auth.userId)
+          const userAsker=await userProfileServices.getUserProfile(req.auth.userId)
+          const userAsked=await userProfileServices.getUserProfile(req.body.userId)
           const newNotification= await notificationsServices.createNotification(
-          "Ai primit o invitatie de colaborare pentru itemul  " + item.itemName + "de la utilizatorul " + " " + user.nickname, req.body.userId
+          "Ai primit o invitatie de colaborare pentru itemul" + " " + item.itemName + " " + "de la utilizatorul" + " " + userAsker.nickname, req.body.userId
            )
 
-           if(user.mailsNotifications=="ON"){
-            sendmail("Notification", "Ai primit o invitatie de colaborare pentru itemul  " + item.itemName + "de la utilizatorul " + " " + user.nickname + item.itemName, user.email)
+           if(userAsked.mailsNotifications=="ON"){
+            sendmail("Notification", "Ai primit o invitatie de colaborare pentru itemul" + " " + item.itemName +" "+ "de la utilizatorul" + " " + userAsker.nickname, userAsked.email)
           }
 
         res.json(newContributionInvitation);

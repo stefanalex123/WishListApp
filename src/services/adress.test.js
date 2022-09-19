@@ -4,6 +4,32 @@ import adressServices from "../services/adress.js"
 
 describe ('Adress Services',  ()=> {
 
+
+
+    test('Creating an adress', async () => {
+   
+    
+        const newAdress=await adressServices.createAdress('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'Romania', 'Constanta', 'Mircea Cel Batran',
+            'D09', '9000000')
+      
+        
+          expect(newAdress).toStrictEqual(
+            {
+                "id": newAdress.id,
+                "userId": newAdress.userId,
+                "country": newAdress.country,
+                "city": newAdress.city,
+                "street": newAdress.street,
+                "flat": newAdress.flat,
+                "postalCode": newAdress.postalCode
+            }
+    
+          )
+          const deleteAdress=await adressServices.deleteAdress(newAdress.id)
+    });
+    
+    
+
     
       test('Getting an adress', async () => {
    
@@ -26,6 +52,8 @@ describe ('Adress Services',  ()=> {
       )
       const deleteAdress=await adressServices.deleteAdress(newAdress.id)
 });
+
+
 
 
 

@@ -7,7 +7,7 @@ const getAllWishlists = async (req, res, next) => {
           res.send("You don't have any wishlists added!")
         }
         else {
-          res.send(allWishlists);
+          res.json(allWishlists);
         }
     } catch (err) {
         next(err);
@@ -37,7 +37,7 @@ const updateWishlist = async (req, res, next) => {
       }
   
       const response = await wishlistServices.updateWishlist(req.params.id, {
-        userId: req.auth.userId || wishlist.userId,
+        userId: req?.auth?.userId || wishlist.userId,
         wishlistName: req?.body?.wishlistName || wishlist.wishlistName,
         wishlistDescription: req?.body?.wishlistDescription || wishlist.wishlistDescription,
         status: wishlist.status,

@@ -1,7 +1,4 @@
-
- //import { accesWrongAdressMiddleware} from './accesWrongAdressMiddleware.js'; // Or whatever file you are testing
-
- import userProfileServices from "../../services/userprofile.js"
+import userProfileServices from "../../services/userprofile.js"
  import httpMocks from 'node-mocks-http'
  import accesWrongUserProfileMiddleware from './accesWrongUserProfile.js';
  
@@ -17,9 +14,7 @@ import userprofile from "../../services/userprofile.js";
  
      test('access the correct Profile', async () => {
  
-        const newUserProfile= await userProfileServices.createUserProfile('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'focanstefan9988@gmail.com',
-        'stefanalex10', '0877762712', 'OFF', '27/12/2000')
- 
+        const newUserProfile= await userProfileServices.getUserProfile('6e53024f-d078-43d0-b89e-1de0a7db2bc3')
      const req = getMockReq({
          auth: { userId: newUserProfile.userId},
        })
@@ -34,7 +29,7 @@ import userprofile from "../../services/userprofile.js";
  
        expect(next).toBeCalled()
  
-       const deleteUserProfile=await userProfileServices.deleteUserProfile(newUserProfile.userId) 
+
  
  });
  
@@ -55,21 +50,3 @@ import userprofile from "../../services/userprofile.js";
  });  
  
  });
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
- 
- 
- 

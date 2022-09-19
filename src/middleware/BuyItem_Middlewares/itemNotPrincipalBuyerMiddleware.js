@@ -15,11 +15,15 @@ const itemNotPrincipalBuyerMiddleware = async ( req, res, next) => {
         
         })
         
-        if(item.status=="DISPONIBLE"){
+        if(item.status=="DISPONIBLE" && item.userId!=req.auth.userId){
            next();
         }
-        else {
-           res.status(409).send("This item already has a principal buyer, you can contribute for it")
+        else if(item.status=="DISPONIBLE" && item.userId==req.auth.userId) {
+         res.status(400).send("You Can't Buy Your Own Item")
+        }
+
+        else if (item.status!="DISPONIBLE"){
+         res.status(409).send("This item already has a principal buyer, you can contribute for it")
         }
            
         }  catch(err) {

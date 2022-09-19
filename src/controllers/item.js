@@ -20,7 +20,7 @@ const getAllItems = async (req, res, next) => {
         res.send("You don't have any items added!")
       }
       else{
-      res.send(items)
+      res.json(items)
       }
   } catch (err) {
       next(err);
@@ -89,7 +89,7 @@ const updateItem = async (req, res, next) => {
       }
   
       const response = await itemService.updateItem(req.params.id, {
-        userId: req.auth.userId || item.userId,
+        userId: req?.auth?.userId || item.userId,
         itemName: req?.body?.itemName || item.itemTitle,
         itemLink: req?.body?.itemLink || item.itemLink,
         itemDescription:req?.body?.itemDescription || item.itemDescription,

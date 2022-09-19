@@ -1,7 +1,4 @@
-
- //import { accesWrongAdressMiddleware} from './accesWrongAdressMiddleware.js'; // Or whatever file you are testing
-
- import userProfileServices from "../../services/userprofile.js"
+import userProfileServices from "../../services/userprofile.js"
  import httpMocks from 'node-mocks-http'
  import accesWrongUserProfileMiddleware from './accesWrongUserProfile.js';
  
@@ -18,11 +15,10 @@ import emailTakenMiddleware from "./emailTakenMiddleware.js"
  
      test('Introducing a valid email ', async () => {
  
-        const newUserProfile= await userProfileServices.createUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0', 'focanstfan5555@gmail.com',
-        'stefanalex10', '0877762712', 'OFF', '27/12/2000')
+        const newUserProfile= await userProfileServices.getUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0')
  
      const req = getMockReq({
-         body:{email:'focanstefan1111@gmail.com'}
+         body:{email:'stefanalex99@gmail.com'}
        })
  
        const { res, next } = getMockRes({
@@ -35,18 +31,16 @@ import emailTakenMiddleware from "./emailTakenMiddleware.js"
  
        expect(next).toBeCalled()
  
-       const deleteUserProfile=await userProfileServices.deleteUserProfile(newUserProfile.userId)
+       
  
  });
 
 
  test('Introducing an used email ', async () => {
  
-    const newUserProfile= await userProfileServices.createUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0', 'focanstefan5555@gmail.com',
-    'stefanalex10', '0877762712', 'OFF', '27/12/2000')
-
+    const newUserProfile= await userProfileServices.getUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0')
  const req = getMockReq({
-     body:{email:'focanstefan5555@gmail.com'}
+     body:{email:'stefanalex20@gmail.com'}
    })
    const res= httpMocks.createResponse();
 
@@ -57,35 +51,7 @@ import emailTakenMiddleware from "./emailTakenMiddleware.js"
 
    expect(res._getData()).toBe("This email is used by other users!")
 
-   const deleteUserProfile=await userProfileServices.deleteUserProfile(newUserProfile.userId) 
+
 
 }); 
-
-
-
-
- 
-
- 
- 
-
- 
- });
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
- 
-  
- 
- 
- 
- 
- 
+ })

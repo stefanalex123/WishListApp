@@ -8,13 +8,13 @@ const mailsNotificationMiddleware = async ( req, res, next) => {
         next()
       }
       else {
-        res.status(404).send("Mails Notifications have to be ON/OFF")
+        res.status(400).send("Mails Notifications have to be ON/OFF")
       }
       
 
 
     } catch(err) {
-        res.status(404).send("Mails Notifications have to be ON/OFF")
+        res.status(400).send("Mails Notifications have to be ON/OFF")
     }
 }
 

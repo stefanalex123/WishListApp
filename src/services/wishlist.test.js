@@ -9,6 +9,58 @@ import wishlistServices from "../services/wishlist.js"
 
 describe ('Wishlist Services',  ()=> {
 
+
+
+    test('Create Wishlist', async () => {
+   
+    
+        const newWishlist= await wishlistServices.createWishlist('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'wishlist1', 'wishlist description wishlist 1');
+    
+    
+
+        
+          expect(newWishlist).toStrictEqual(
+            {
+                "id": newWishlist.id,
+                "userId":newWishlist.userId,
+                "wishlistName":newWishlist.wishlistName,
+                "wishlistDescription": newWishlist.wishlistDescription,
+                "status":newWishlist.status,
+                "wishlistNrItems":newWishlist.wishlistNrItems,
+                "createdAt":newWishlist.createdAt,
+                "updatedAt":newWishlist.updatedAt,
+            }
+    
+          )
+          const deleteWishlist=await wishlistServices.deleteWishlist(newWishlist.id)
+    });
+
+
+
+    test('Delete Wishlist', async () => {
+   
+    
+        const newWishlist= await wishlistServices.createWishlist('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'wishlist1', 'wishlist description wishlist 1');
+        const deleteWishlist=await wishlistServices.deleteWishlist(newWishlist.id)
+    
+
+        
+          expect(deleteWishlist).toStrictEqual(
+            {
+                "id": newWishlist.id,
+                "userId":newWishlist.userId,
+                "wishlistName":newWishlist.wishlistName,
+                "wishlistDescription": newWishlist.wishlistDescription,
+                "status":newWishlist.status,
+                "wishlistNrItems":newWishlist.wishlistNrItems,
+                "createdAt":newWishlist.createdAt,
+                "updatedAt":newWishlist.updatedAt,
+            }
+    
+          )
+    
+    });
+
     
       test('Getting an Wishlist', async () => {
    
@@ -113,6 +165,11 @@ describe ('Wishlist Services',  ()=> {
 });    
 
 
+
+
+
+
+
 /* 
  test('Delete Andress', async () => {
    
@@ -120,8 +177,6 @@ describe ('Wishlist Services',  ()=> {
     'D09', '9000000')
     
     const adressDeleted=await adressServices.deleteAdress(newAdress.id)
-
-
     expect(adressDeleted).toStrictEqual({
         "id": adressDeleted.id,
         "userId": adressDeleted.userId,
@@ -130,11 +185,7 @@ describe ('Wishlist Services',  ()=> {
         "street": adressDeleted.street,
         "flat": adressDeleted.flat,
         "postalCode": adressDeleted.postalCode
-
     })
-
-
-
 });      */
 
 

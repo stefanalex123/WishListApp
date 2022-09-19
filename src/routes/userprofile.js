@@ -132,7 +132,7 @@ const router = express.Router();
 
     ],
     validationMiddleware,
-    jwtMiddleware,
+ 
     //Verify_If_Code_Is_Correct
     //Verify_If_emailUsed_Is_related_to_user_profile
     //Verify_If_Verify_Account_is_Active
@@ -142,7 +142,7 @@ const router = express.Router();
 
 
 
-    router.route('/deleteaccount')
+    /* router.route('/deleteaccount')
     .post([
         check("code")
         .exists()
@@ -153,7 +153,7 @@ const router = express.Router();
     jwtMiddleware,
 
      userprofileController.updateUserProfileVerifiedAccount
-    )
+    ) */
 
 
 

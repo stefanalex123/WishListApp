@@ -8,13 +8,13 @@ const statusProfileMiddleware = async ( req, res, next) => {
         next()
       }
       else {
-        res.status(404).send("It has to be PRIVATE OR PUBLIC")
+        res.status(400).send("It has to be PRIVATE OR PUBLIC")
       }
       
 
 
     } catch(err) {
-        res.status(404).send("IT HAS TO BE PRIVATE OR PUBLIC")
+        res.status(400).send("IT HAS TO BE PRIVATE OR PUBLIC")
     }
 }
 

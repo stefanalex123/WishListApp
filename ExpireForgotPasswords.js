@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 const jobDeleteActiveForgotPassword = nodeCron.schedule("12 12 12 12 *", async function jobYouNeedToExecute() {
     // Do whatever you want in here. Send email, Make  database backup or download data.
 
-console.log("TEEEEEEST")
+
 const allForgotPasswords=await forgotPasswordServices.getAllForgotPasswords()
 console.log(allForgotPasswords)
 

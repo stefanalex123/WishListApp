@@ -4,7 +4,7 @@ const getLoginAdress = async (req, res, next) => {
     try {
 
         
-        res.send('<a href=":referralInvitationId/auth/google">Authenticate with Google</a>');
+        res.send('<a href="gmail/auth/google">Authenticate with Google</a>');
     } catch (err) {
         next(err);
     }

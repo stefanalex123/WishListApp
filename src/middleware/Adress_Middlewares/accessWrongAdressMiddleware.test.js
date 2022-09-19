@@ -1,5 +1,3 @@
-
- //import { accesWrongAdressMiddleware} from './accesWrongAdressMiddleware.js'; // Or whatever file you are testing
 import accesWrongAdressMiddleware from './accesWrongAdressMiddleware.js';
 import userController from "../../controllers/adress.js"
 import adressServices from "../../services/adress.js"
@@ -78,20 +76,3 @@ test('accessing an adress that doesnt exists', async () => {
 }); 
 
 });
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-

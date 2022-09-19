@@ -8,7 +8,7 @@ async function randomIntFromInterval(min, max) { // min and max included
     async function  NumeSugestie(numeNou){
 
     try{
-        const userprofile =  await prisma.userProfile.findUnique({
+        const userprofile =  await prisma.userProfile.findMany({
             where: {
                 nickname:numeNou
             },
@@ -17,7 +17,7 @@ async function randomIntFromInterval(min, max) { // min and max included
         
         
 
-        if(userprofile.nickname==numeNou){
+        if(userprofile[0].nickname==numeNou){
         var NumeNouRandom= await randomIntFromInterval(10,90)
         return NumeSugestie(numeNou + NumeNouRandom);
         }
@@ -31,7 +31,7 @@ async function randomIntFromInterval(min, max) { // min and max included
 //Verify_if_Nickname_taken
 const nicknameTakenMiddleware = async ( req, res, next) => {
 try{
-const userprofile = await prisma.userProfile.findUnique({
+const userprofile = await prisma.userProfile.findMany({
     where: {
         nickname:req.body.nickname
     },
@@ -39,7 +39,7 @@ const userprofile = await prisma.userProfile.findUnique({
 
 })
 
-if(userprofile.nickname==req.body.nickname){
+if(userprofile[0].nickname==req.body.nickname){
 
     var msg= await NumeSugestie(req.body.nickname);
     res.status(409).send("This nickname is not available, you can try this nickname: "+ msg);

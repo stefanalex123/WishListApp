@@ -9,7 +9,7 @@ if(req.body.status=="ACCEPTED" || req.body.status=="DECLINED"){
     next();
 }
 else {
-    res.status(404).send("It has to be accepted or declined")
+    res.status(400).send("It has to be accepted or declined")
 }
 
 } catch(err) {

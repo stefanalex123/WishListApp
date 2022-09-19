@@ -62,11 +62,12 @@ const createBuyItem = async (req,res,next) => {
       
         
         const user=await userprofileService.getUserProfile(req.auth.userId) 
+        const userOwnerItem=await userprofileService.getUserProfile(item.userId)
         const newNotification= await notificationsServices.createNotification(
-        "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " " ,item.userId
+        "Itemul pe care il detii" + " "+item.itemName+ " "+"a fost cumparat de" + " " + user.nickname+ " " ,item.userId
         )
         if(user.mailsNotifications=="ON"){
-          sendmail("Notification", "Itemul pe care il detii " + "Itemul pe care il detii " + item.itemName + " a fost cumparat de  " + user.nickname+ " ", user.email)
+          sendmail("Notification", "Itemul pe care il detii" + " " + item.itemName + " " + " a fost cumparat de" + " " + user.nickname+ " ", userOwnerItem.email)
         }
 
         res.json(newBuyItem);

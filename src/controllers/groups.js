@@ -123,12 +123,16 @@ const deleteGroup = async (req, res, next) => {
               }
         })
 
+        let popularBuyer=[ { "MostPopularBuyerId":numberOfItemsBoughtByUser[0].userBuyerId,
+                              "numberOfItemsBought":numberOfItemsBoughtByUser.length,
+      }]
         for(let j=0;j<itemsUserBought.length;j++){
         let mostPopularBuyer = [
           
             {
               "MostPopularBuyerId":numberOfItemsBoughtByUser[0].userBuyerId,
               "numberOfItemsBought":numberOfItemsBoughtByUser.length,
+
               "itemsUserBought":[
                 {
                   "itemId:": itemsUserBought[j].id,

@@ -7,10 +7,9 @@ describe ('User Profile Services',  ()=> {
     
       test('Getting the User Profile', async () => {
    
-    const newUserProfile= await userProfileServices.createUserProfile('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'focanstefan9988@gmail.com',
-    'stefanalex10', '0877762712', 'OFF', '27/12/2000')
+    const newUserProfile= await userProfileServices.getUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0')
  
-    const userProfile=await userProfileServices.getUserProfile(newUserProfile.userId);
+    const userProfile=await userProfileServices.getUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0');
     
       expect(userProfile).toStrictEqual(
         {
@@ -22,18 +21,18 @@ describe ('User Profile Services',  ()=> {
             "mailsNotifications": newUserProfile.mailsNotifications,
             "birthday": newUserProfile.birthday,
             "verifiedAccount":'UNVERIFIED',
+            "status":"PUBLIC",
             "socketId":'0'
         }
 
       )
-      const deleteUserProfile=await userProfileServices.deleteUserProfile((userProfile.userId))
+      //const deleteUserProfile=await userProfileServices.deleteUserProfile((userProfile.userId))
 });
 
 test('Getting the User Profile By Email', async () => {
    
-    const newUserProfile= await userProfileServices.createUserProfile('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'focanstefan9988@gmail.com',
-    'stefanalex10', '0877762712', 'OFF', '27/12/2000')
- 
+    const newUserProfile= await userProfileServices.getUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0')
+
     const userProfile=await userProfileServices.getUserProfileByEmail(newUserProfile.email);
     
       expect(userProfile).toStrictEqual(
@@ -46,18 +45,18 @@ test('Getting the User Profile By Email', async () => {
             "mailsNotifications": newUserProfile.mailsNotifications,
             "birthday": newUserProfile.birthday,
             "verifiedAccount":'UNVERIFIED',
+            "status":"PUBLIC",
             "socketId":'0'
         }
 
       )
-      const deleteUserProfile=await userProfileServices.deleteUserProfile((userProfile.userId))
+      //const deleteUserProfile=await userProfileServices.deleteUserProfile((userProfile.userId))
 });
 
 
 
 test('Update User Profile', async () => {
-    const newUserProfile= await userProfileServices.createUserProfile('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'focanstefan9988@gmail.com',
-    'stefanalex10', '0877762712', 'OFF', '27/12/2000')
+    const newUserProfile= await userProfileServices.getUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0')
 
    
     const userProfile=await userProfileServices.updateUserProfile(newUserProfile.userId,
@@ -70,6 +69,7 @@ test('Update User Profile', async () => {
             "mailsNotifications": newUserProfile.mailsNotifications,
             "birthday": newUserProfile.birthday,
             "verifiedAccount":'UNVERIFIED',
+            "status":"PUBLIC",
             "socketId":'0'
         }
     )
@@ -78,18 +78,19 @@ test('Update User Profile', async () => {
     expect(userProfile).toStrictEqual(
         {
         
-            "userId": '6e53024f-d078-43d0-b89e-1de0a7db2bc3',
-            "email":  'focanstefan9988@gmail.com',
-            "nickname":'stefanalex10',
+            "userId": newUserProfile.userId,
+            "email":  newUserProfile.email,
+            "nickname":newUserProfile.nickname,
             "phoneNumber": '07777777777',
-            "mailsNotifications": "OFF",
-            "birthday": '27/12/2000',
-            "verifiedAccount":'UNVERIFIED',
-            "socketId":'0'
+            "mailsNotifications": newUserProfile.mailsNotifications,
+            "birthday":newUserProfile.birthday,
+            "verifiedAccount":newUserProfile.verifiedAccount,
+            "status":newUserProfile.status,
+            "socketId":newUserProfile.socketId
         }
     )
 
-    const deleteUserProfile=await userProfileServices.deleteUserProfile((userProfile.userId))
+    //const deleteUserProfile=await userProfileServices.deleteUserProfile((userProfile.userId))
 
 
 });  
@@ -97,8 +98,7 @@ test('Update User Profile', async () => {
 
 test('Delete User Profile', async () => {
    
-    const newUserProfile= await userProfileServices.createUserProfile('6e53024f-d078-43d0-b89e-1de0a7db2bc3', 'focanstefan9988@gmail.com',
-    'stefanalex10', '0877762712', 'OFF', '27/12/2000')
+    const newUserProfile= await userProfileServices.getUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0')
 
     
     const userProfileDeleted=await userProfileServices.deleteUserProfile(newUserProfile.userId)
@@ -113,13 +113,14 @@ test('Delete User Profile', async () => {
             "mailsNotifications": userProfileDeleted.mailsNotifications,
             "birthday": userProfileDeleted.birthday,
             "verifiedAccount":userProfileDeleted.verifiedAccount,
+            "status":userProfileDeleted.status,
             "socketId":userProfileDeleted.socketId
         }
 
     )
 
-
-
+    const addUserProfile=await userProfileServices.createUserProfile('a0da629a-b19e-4973-bfaa-419c009872e0', 'stefanalex20@gmail.com'
+    , 'stefanalex20', '0788872121', 'ON', '27/12/2000')
 
 });    
 

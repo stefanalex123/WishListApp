@@ -125,6 +125,8 @@ const router = express.Router();
     owenerGroupMiddleware, //Verify if Owner Group,
     groupController.deleteGroup)
 
+
+
  //Adding wishlists to groups
 
      router.route('/:id/wishlist') 
@@ -143,6 +145,7 @@ const router = express.Router();
     ],
     validationMiddleware,
     jwtMiddleware,
+    //userOwnerWishlistParamsMiddleware,      //Verify if User Is Owner Of WishList Params, 
     userMemberGroupMiddleware,               //Verify_If_User_Is_Member_Of_Group, 
     userOwnerWishlistAndAvailableMiddleware, //Verify if the user is the owner of the wishlist and if the wishlist has at least one item in it, 
     wishlistBodyNotSharedGroupMiddleware,    //Verify If wishlist is not already shared in the group,
@@ -184,6 +187,7 @@ const router = express.Router();
     wishlisttogroupController.updateWishlistToGroup) 
 
 
+    
 //Sending invitations to user to groups
 
     router.route('/:id/invite/allUsers')
@@ -231,7 +235,7 @@ const router = express.Router();
            referralLinkNotSendMiddleware,   //Verify_If_Refferal_Invitation_is_Not_Send         
             referralsinvitationsController.createReferralInvitationGmail) 
 
-    router.route('/:id/invite/:userinvitedid')
+    router.route('/:id/invite/:userInvitedId')
     .delete([   
     ],
     validationMiddleware,
@@ -284,7 +288,7 @@ const router = express.Router();
     userMemberGroupMiddleware,               //Verify If User Is Member Of Group,  
     itemParamsSharedWishlistMiddleware,     //Verify If Item Params Is Shared In WishList,     
     wishlistParamsSharedGroupMiddleware,   //Verify If Wishlist Params Is Shared In Group, 
-    itemNotPrincipalBuyerMiddleware,      //Verify If Item is not having Principal Buyer, 
+    itemNotPrincipalBuyerMiddleware,      //Verify If Item is not having Principal Buyer If User is Not Bought By Owner 
     buyitemcontroller.createBuyItem
     )
 

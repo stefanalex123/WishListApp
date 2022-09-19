@@ -16,13 +16,14 @@ const updateGroupInvitation = async (req, res, next) => {
        const user=await userProfileServices.getUserProfile(req.auth.userId)
        const groupInvitation=await groupsInvitationServices.getGroupInvitation(req.params.invitationId)
        const group=await groupServices.getGroup(groupInvitation.groupId)
+       const userInviter=await userProfileServices.getUserProfile(group.groupOwnerId)
       const newNotificaton= await notificationsServices.createNotification(
-         "Utilizatorul" + user.nickname + "a raspuns invitatiei cu " + req.body.status + " pentru grupul " + group.groupTitle, group.groupOwnerId
+         "Utilizatorul" + " " + user.nickname + " "+ "a raspuns invitatiei cu" + " " + req.body.status + " "+ "pentru grupul " + group.groupTitle, group.groupOwnerId
       )
 
       
       if(user.mailsNotifications=="ON"){
-        sendmail("Notification", "Utilizatorul" + user.nickname + "a raspuns invitatiei cu " + req.body.status + " pentru grupul " + group.groupTitle ,user.email)
+        sendmail("Notification", "Utilizatorul" +" "+ user.nickname + " "+ "a raspuns invitatiei cu" + " " + req.body.status + " "+"pentru grupul " + group.groupTitle ,userInviter.email)
       }
 
 
@@ -52,11 +53,11 @@ const createGroupInvitation = async (req,res,next) => {
         const group=await groupServices.getGroup(req.params.id)
         const user=await userProfileServices.getUserProfile(req.body.userInvitedId)
         const newNotificaton= await notificationsServices.createNotification(
-        "Ai primit o invitatie de la grupul " + group.groupTitle +" ", req.body.userInvitedId
+        "Ai primit o invitatie de la grupul" + " " + group.groupTitle + " ", req.body.userInvitedId
         )
 
         if(user.mailsNotifications=="ON"){
-          sendmail("Notification",  "Ai primit o invitatie de la grupul " + group.groupTitle +" " ,user.email)
+          sendmail("Notification",  "Ai primit o invitatie de la grupul" +" "+group.groupTitle+" " ,user.email)
         }
         res.json(newGroupInvitation);
     } catch (err){

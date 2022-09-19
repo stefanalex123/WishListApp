@@ -10,7 +10,7 @@ import referralLinkExistsAndValidMiddleware from "../middleware/Referral_Middlew
 
 
 import passport from "passport";
-import "../../googleAuthReferral.js"
+//import "../../googleAuthReferral.js"
 import createGoogleToken from "../middleware/Google_Middlewares/createGoogleToken.js";
 import gmailController from "../controllers/gmail.js"
 import createGoogleReferralGroupInvitation from "../middleware/Google_Middlewares/createGoogleReferralGroupInvitation.js"
@@ -43,11 +43,7 @@ router.route('/:referralInvitationId')
     .withMessage("You cant have special characters in your username")
     .matches(/^[a-zA-Z][\w\s-]+/)
     .withMessage("It has to start with a letter"),
-    check("email")
-    .exists()
-    .withMessage('is required')
-    .isEmail()
-    .withMessage('wrong format')
+   
 
     
 ], 

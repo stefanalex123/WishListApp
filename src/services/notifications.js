@@ -10,7 +10,11 @@ const getAllNotifications= async (id) => {
     const allNotifications = await prisma.notifications.findMany({
       where: {
         userdeliverId:id
-      }
+      },
+      orderBy: {
+      
+          deliverAt: 'desc',
+      } 
     })
     return allNotifications;
   };

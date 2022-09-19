@@ -29,13 +29,14 @@ const updateAdress = async (req, res, next) => {
     try {
   
       const adress = await adressService.getAdress(req.params.id);
+      console.log(adress)
   
       if (!adress) {
         throw { message: "Adress not found" };
       }
   
       const response = await adressService.updateAdress(req.params.id, {
-        userId: req.auth.userId || adress.userId,
+        userId: req?.auth?.userId || adress.userId,
         country: req?.body?.country || adress.country,
         city: req?.body?.city || adress.city,
         street:req?.body?.street || adress.street,
@@ -57,7 +58,7 @@ const updateAdress = async (req, res, next) => {
           res.send("You don't have any adresses added!")
         }
         else {
-          res.send(adresses)
+          res.json(adresses)
         }
     } catch (err) {
         next(err);

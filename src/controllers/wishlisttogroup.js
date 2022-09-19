@@ -14,7 +14,7 @@ const updateWishlistToGroup = async (req, res, next) => {
         createdAt:wishlistToGroup[0].createdAt,
         updatedAt: new Date(),
       });
-      res.json("Item Updated");
+      res.json("Wishlist Updated");
     } catch (err) {
       console.error(`Error while updating Item in the Wishlist`);
       next(err);

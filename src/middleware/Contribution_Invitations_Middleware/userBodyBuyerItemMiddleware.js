@@ -17,12 +17,16 @@ try{
     })
 
 
-if(buyItem[0].userBuyerId==req.body.userId){
+if(buyItem[0].userBuyerId==req.body.userId && req.body.userId!=req.auth.userId){
 
    next()
 }
-else{
-    res.status(404).send("The user you introduced is not the first buyer of this item!")
+else if(buyItem[0].userBuyerId==req.body.userId && req.body.userId==req.auth.userId){
+    res.status(409).send("You Can't Contribute To An Item Bought Buy You")
+}
+
+else if(buyItem[0].userBuyerId!=req.body.userId){
+    res.status(404).send("The User you introduces is not the first buyer of the item")
 }
 
 } catch(err) {
